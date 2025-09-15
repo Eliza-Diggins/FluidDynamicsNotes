@@ -1,0 +1,90 @@
+\begin{remark}
+    This chapter is largely subsumed by more invested literature; particularly the Binney \& Tremmaine, which covers the details of gravitational fields in considerably greater detail. For that reason, most of the exposition of this chapter is skipped and should be reviewed via reference to that text.
+\end{remark}
+
+\section{The Virial Theorem}
+
+One element of classical mechanics of extreme importance for fluid dynamics is the \textbf{virial theorem}, which describes the distribution of energy between potential and kinetic energy in a classical system. We will use it for many computations in astrophysical fluid dynamics.
+
+\subsection{Dilation Asymmetry}
+
+The core result of the virial theorem does not really depend on its origin; however, there is some interesting classical physics driving this result which can be interesting. We include this section here to cover this interesting physics; however, it may be skipped without loss of continuity.
+
+Consider a generic classical system subject to a Lagrangian $L$ of the form
+\[
+L({\bf r}_i,\dot{\bf r}_i) = \frac{1}{2}\sum_i m_i \dot{r}_i^2 - V({\bf r}).
+\]
+We might consider the behavior of the system under an \textbf{infinitesimal dilation}. Formally, we consider a transformation
+\[
+{\bf r}_i \to (1+\epsilon){\bf r}_i.
+\]
+The resulting change in the action integrand will be
+\[
+\delta L = \sum_i \left( \frac{\partial L}{\partial \mathbf{r}_i} \cdot \delta \mathbf{r}_i + \frac{\partial L}{\partial \dot{\mathbf{r}}_i} \cdot \delta \dot{\mathbf{r}}_i \right)
+= \sum_i \left( -\frac{\partial V}{\partial \mathbf{r}_i} \cdot \mathbf{r}_i + m_i \dot{\mathbf{r}}_i \cdot \dot{\mathbf{r}}_i \right) \epsilon
+\]
+
+\[
+\delta L = \left(2T + \sum_i \mathbf{F}_i \cdot \mathbf{r}_i \right) \epsilon
+\]
+
+Now, symmetry only occurs when
+\[
+2T + \sum_i {\bf F}_i \cdot {\bf r}_i = 0,
+\]
+which is not a standard occasion. Thus, the infinitesimal dilation is \textbf{not} a symmetry of the Lagrangian unless the above condition is satisfied at every instant in time. For most potentials, this is not generally the case. However, this lack of symmetry is not useless — instead, it gives rise to a physically meaningful quantity whose dynamics encode the failure of dilation symmetry.
+
+To further understand this, consider the quantity
+\[
+G = \sum_i \mathbf{p}_i \cdot \mathbf{r}_i,
+\]
+which we interpret as the \textbf{Noether-like charge} associated with dilation. It is not generally conserved, but it plays an important role in encoding the system's behavior under spatial rescaling.
+
+Taking its time derivative:
+\[
+\frac{dG}{dt} = \sum_i \left( \dot{\mathbf{p}}_i \cdot \mathbf{r}_i + \mathbf{p}_i \cdot \dot{\mathbf{r}}_i \right)
+= \sum_i \left( \mathbf{F}_i \cdot \mathbf{r}_i + m_i \dot{\mathbf{r}}_i \cdot \dot{\mathbf{r}}_i \right)
+= \sum_i \mathbf{F}_i \cdot \mathbf{r}_i + 2T
+\]
+
+This equation explicitly shows how the rate of change of the dilation generator $G$ is governed by the degree to which the forces are not scale-invariant. Thus, in a scale invariant system, $dG/dt = 0$.  Although $G$ is not conserved instantaneously, we may consider its time average for systems in a steady or bounded configuration. Assuming the system does not expand or contract indefinitely, the long-term average of $\frac{dG}{dt}$ vanishes:
+\[
+\left\langle \frac{dG}{dt} \right\rangle = 0
+\quad \Rightarrow \quad
+\left\langle 2T + \sum_i \mathbf{F}_i \cdot \mathbf{r}_i \right\rangle = 0.
+\]
+
+This is the \textbf{virial theorem}, recovered as the time-averaged failure of dilation symmetry. It shows that, for a system in equilibrium or exhibiting periodic motion, the kinetic energy is balanced by the potential's response to scaling:
+\[
+\boxed{
+\left\langle T \right\rangle = -\frac{1}{2} \left\langle \sum_i \mathbf{F}_i \cdot \mathbf{r}_i \right\rangle
+}
+\]
+
+\subsection{For Gravitational Systems}
+Consider that the above system is actually a set of particles with positions ${\bf r}_i$ which are interacting gravitationally. In such a case, we have
+\[
+{\bf F}_i = -G\sum_{i\neq j}  \frac{m_im_j}{|{\bf r}_i-{\bf r}_j|^3} ({\bf r}_i-{\bf r}_j).
+\]
+Thus,
+\[
+\sum_i {\bf F}_i \cdot {\bf r}_i = -G \sum_{i}\sum_{i \neq j} \frac{m_im_j}{|{\bf r}_i-{\bf r}_j|^3  }({\bf r}_i- {\bf r}_j )\cdot {\bf r}_i.
+\]
+For a given pair $i,j$, we have terms
+\[
+- G \frac{m_im_j}{|{\bf r}_i-{\bf r}_j|^3} |{\bf r}_i-{\bf r}_j|^2 = - G \frac{m_im_j}{r_{ij}}.
+\]
+Thus,
+\[
+\sum_i {\bf F}_i \cdot {\bf r}_i = V,
+\]
+where $V$ is the \textbf{gravitational potential}. Thus, we have the relationship that
+\[
+\boxed{\left<V\right> + 2\left<T\right> = 0.}
+\]
+where $\left<T\right>$ is the \textbf{total kinetic energy} and $\left<V\right>$ is total \textbf{potential energy}.
+
+
+
+
+

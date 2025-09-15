@@ -1,0 +1,523 @@
+In this section, we will derive the critical equations of fluid dynamics: the so-called \textbf{Euler Equations}. In effect, these are derived from 3 core principles:
+
+\begin{enumerate}
+    \item \textbf{Conservation of Mass}: leads to the \emph{conservation equation}.
+    \item \textbf{Conservation of Energy / Momentum}: lead to the Euler equations.
+\end{enumerate}
+
+\section{The Continuity Equation}
+
+Consider a fluid with a conserved density field $\psi$ (generally the \textbf{mass density}). In some region $V$, the total amount of the conserved field is
+\[
+\Psi = \int_V \psi dV.
+\]
+Now, this may flow in / out of the volume or be created / destroyed within the volume. In some time $\delta t$, we describe the created / destroyed quantity as
+\[
+\Delta \Psi_{\rm internal} = \int_V \delta \psi dV
+\]
+Additionally, there is some flow in / out of the surface
+\[
+\Delta \Psi_{\rm flux} = dt\oint_{\partial V} \psi {\bf u} \cdot d{\bf S}.
+\]
+If \textbf{no material is created / destroyed}, then
+\[
+\frac{d\Psi}{dt} = -\oint_{\partial V} \psi \;{\bf u} \cdot d{\bf S} 
+\]
+By \textbf{divergence theorem},
+\[
+-\oint_{\partial V} {\bf X} \cdot d{\bf S} = -\int_V \nabla \cdot {\bf X} dV \implies \oint_{\partial V} \psi {\bf u} \cdot d{\bf S} = \int_V \nabla \cdot (\psi {\bf u}) dV.
+\]
+Therefore,
+\[
+\frac{d\Psi}{dt} = \int_V \frac{\partial\psi}{\partial t} dV = - \int_V \nabla \cdot (\psi {\bf u}) dV.
+\]
+In the limit as $V \to 0$, this becomes
+\begin{equation}
+\label{eq:conservation-equation-eulerian}
+\boxed{
+\frac{\partial\psi}{\partial t} + \nabla \cdot (\psi {\bf u}) = 0.\;\text{Eulerian.}
+}
+\end{equation}
+\begin{remark}
+    In most cases, we are chiefly concerned with the density $\rho$, in which case we have
+    \[
+    \frac{\partial\rho}{\partial t} + \nabla \cdot (\rho {\bf u}) = 0
+    \]
+    In the frequent case (in classical fluid dynamics) where $\rho$ is a constant of the flow, you can pull it out; however, this is not generally the case in compressible gas flows.
+\end{remark}
+
+To write the above result in \textbf{Lagrangian form}, we need only remember that (equation~\ref{eq:euler-lagrange-convert})
+\[
+\frac{\partial \psi_{\rm Eulerian}}{\partial t} = \frac{D\psi}{Dt} - {\bf u} \cdot \nabla \psi.
+\]
+\rmk{Recall that $\nabla \cdot (\rho {\bf u}) = \partial_k (\rho u^k) = \rho \partial_ku^k + u^k \partial_k \rho = \rho \nabla \cdot {\bf u} + {\bf u} \cdot \nabla \rho.$} Thus, substituting into equation~\ref{eq:conservation-equation-eulerian}, we find
+\begin{equation}
+   \label{eq:conservation-equation-lagrangian}
+   \boxed{
+    \frac{D\rho}{Dt} + \rho \nabla \cdot {\bf u} = 0.\;\text{Lagrangian.}}
+\end{equation}
+\begin{remark}
+    The intuition here is not as easy to see on inspection. Imagine yourself floating along in the flow. The first term $D\rho/Dt$ describes how the \textbf{comoving density} behaves (the density you feel). Now, what should that intuitively be tied to? Well clearly to the density of the particles around you. They are all also moving with the flow, so as long as the flow lines remain totally parallel we don't get any change in density. If the flow lines converge, then the density will clearly go up as particles get pressed closer. The natural measure of that "convergence" is the \textbf{divergence of the velocity field}.
+
+    Notice that both forms of the equation have their "problem terms." The Eulerian approach requires $\nabla \cdot (\psi{\bf u})$, which may be tricky to evaluate. Meanwhile, the Lagrangian term only requires $\nabla \cdot {\bf u}$ but also requires $D\rho/Dt$.
+\end{remark}
+\begin{remark}
+    Consider the scenario where $D\rho/Dt = 0.$ We see immediately that this requires $\nabla \cdot {\bf u} = 0$, so the fluid is \textbf{solenoidal} (divergenceless). This is a characteristic aspect of \textbf{divergence free flows} or \textbf{incompressible flows}, which occur in many limits.
+\end{remark}
+\section{Vector Conservation Laws}
+
+Just as we did for the scalar field $\psi$, we might also be interested in the conservation of a vector density field ${\bf \Psi}$ defined on the domain. This is a \textbf{trickier calculation}; however, it has a massive role in the nature of fluid dynamics, especially in the conservation of momentum.
+
+\begin{remark}
+    For a \textbf{vector density}, each component of the field must be conserved as in the scalar case; however, flux in / out of the surface in a particular index $i$ may couple with the $j$ component in the adjacent region. This was a consideration which was not necessary in the treatment of the scalar case.
+\end{remark}
+
+Consider a region $V$ of the domain with total quantity of $\psi_k$:
+\[
+\Psi_k = \int_V \psi_k \; dV.
+\]
+As in the scalar case, changes to $\Psi_k$ may arise from creation/annihilation within $V$ and flux across the boundary $\partial V$. The creation/annihilation is straightforward:
+\[
+\Delta \Psi_{k,\;{\rm internal}} = \int_V \frac{\partial \psi_k}{\partial t} \; dV.
+\]
+However, the movement across the membrane is \textbf{not as simple to describe}, since the vector field may not transport identically across all orientations of the membrane, nor in all components. We therefore introduce the \textbf{Flux Tensor} $\Sigma^k_j$, defined such that:
+\[
+\Delta \Psi_{k,\;{\rm flux}} = \oint_{\partial V} \Sigma^k_j \; dS^j.
+\]
+\rmk{Note that we have made a sign convention here which needs to be kept track of...}
+Here, $dS^j$ is the oriented surface area element in the $j^{\rm th}$ direction, and $\Sigma^k_j$ expresses the flux of the $k^{\rm th}$ component of the conserved vector through surfaces with orientation in the $j^{\rm th}$ direction. The change in the total $\Psi$ in a time $\Delta t$ is thus
+\[
+\Delta \Psi = \int_V \frac{\partial \psi_k}{\partial t} \; dV + \oint \Sigma_j^k \;dS^j = \int_V \frac{\partial \psi_k}{\partial t} + \partial_j\Sigma_j^k\; dV \Delta t
+\]
+Now, the LHS provides source terms to the equation and we therefore have that, for some set of sources ${\bf f}$,
+\[
+\frac{\partial \boldsymbol{\psi}}{\partial t} + \nabla \cdot \boldsymbol{\Sigma} = {\bf f}.
+\]
+Since $V$ is arbitrary, the integrands must be equal everywhere, leading to the \textbf{general vector conservation law}:
+\begin{equation}
+\boxed{
+\frac{\partial \psi_k}{\partial t} + \partial_j \Sigma^k_j = 0.
+}
+\end{equation}
+In \textbf{vector notation}, this is
+\[
+\frac{\partial{\bf \Psi}}{\partial t} + \nabla \cdot {\bf \Sigma} = 0,\;\text{Eulerian.}
+\]
+
+\subsection{Momentum Conservation}
+
+With the general form of a \textbf{vector conservation law} in hand, we now want to derive the explicit form of the flux tensor $\Sigma$ for the case of momentum conservation. The relevant vector density field is the \textbf{momentum density}:
+\[
+{\bf p} = \rho {\bf u},
+\]
+where $\rho$ is the mass density and ${\bf u}$ is the velocity field.
+
+There are \textbf{two distinct physical mechanisms} by which momentum is transported in a fluid:
+
+\begin{enumerate}
+    \item \textbf{Advection}: Material crosses the boundary $\partial V$ carrying its momentum with it. The mass flux across a surface with oriented area element $dS^j$ is $\rho u_j \, dS^j$. Since each unit of mass carries momentum ${\bf p}$, the $k^{\rm th}$ component of momentum advected across the surface is:
+    \[
+    \Delta p^k_{\rm advective} = \rho u^k u_j \, dS^j.
+    \]
+
+    \item \textbf{Internal Stresses}: Even without bulk motion, microscopic interactions between particles on either side of the boundary may transfer momentum. These are summarized by the \textbf{stress tensor} $\sigma^k_j$, defined such that the $k^{\rm th}$ component of momentum transferred per unit area per unit time across a surface with normal $\hat{n}^j$ is:
+    \[
+    \Delta p^k_{\rm stress} = \sigma^k_j \, \hat{n}^j.
+    \]
+\end{enumerate}
+
+Combining these mechanisms, the total momentum flux tensor takes the form:
+\[
+\Sigma^k_j = \rho u^k u_j + \sigma^k_j.
+\]
+
+The general vector conservation law for momentum density reads:
+\[
+\frac{\partial p_k}{\partial t} + \partial_j \Sigma^k_j = 0,
+\]
+or explicitly:
+\[
+\frac{\partial (\rho u_k)}{\partial t} + \partial_j \left( \rho u_k u^j + \sigma^k_j \right) = 0.
+\]
+
+In vector notation, this becomes:
+\[
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = 0,
+\]
+where:
+\begin{itemize}
+    \item ${\bf p} \otimes {\bf u}$ denotes the outer product (dyadic product) of momentum and velocity, producing a rank-2 tensor with components $p^k u_j = \rho u^k u_j$,
+    \item $\boldsymbol{\sigma}$ is the stress tensor.
+\end{itemize}
+
+This formulation clearly separates:
+\begin{itemize}
+    \item Momentum transport due to advection (${\bf p} \otimes {\bf u}$),
+    \item Momentum exchange due to internal stresses ($\boldsymbol{\sigma}$).
+\end{itemize}
+
+In \textbf{some cases}, we may have \textbf{external sources of momentum}, leading us to
+\[
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = {\bf F}_{\rm ext}.
+\]
+\begin{remark}
+    We also might characterize the entire RHS as a stress tensor:
+    \[
+    \boldsymbol{\sigma} = \left({\bf p} \otimes {\bf u} + P{\bf I}\right),
+    \]
+    in which case, we have
+    \[
+    \frac{\partial {\bf p}}{\partial t} + \nabla \cdot \boldsymbol{\sigma} ={\bf F}_{\rm ext}.
+    \]
+\end{remark}
+\textbf{much more can be done with a bit more work.}
+
+\subsection{The Stress Tensor}
+
+We have, so far, derived the critical equation
+\[
+\boxed{
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = {\bf F}_{\rm ext}.}
+\]
+for a very general $\boldsymbol{\sigma}$, these equations can be quite difficult to solve; however, we can make quite a bit of progress on physical arguments about the stress tensor. In this section, we'll take some time to explore these behaviors before proceeding.
+\vspace{0.25cm}
+\begin{theorem}[The stress tensor is symmetric]
+\label{thrm:stress-is-symmetric}
+Let ${\bf p}$ be the momentum of a particular fluid flow with velocity field ${\bf u}$ and density field $\rho$. Regardless of the nature of the system, the \textbf{stress tensor} $\sigma_{ij}$ is everywhere symmetric.
+\end{theorem}
+\rmk{In fact, by the same logic, you can show that ANY \textbf{flux tensor} in a momentum conservation law MUST have these properties for the same reason. This makes the flux tensor for momentum special in that it must ALWAYS be symmetric.}
+\begin{proof}
+The intuition behind this is relatively simple. Consider a small control volume of fluid with negligible size. If the off-diagonal elements of the stress tensor are not symmetric, the internal forces will generate a net torque proportional to the surface area of the control volume. As the size of the volume shrinks to zero, the torque remains finite, implying the possibility of unbounded angular acceleration — contradicting the assumption of local mechanical equilibrium.
+
+We now present the formal derivation based on the conservation of angular momentum.
+
+The total angular momentum of a region $V$ is given by:
+\[
+L^k = \int_V \epsilon^{kij} x_i \rho u_j \; dV,
+\]
+where:
+\begin{itemize}
+    \item $\epsilon^{kij}$ is the Levi-Civita symbol,
+    \item $x_i$ is the position vector,
+    \item $\rho u_j$ is the $j^{\rm th}$ component of the momentum density.
+\end{itemize}
+
+The rate of change of angular momentum is:
+\[
+\frac{d L^k}{dt} = \int_V \epsilon^{kij} x_i \frac{\partial (\rho u_j)}{\partial t} \; dV.
+\]
+
+Applying the momentum conservation equation:
+\[
+\frac{\partial (\rho u_j)}{\partial t} + \partial_m \Sigma^m_j = 0,
+\]
+we substitute:
+\[
+\frac{d L^k}{dt} = - \int_V \epsilon^{kij} x_i \partial_m \Sigma^m_j \; dV.
+\]
+
+Using the product rule and the divergence theorem:
+\[
+\frac{d L^k}{dt} = - \oint_{\partial V} \epsilon^{kij} x_i \Sigma^m_j \; dS_m + \int_V \epsilon^{kij} \Sigma^m_j \delta_{im} \; dV.
+\]
+
+The first term represents the torque exerted on the boundary of the region, which may be nonzero due to external forces. The second term simplifies using $\delta_{im}$:
+\[
+\frac{d L^k}{dt} = - \oint_{\partial V} \epsilon^{kij} x_i \Sigma^m_j \; dS_m + \int_V \epsilon^{kij} \Sigma^i_j \; dV.
+\]
+
+In the absence of internal microscopic torques (body couples), conservation of angular momentum requires that the internal torque contribution vanishes identically:
+\[
+\int_V \epsilon^{kij} \Sigma^i_j \; dV = 0.
+\]
+
+Since $V$ is arbitrary, the integrand itself must vanish pointwise:
+\[
+\epsilon^{kij} \Sigma^i_j = 0.
+\]
+
+The Levi-Civita symbol is antisymmetric in $i$ and $j$, implying that the antisymmetric part of $\Sigma^i_j$ must vanish. Explicitly, we can decompose:
+\[
+\Sigma^i_j = \Sigma^{(ij)} + \Sigma^{[ij]},
+\]
+where:
+\[
+\Sigma^{(ij)} = \frac{1}{2} \left( \Sigma^i_j + \Sigma^j_i \right), \quad \Sigma^{[ij]} = \frac{1}{2} \left( \Sigma^i_j - \Sigma^j_i \right).
+\]
+
+The expression $\epsilon^{kij} \Sigma^i_j = 0$ requires the antisymmetric part $\Sigma^{[ij]}$ to vanish identically. Therefore, the stress tensor is symmetric:
+\[
+\boxed{ \Sigma^i_j = \Sigma^j_i }.
+\]
+
+In particular, for the internal stress tensor $\sigma^i_j$, this symmetry property holds:
+\[
+\sigma^i_j = \sigma^j_i.
+\]
+
+Thus, the stress tensor is symmetric everywhere, consistent with conservation of angular momentum in the absence of internal body torques.
+
+\end{proof}
+\vspace{0.5cm}
+Theorem~\ref{thrm:stress-is-symmetric} gives us a few very interesting corollaries:
+
+\begin{corollary}
+    For any stress tensor $\sigma_{ij}$, there is a coordinate frame (orthogonal transformation) in which $\sigma$ is \textbf{diagonalized}. In this frame, there are no shear forces and the expansion / contraction of fluid elements is more directly understood.
+\end{corollary}
+
+\begin{corollary}
+    Any stress tensor may be \textbf{decomposed} into its \textbf{isotropic} and \textbf{deviatoric} components:
+    
+    \begin{itemize}
+        \item The \textbf{isotropic component} is of the form $-p \delta_{ij}$, where $p$ is the \textbf{very familiar quantity of pressure}.
+        \item The \textbf{deviatoric component} is effectively everything else: $\tau_{ij}$. It describes the shears and viscous effects.
+    \end{itemize}
+\end{corollary}
+
+\section{Euler's Equations}
+
+We are now in a position to derive the \textbf{Euler equations} — the fundamental equations governing the motion of an \emph{inviscid} (non-viscous) fluid. These equations follow naturally by simplifying the general momentum conservation law under the assumption that viscous stresses vanish and only isotropic pressure remains.
+
+\vspace{0.25cm}
+\subsubsection*{Momentum Conservation in General Form}
+
+Recall the momentum conservation equation:
+\[
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = {\bf F}_{\rm ext},
+\]
+where:
+\begin{itemize}
+    \item ${\bf p} = \rho {\bf u}$ is the momentum density,
+    \item $\boldsymbol{\sigma}$ is the internal stress tensor,
+    \item ${\bf F}_{\rm ext}$ represents external body forces (e.g., gravity).
+\end{itemize}
+
+For an inviscid fluid, there are no shear or viscous stresses. The only internal stress is the isotropic pressure, so:
+\[
+\sigma_{ij} = -p \delta_{ij},
+\]
+where:
+\begin{itemize}
+    \item $p$ is the pressure,
+    \item $\delta_{ij}$ is the Kronecker delta.
+\end{itemize}
+
+Substituting into the momentum conservation equation:
+\[
+\frac{\partial (\rho u_k)}{\partial t} + \partial_j \left( \rho u_k u^j \right) + \partial_j \left( -p \delta^k_j \right) = F^k_{\rm ext}.
+\]
+
+Simplifying:
+\[
+\frac{\partial (\rho u_k)}{\partial t} + \partial_j \left( \rho u_k u^j \right) = - \partial_k p + F^k_{\rm ext}.
+\]
+
+\subsection*{Expanding with the Continuity Equation}
+
+We can rewrite the time derivative term using the product rule:
+\[
+\frac{\partial (\rho u_k)}{\partial t} = \rho \frac{\partial u_k}{\partial t} + u_k \frac{\partial \rho}{\partial t},
+\]
+and similarly expand the divergence term:
+\[
+\partial_j \left( \rho u_k u^j \right) = \rho u^j \partial_j u_k + u_k \partial_j ( \rho u^j ).
+\]
+
+Thus, the momentum equation becomes:
+\[
+\rho \frac{\partial u_k}{\partial t} + u_k \frac{\partial \rho}{\partial t} + \rho u^j \partial_j u_k + u_k \partial_j ( \rho u^j ) = - \partial_k p + F^k_{\rm ext}.
+\]
+
+We now use the continuity equation (conservation of mass):
+\[
+\frac{\partial \rho}{\partial t} + \nabla \cdot ( \rho {\bf u} ) = 0,
+\]
+or explicitly:
+\[
+\frac{\partial \rho}{\partial t} + \partial_j ( \rho u^j ) = 0.
+\]
+
+Substituting this into the momentum equation, notice:
+\[
+u_k \left( \frac{\partial \rho}{\partial t} + \partial_j ( \rho u^j ) \right) = 0.
+\]
+
+Therefore, the momentum equation simplifies to:
+\[
+\rho \left( \frac{\partial u_k}{\partial t} + u^j \partial_j u_k \right) = - \partial_k p + F^k_{\rm ext}.
+\]
+
+\subsection*{Lagrangian Form of the Euler Equations}
+
+The left-hand side of the above is the \textbf{material derivative} of $u_k$:
+\[
+\frac{D u_k}{D t} = \frac{\partial u_k}{\partial t} + u^j \partial_j u_k.
+\]
+
+Thus, the \textbf{Lagrangian form} of the Euler equations is:
+\begin{equation}
+\label{eq:momentum_lagrangian}
+\boxed{
+\rho \frac{D {\bf u}}{D t} = - \nabla p + {\bf F}_{\rm ext}.
+}
+\end{equation}
+
+Intuitively, this is the co-moving conservation of momentum equation, which makes a lot of sense on examination of its various terms and in analogy with the familiar form of Newton's 2nd law.
+
+\subsection*{Eulerian Form of the Euler Equations}
+
+Alternatively, from the stationary (Eulerian) perspective, we can simply transform the equation as
+\[
+\rho \partial_t {\bf u} + \rho {\bf u}\cdot \nabla {\bf u} = - \nabla p + {\bf F}_{\rm ext}.
+\]
+
+This is equivalent to 
+\[
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = {\bf F}_{\rm ext},
+\]
+after reduction of the stress tensor and inclusion of the conservation of mass.
+
+\begin{remark}
+    In the Lagrangian viewpoint, you imagine yourself drifting along with a fluid parcel. You directly experience how the velocity of the parcel changes over time as a result of local pressure gradients and external forces, such as gravity. The material derivative $D{\bf u}/Dt$ captures this physical acceleration of the parcel.
+\end{remark}
+
+\subsection*{Summary of the Inviscid Euler Equations}
+
+For an inviscid, compressible fluid with mass density $\rho$, velocity field ${\bf u}$, and pressure $p$, the governing equations are:
+
+\begin{enumerate}
+    \item \textbf{Conservation of Mass (Continuity Equation)}:
+    \[
+    \frac{\partial \rho}{\partial t} + \nabla \cdot ( \rho {\bf u} ) = 0.
+    \]
+
+    \item \textbf{Conservation of Momentum (Euler Equations)}:
+    \[
+    \rho \frac{D {\bf u}}{D t} = - \nabla p + {\bf F}_{\rm ext}.
+    \]
+\end{enumerate}
+
+These two equations form the foundation of inviscid fluid dynamics. They are generally closed by an \textbf{equation of state} relating pressure $p$ to $\rho$ and potentially other thermodynamic quantities, especially in compressible flows.
+
+\section{Viscosity}
+In many astrophysical settings, viscosity can often be neglected. However, when it does become relevant, it plays a crucial role in the dynamics. Intuitively, \textbf{viscous forces} arise from interactions between neighboring fluid elements that are moving at different velocities. These internal forces act to \textbf{resist deformation} and \textbf{dissipate energy} within the fluid.
+
+\vspace{0.25cm}
+
+\subsection{Velocity Gradients and Deformation}
+Before discussing viscosity itself, we first need to introduce some ideas about the velocity field. The basic input to viscosity is the \textbf{velocity gradient tensor}:
+\[
+\nabla_\ell u_k = \frac{\partial u_k}{\partial x_\ell},
+\]
+which quantifies how the velocity varies in space and therefore how a fluid element is being deformed or rotated. 
+
+As with all rank-2 tensors, the velocity gradient can be uniquely decomposed into symmetric and antisymmetric parts:
+\[
+\nabla_\ell u_k = 
+\underbrace{\tfrac{1}{2}\left(\nabla_\ell u_k + \nabla_k u_\ell\right)}_{\text{Symmetric part}} \;+\;
+\underbrace{\tfrac{1}{2}\left(\nabla_\ell u_k - \nabla_k u_\ell\right)}_{\text{Antisymmetric part}}.
+\]
+
+Both of these components play important roles in fluid dynamics and have special names.
+
+\begin{definition}[Rate-of-Strain Tensor]
+The \textbf{rate-of-strain tensor} is the symmetric part of the velocity gradient:
+\[
+S_{k\ell} = \tfrac{1}{2}\left(\nabla_\ell u_k + \nabla_k u_\ell\right).
+\]
+It measures the rate at which a fluid element is stretched, compressed, or sheared. Because $S_{k\ell}$ is symmetric, it can be diagonalized: in an appropriate basis, the eigenvalues correspond to the principal rates of elongation or contraction along orthogonal directions.
+\end{definition}
+
+\begin{definition}[Vorticity Tensor]
+The \textbf{vorticity tensor} is the antisymmetric part of the velocity gradient:
+\[
+\Omega_{k\ell} = \tfrac{1}{2}\left(\nabla_\ell u_k - \nabla_k u_\ell\right).
+\]
+It measures the local rigid-body rotation of a fluid element. In three dimensions, $\Omega_{k\ell}$ is directly related to the vorticity vector
+\[
+\boldsymbol{\omega} = \nabla \times \mathbf{u}, \qquad
+\Omega_{k\ell} = -\tfrac{1}{2}\,\epsilon_{k\ell m}\,\omega_m.
+\]
+\end{definition}
+
+\noindent
+\noindent
+Viscous forces depend only on the symmetric rate-of-strain tensor $S_{k\ell}$. 
+The antisymmetric part $\Omega_{k\ell}$ corresponds to a rigid-body rotation of the fluid element: such a motion does not change the relative distances between neighboring particles and therefore cannot produce internal friction. 
+Formally, any contribution of $\Omega_{k\ell}$ to the stress would imply dissipation under pure rotation, which is unphysical. 
+Moreover, the dissipation rate $\Phi = \tau_{ij} \nabla_j u_i$ vanishes for the antisymmetric part since $\tau_{ij}\Omega_{ij}=0$, confirming that only $S_{k\ell}$ contributes to viscous stresses.
+
+\vspace{0.5cm}
+
+\subsection{Constitutive Law for Viscous Stress}
+To first order in the gradients, we postulate a linear constitutive law relating viscous stresses to the rate-of-strain tensor:
+\[
+\tau_{ij} = \mu_{ijkl} \, S_{kl},
+\]
+where:
+\begin{itemize}
+    \item $\tau_{ij}$ is the \textbf{viscous stress tensor},
+    \item $S_{kl}$ is the symmetric rate-of-strain tensor,
+    \item $\mu_{ijkl}$ is the rank-4 \textbf{viscosity tensor}, encoding the proportionality between strain rates and stresses.
+\end{itemize}
+
+In full generality, $\mu_{ijkl}$ could contain $3^4=81$ components in three dimensions. Physical symmetries reduce this number dramatically.
+
+\vspace{0.5cm}
+
+\subsection{Constraints on $\mu_{ijkl}$}
+
+\paragraph{1. Stress symmetry.}
+Because $\tau_{ij} = \tau_{ji}$, only the part of $\mu_{ijkl}$ symmetric under $i \leftrightarrow j$ contributes. Similarly, since $S_{kl}$ is symmetric, only the part symmetric under $k \leftrightarrow \ell$ is relevant.
+
+\paragraph{2. Isotropy.}
+An isotropic fluid must respond identically in all directions. Formally, this means $\mu_{ijkl}$ must remain invariant under any rotation:
+\[
+\mu_{ijkl} = R_{ip}R_{jq}R_{kr}R_{\ell s}\,\mu_{pqrs}, \qquad \forall R \in SO(3).
+\]
+The only building blocks of such isotropic tensors are Kronecker deltas. To construct a rank-4 isotropic tensor, we pair indices in all inequivalent ways.
+
+\paragraph{3. Independent delta pairings.}
+There are exactly three independent pairings:
+\[
+\delta_{ij}\delta_{k\ell}, \qquad
+\delta_{ik}\delta_{j\ell}, \qquad
+\delta_{i\ell}\delta_{jk}.
+\]
+Thus the most general isotropic form is
+\[
+\mu_{ijkl} = \alpha \,\delta_{ij}\delta_{k\ell}
++ \beta \,\delta_{ik}\delta_{j\ell}
++ \gamma \,\delta_{i\ell}\delta_{jk},
+\]
+with scalar coefficients $\alpha,\beta,\gamma$.
+
+\paragraph{4. Reduction.}
+Contracting this form with $S_{kl}$ yields
+\[
+\tau_{ij} = \alpha \,\delta_{ij} S_{kk} + (\beta + \gamma) S_{ij}.
+\]
+This shows that the viscous stress is determined by only two independent constants:
+\[
+\tau_{ij} = 2\mu S_{ij} + \lambda \,\delta_{ij} S_{kk},
+\]
+where $\mu = \beta + \gamma$ is the \textbf{shear viscosity} and $\lambda = \alpha$ is the \textbf{bulk viscosity}.
+
+\subsection{Shear and Bulk Viscosity}
+
+The reduction above shows that all viscous behavior of an isotropic fluid can be described using only two scalar coefficients: the \textbf{shear viscosity} $\mu$ and the \textbf{bulk viscosity} $\lambda$.
+
+\begin{definition}[Shear Viscosity]\label{def:shear-viscosity}
+The \textbf{shear viscosity} $\mu$ quantifies the internal resistance of a fluid to \emph{shearing deformations}, i.e.~motions where parallel fluid layers slide past one another at different velocities. It governs the stresses proportional to the traceless, symmetric part of the strain-rate tensor. Everyday examples include the drag experienced when stirring honey or the laminar shear between plates in Couette flow.
+\end{definition}
+
+\begin{definition}[Bulk Viscosity]\label{def:bulk-viscosity}
+The \textbf{bulk viscosity} $\lambda$ quantifies the fluid's resistance to \emph{volumetric deformations}, i.e.~uniform compression or expansion. It appears as an isotropic stress proportional to $\nabla \cdot \mathbf{u}$. For incompressible flows ($\nabla \cdot \mathbf{u} = 0$), bulk viscosity plays no role. In compressible flows, however—particularly when internal degrees of freedom such as molecular vibrations or rotations are excited—bulk viscosity can strongly affect energy dissipation.
+\end{definition}
+
+
+\subsection{The Navier-Stokes Equations}
+
+
+
+

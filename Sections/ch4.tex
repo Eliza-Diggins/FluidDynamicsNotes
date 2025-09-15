@@ -1,0 +1,742 @@
+Thus far, we have derived two equations (the \textbf{Euler Equations}) which involve several fluid variables:
+
+\begin{enumerate}
+    \item \textbf{Conservation of Mass (Continuity Equation)}:
+    \[
+    \frac{\partial \rho}{\partial t} + \nabla \cdot ( \rho {\bf u} ) = 0.
+    \]
+
+    \item \textbf{Conservation of Momentum}:
+    \[
+    \rho \frac{D {\bf u}}{D t} = - \nabla p + {\bf F}_{\rm ext}.
+    \]
+\end{enumerate}
+
+Assuming the external force field ${\bf F}_{\rm ext}$ is known from the problem setup (e.g., gravity), the system contains \textbf{three primary unknowns}: the mass density $\rho$, the velocity field ${\bf u}$, and the pressure $p$. With only two equations, this system is \textbf{underdetermined}, and we require an additional relation to close it.
+
+\begin{ideabox}
+    If the fluid admits a thermodynamic description, we may posit an \textbf{equation of state} (EOS) of the form
+    \[
+    F(\rho, p, u) = 0,
+    \]
+    where \( u \) is the internal energy per unit mass. This provides a link between thermodynamic variables but does not by itself close the system. To proceed, we generally take one of the following approaches:
+
+    \begin{enumerate}
+        \item \textbf{Include an energy equation}: Add a conservation law for internal energy or entropy to evolve \( u \) dynamically. This is required in fully general, compressible, thermodynamic flows.
+        
+        \item \textbf{Assume a limiting thermodynamic regime}: Impose a simplification based on physics (e.g., rapid cooling or adiabatic expansion) that reduces the EOS to a barotropic form:
+        \[
+        p = p(\rho),
+        \]
+        thereby eliminating \( u \) as an independent variable.
+    \end{enumerate}
+\end{ideabox}
+
+\begin{remark}
+    Above, we assert that the fluid permits a \textbf{thermodynamic description}, which is a common scenario, but not one to be taken for granted. In order for a fluid to be described by equilibrium thermodynamics, we require \textbf{Local Thermodynamic Equilibrium}. Formally, a fluid element with characteristic length scale $\delta L$ must be able to reach a maximum entropy state much more quickly than any dynamical changes can occur.
+
+The ability for a maximum entropy state to be reached is dependent on the interaction scale (\textbf{the mean free path}) between collisions $\lambda_{\rm mfp}$. If $\lambda_{\rm mfp} \ll \delta L$, then \textbf{interactions are localized}, which is a critical element of our thermodynamic assumption. Likewise, if $t_{\rm coll}$ is the mean \textbf{collision time}, then $t_{\rm coll} \ll t_{\rm dyn}$ implies that the system has time to equilibrate much faster than its dynamical timescale.
+\end{remark}
+
+In the following sections, we will explore our options for treating these thermodynamically equilibrated systems.
+
+\section{Important Elements of Thermodynamics}
+
+Before we continue with our treatment of equations of state, we will first review a few important elements of thermodynamics. Specifically, there are a few words to be had regarding
+the notion of entropy, and of adiabatic processes which is relevant to our continued discussion.
+
+\subsection{Equipartition}
+
+The \textbf{equipartition theorem} states that each quadratic degree of freedom in a system contributes $\tfrac{1}{2}kT$ to the mean energy. For a system of $N$ particles with $f$ quadratic degrees of freedom each, the total internal energy is therefore
+\[
+U = \frac{f}{2} NkT.
+\]
+
+\subsection{Specific Heats and the Adiabatic Index}
+
+The notion of specific heat arises naturally once we combine the first law of thermodynamics with equipartition. The specific heat is defined as the amount of heat required to change the temperature of a system, 
+\[
+C \equiv \frac{dQ}{dT},
+\]
+and its value depends on the thermodynamic constraint under which the process occurs. From the first law,
+\[
+dU = dQ - PdV,
+\]
+and using the equipartition expression for internal energy, 
+\[
+dU = \frac{f}{2} Nk \, dT,
+\]
+we can directly relate changes in heat to changes in temperature.  
+
+If the volume is held fixed, the work term vanishes and one finds
+\[
+C_V = \left(\frac{dQ}{dT}\right)_V = \frac{f}{2} Nk,
+\]
+which reflects the fact that all the supplied heat goes into raising the internal energy. On the other hand, if the pressure is held constant, then the system must also do expansion work as the temperature changes. In this case,
+\[
+\left(\frac{dQ}{dT}\right)_P = \frac{f}{2} Nk + P \frac{dV}{dT}.
+\]
+Invoking the ideal gas law $PV = NkT$, we find that $P(dV/dT) = Nk$, and thus
+\[
+C_P = \left(\frac{f}{2} + 1\right) Nk.
+\]
+
+The ratio of these two heat capacities defines the \textbf{adiabatic index}, 
+\[
+\gamma \equiv \frac{C_P}{C_V} = 1 + \frac{2}{f}.
+\]
+This simple relation shows how $\gamma$ is determined entirely by the number of quadratic degrees of freedom of the particles. For a monatomic ideal gas with $f=3$, we obtain $\gamma = 5/3$, while for a diatomic gas at moderate temperatures with $f=5$, we have $\gamma = 7/5$. The adiabatic index is of central importance in fluid dynamics, since it governs the speed of sound in an ideal gas and dictates the relation between pressure and density during adiabatic processes.
+
+\subsection{Entropy in a Fluid}
+
+In a formal sense, the \textbf{Sackur–Tetrode equation} gives the entropy of an ideal gas; however, this form is often unwieldy in fluid dynamics, since it encodes the full quantum–statistical information. Instead, we can work more gently from the thermodynamic identities.
+
+Starting from the first law per unit mass,
+\[
+du = T\,ds - P\,d\!\left(\frac{1}{\rho}\right) 
+    = T\,ds - \frac{P}{\rho^2} d\rho,
+\]
+we obtain
+\[
+ds = \frac{1}{T}\left(du + \frac{P}{\rho^2} d\rho\right).
+\]
+
+For an ideal gas with $f$ quadratic degrees of freedom,
+\[
+u = c_v T, \qquad du = c_v\,dT,
+\]
+where the specific heat at constant volume is
+\[
+c_v = \frac{f}{2}\,\frac{k}{\mu m_p}.
+\]
+
+Thus,
+\[
+ds = \frac{1}{T}\left(c_v\,dT + \frac{P}{\rho^2} d\rho\right).
+\]
+
+Using the ideal gas law,
+\[
+P = \frac{\rho kT}{\mu m_p} = \rho R T,
+\]
+with $R = k/(\mu m_p)$, we have
+\[
+\frac{dP}{P} = \frac{dT}{T} + \frac{d\rho}{\rho}.
+\]
+Substituting for $dT/T$ gives
+\[
+ds = c_v\!\left(\frac{dP}{P} - \frac{d\rho}{\rho}\right) + R\frac{d\rho}{\rho}.
+\]
+
+Collecting terms,
+\[
+ds = c_v \frac{dP}{P} - (c_v+R)\frac{d\rho}{\rho} 
+    = c_v \frac{dP}{P} - c_p \frac{d\rho}{\rho},
+\]
+where $c_p = c_v+R$ and $\gamma = c_p/c_v$. Integration then yields
+\begin{equation}
+\label{eq:specific_entropy}
+\boxed{
+    s = c_v \ln\!\left(\frac{P}{\rho^\gamma}\right) + \text{const}.
+    }
+\end{equation}
+
+\begin{bigidea}
+We should therefore \textbf{recognize} that the combination
+\[
+\frac{P}{\rho^\gamma} \;\;\propto\;\; e^{s/c_v}
+\]
+serves as a practical \textbf{entropy proxy}. In fact, when an equation of state is written in polytropic form,
+\[
+P = K \rho^\gamma,
+\]
+the constant $K$ is directly related to the entropy, with $K \propto e^{s/c_v}$.
+\end{bigidea}
+
+
+\subsection{Isentropic Processes}
+
+An important special case in fluid dynamics is the \textbf{isentropic process}, in which the entropy remains constant. Since for an ideal gas we have
+\[
+s = c_v \ln\!\left(\frac{P}{\rho^\gamma}\right) + \text{const},
+\]
+holding $s$ fixed implies that the combination $P/\rho^\gamma$ must also remain constant. Thus, in an isentropic transformation, the pressure and density are related by the \textbf{polytropic equation of state}
+\[
+P = K \rho^\gamma,
+\]
+where the constant $K$ encodes the entropy of the system. In other words, isentropic processes are exactly those in which the polytropic constant does not change.
+
+The relevance of this result is considerable. In the absence of shocks or dissipation, adiabatic flows in gases are also isentropic flows, and so the condition $P \propto \rho^\gamma$ holds along streamlines. This relation underpins many results in fluid dynamics: it sets the speed of sound in an ideal gas,
+\[
+c_s = \sqrt{\frac{\gamma P}{\rho}},
+\]
+it determines the pressure–density relation inside stars and polytropic models of stellar structure, and it is the key assumption in many treatments of compressible flow, including shock tubes, nozzle flows, and astrophysical accretion. In short, the isentropic assumption allows the fluid equations to be closed with a simple but powerful equation of state, tying thermodynamic structure directly to dynamical behavior.
+
+\subsection{Thermodynamic Potentials}
+
+A key theme in thermodynamics is the pairing of \textbf{extensive variables}, which scale with system size, and their conjugate \textbf{intensive variables}, which are independent of system size. Energy is always expressed in terms of these conjugate pairs, for example
+\[
+dU = T\,dS - P\,dV + \mu\, dN,
+\]
+where $(S,V,N)$ are extensives and $(T,-P,\mu)$ are their conjugates. The extensives can be thought of as the natural ``coordinates'' of the system, while the intensives measure how the energy changes when those coordinates are varied.
+
+\medskip
+There are four \textbf{standard thermodynamic potentials}, each adapted to different natural variables. Their definitions and uses are summarized below:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+Potential & Natural Variables & Definition \\
+\hline
+Internal Energy $U$ & $(S,V,N)$ & $U(S,V,N)$ \\
+Helmholtz Free Energy $F$ & $(T,V,N)$ & $F = U - TS$ \\
+Enthalpy $H$ & $(S,P,N)$ & $H = U + PV$ \\
+Gibbs Free Energy $G$ & $(T,P,N)$ & $G = U - TS + PV$ \\
+\end{tabular}
+\end{center}
+
+Each potential is related to the others by a Legendre transform, which swaps an extensive variable for its conjugate intensive one. In this sense, choosing a potential is much like choosing a different coordinate chart for the thermodynamic state space.
+
+\medskip
+Among these, \textbf{enthalpy} plays a particularly important role in fluid dynamics. Because many flows and reactions occur at constant pressure rather than constant volume, it is convenient to use $H(S,P,N)$, whose differential is
+\[
+dH = T\,dS + V\,dP + \mu\, dN.
+\]
+This form makes pressure, rather than volume, the natural variable, which aligns well with practical conditions such as atmospheric pressure in laboratory or astrophysical systems. As we will see later, enthalpy appears naturally in conservation laws and in the description of compressible flows.
+Now, by the first law of thermodynamics,
+\[
+du = Tds - P d\frac{1}{\rho} \implies \boxed{dh = Tds + \frac{1}{\rho} dP}.
+\]
+\textbf{Why is this helpful?} It is helpful because, in \textbf{barotropic equations of state}, where $h(p)$ is a function of the pressure (or density) only, we have 
+\[
+dh = \frac{1}{\rho} dP.
+\]
+\rmk{Formally, the $Tds$ doesn't go away, but we are constrained to take a path respecting the EOS, which means that we have entropy path independence.} As such, instead of
+\[
+\frac{D{\bf u}}{Dt} = - \frac{\nabla P}{\rho}, \text{we have}, \frac{D{\bf u}}{Dt} = - \nabla h.
+\]
+Thus, \textbf{$h$ has a particular use as a potential of the fluid in the Euler equations}.
+
+
+
+\section{Equations of State}
+
+Formally, we \textbf{define} an equation of state such that
+\vspace{0.25cm}
+\begin{definition}[Equation of State]
+    Given some set of \textbf{complete thermodynamic variables} (i.e. variables which span the phase space) $(X_1,X_2,\ldots)$, an \textbf{equation of state} is a relationship between these thermodynamic variables of the form
+    \begin{equation}
+        \label{eq:general_eos}
+        F(X_1,\ldots,X_n) = 0.
+    \end{equation}
+    In general, we commonly see equations of state for $(p, \rho, T)$ or $(p,\rho,u)$.
+\end{definition}
+\vspace{0.25cm}
+There are a number of common equations of state which are relevant for representing different physics. The most well known of these is the \textbf{ideal gas equation of state}:
+\vspace{0.25cm}
+\begin{definition}[Ideal Gas]
+An \textbf{ideal gas} is a theoretical gas composed of a large number of identical, point-like particles that interact only via elastic collisions and do not exert long-range forces on one another. The behavior of an ideal gas is governed by the \textbf{ideal gas law}:
+\[
+pV = Nk_B T,
+\]
+where:
+\begin{itemize}
+    \item $p$ is the pressure of the gas,
+    \item $V$ is the volume it occupies,
+    \item $N$ is the total number of particles,
+    \item $k_B$ is the Boltzmann constant,
+    \item $T$ is the absolute temperature of the gas.
+\end{itemize}
+\end{definition}
+\vspace{0.25cm}
+In astrophysical cases, we usually end up using
+\[
+n = \frac{N}{V} = \frac{\rho}{m_p\mu},
+\]
+where $\mu$ is the \textbf{mean particulate weight} of a given particle species in the gas. In this form, we have
+\begin{equation}
+    \label{eq:ideal_gas}
+    \boxed{
+    p = \frac{\rho k T}{m_p\mu} \sim \omega \rho T.
+    }
+\end{equation}
+\begin{remark}
+    While most astrophysical fluids are well approximated by the ideal gas formalism, there are some fluids which require a more robust treatment. These result from a number of characteristic limits on the ideal gas that are worth being familiar with:
+\begin{enumerate}
+    \item \textbf{High Temperatures:} In very high temperature scenarios, the kinetic energy of the particles leads to speeds at a significant fraction the speed of light and therefore requires relativistic treatment. This formally occurs when $kT \simeq mc^2$ and the energy stored in the mass is similar to the kinetic energy. In these cases, relativistic equations of state are required (i.e. $p = \rho c^2/3$ for ultra-relativistic gasses).
+    \item \textbf{Strong Coupling:} In some cases, electromagnetic interactions occur over longer ranges and induce non-ideal behavior. This then becomes the realm of plasma physics (in most cases). We generally see this in stellar interiors, but it is becoming more relevant in many of the diffuse astrophysical plasmas we consider.
+\end{enumerate}
+\end{remark}
+
+\subsection{Isothermal Equations of State}
+
+Let's return to the issue of the temperature. In general, we need a prescription for how the temperature behaves in the fluid using some sort of equation for \textbf{energy transport}, which can often be quite difficult. In some cases, we might invoke an approximate rule for the temperature which is founded in a thermodynamic assumption. The resulting EOS is called a \textbf{barotropic equation of state} and there are generally two cases that get considered.
+
+In an \textbf{isothermal} gas, the temperature is held \textbf{fixed} throughout the evolution of the system. As a result, the equation of state reduces to a linear relation between pressure and density:
+\[
+p = \frac{\rho k_B T}{\mu m_p} = K \rho,
+\]
+where:
+\begin{itemize}
+    \item \( k_B \) is Boltzmann's constant,
+    \item \( \mu \) is the mean molecular weight,
+    \item \( m_p \) is the proton mass,
+    \item \( T \) is the (constant) temperature,
+    \item \( K = \frac{k_B T}{\mu m_p} \) is a constant of proportionality.
+\end{itemize}
+
+This linear relation between pressure and density effectively \textbf{closes} the fluid equations without requiring an additional energy or entropy equation.
+
+\vspace{0.3em}
+The \textbf{isothermal approximation} is valid when each fluid element maintains approximately the same temperature over its evolution. Physically, this requires that any thermal energy gained (due to compression, shocks, or other dynamical processes) is quickly radiated or otherwise dissipated before the temperature can change appreciably.
+
+\begin{remark}
+    In a typical dynamical time interval \( \delta t \), a fluid element may undergo motion, compression, shocks, or other interactions that introduce thermal energy — these are the \textbf{dynamical processes}. Simultaneously, the fluid may also lose energy through radiation, turbulent dissipation, conduction, or viscosity — these are the \textbf{cooling processes}. The isothermal approximation is justified when the cooling timescale \( t_{\rm cool} \) is much shorter than the dynamical timescale \( t_{\rm dyn} \), i.e.,
+    \[
+    t_{\rm cool} \ll t_{\rm dyn}.
+    \]
+    In this regime, any heating is rapidly counteracted by efficient cooling, and the temperature remains effectively constant in time along the path of a fluid element.
+\end{remark}
+
+Note that this condition applies \textit{locally} along the trajectories of individual fluid parcels; it does not require the temperature to be globally uniform throughout the fluid domain. Therefore, isothermal models may still allow for slow or large-scale spatial variation in temperature, provided the temperature is approximately constant \textit{along} each fluid element's motion.
+
+The following are classic cases where these approximations can be applied:
+
+\begin{enumerate}
+    \item \textbf{Molecular Cloud Cores (Pre-Stellar Collapse)}\\
+    In the early stages of star formation, molecular clouds are cold (\( T \sim 10 \) K) and radiate efficiently via dust and molecular line emission (e.g., CO, C\textsc{ii}). The cooling time is much shorter than the free-fall time, making the temperature nearly constant during collapse. Hence, isothermal models are often used to study fragmentation, gravitational instability (e.g., Jeans analysis), and early core dynamics.
+
+    \item \textbf{Thin Accretion Disks (Vertical Structure)}\\
+    In geometrically thin disks (e.g., around stars or black holes), the vertical thermal timescale is much shorter than the radial viscous timescale. This allows for rapid radiative relaxation in the vertical direction, justifying a locally isothermal assumption (\( T = T(r) \), constant in \( z \)) when analyzing hydrostatic balance and vertical disk structure.
+
+    \item \textbf{Self-Gravitating Isothermal Spheres (e.g., Bonnor–Ebert Spheres)}\\
+    These models describe equilibrium structures of self-gravitating gas in thermal contact with a surrounding reservoir. The assumption of an externally regulated or thermostatted temperature yields simple equilibrium equations and captures the onset of gravitational instability in pressure-confined clouds.
+
+    \item \textbf{Idealized Jeans Instability Calculations}\\
+    In linear perturbation theory, the isothermal EOS simplifies the analysis of gravitational collapse. It removes complications from entropy or energy evolution, focusing purely on the balance between self-gravity and thermal pressure.
+
+    \item \textbf{Numerical Simulations with Rapid Cooling}\\
+    In some hydrodynamical simulations (e.g., cosmological structure formation, protoplanetary disks), the gas is assumed to cool instantaneously or follow a prescribed temperature profile. This justifies an isothermal approximation when detailed radiative transfer or energy evolution is computationally prohibitive.
+
+    \item \textbf{Planetary Atmospheres (Isothermal Layers)}\\
+    Upper layers of planetary atmospheres, where radiative equilibrium is maintained with a surrounding radiation field, can often be modeled as isothermal. This is especially useful in analytic modeling of scale heights and hydrostatic profiles.
+
+\end{enumerate}
+
+\subsection{Adiabatic Equations of State}
+
+Consider an ideal gas which undergoes processes quickly enough that no heat is able to enter or leave the fluid element. In such a scenario, we have the \textbf{ideal gas equation of state}
+\[
+p = \frac{\rho kT}{m_p\mu},
+\]
+and we have also the \textbf{first law of thermodynamics} (in terms of quantities per unit mass), which takes the form
+\[
+\delta \tilde{U} = - p d\tilde{V} = \frac{p}{\rho^2} d\rho
+\]
+in the absence of heat transfer. \rmk{We use $\tilde{\cdot}$ to denote quantities per unit mass.} By \textbf{equipartition}, we also have
+\[
+\tilde{U} = \frac{f}{2} \frac{kT}{m_p\mu} \implies \delta \tilde{U} = \frac{f}{2} \frac{kdT}{m_p \mu}.
+\]
+If we equate these two statements, we have
+\[
+\frac{p}{\rho^2} d\rho = \frac{f}{2} \frac{k dT}{m_p\mu}.
+\]
+Utilizing the equation of state,
+\[
+\frac{m_p \mu}{k} \left[\frac{dp}{\rho} - \frac{p}{\rho^2} d\rho \right]= dT \implies \frac{p}{\rho^2} d\rho =\frac{f}{2}\left[\frac{dp}{\rho} - \frac{p}{\rho^2} d\rho\right].
+\]
+We therefore may write the differential equation as
+\[
+\frac{f+2}{f} \frac{d\rho}{\rho} = \frac{dp}{p} \implies p \propto \rho^{\gamma},
+\]
+where $\gamma = (f+2)/f$ is the \textbf{adiabatic index}. This \textbf{polytropic relation} between pressure and density closes the system of fluid equations without requiring a separate temperature or entropy evolution law, provided the process remains adiabatic.
+
+\vspace{0.3em}
+The \textbf{adiabatic approximation} is valid when fluid elements evolve on timescales short enough that there is negligible radiative energy exchange or dissipation. In particular, the entropy of each parcel remains constant:
+\[
+\frac{ds}{dt} = 0.
+\]
+This assumption holds in dynamically evolving systems where thermal transport processes are slow compared to bulk motion — such as in rapidly collapsing, expanding, or oscillating fluids.
+
+\begin{remark}
+    In a dynamical time interval \( \delta t \), a fluid parcel may be compressed or expanded, doing work and changing its internal energy. If this happens faster than energy can be transported via radiation, conduction, or viscosity, then the evolution is \textbf{adiabatic}. Additionally, if shocks or turbulence are weak or absent, the process remains \textbf{isentropic}, meaning that the fluid retains constant entropy. This regime is described by the adiabatic (isentropic) equation of state:
+    \[
+    p \propto \rho^\gamma.
+    \]
+\end{remark}
+
+Note that \( K \) can vary from one fluid element to another if entropy varies, but in isentropic flow, \( K \) is constant along fluid paths. Therefore, this EOS captures compressional heating and expansion cooling, unlike the isothermal case.
+
+The following are classic contexts where the isentropic approximation is applied:
+
+\begin{enumerate}
+    \item \textbf{Stellar Interiors (Convective Regions)}\\
+    In regions of efficient convection, heat is transported by fluid motion much faster than by radiation. The rising and sinking fluid parcels experience nearly adiabatic processes, justifying an isentropic EOS in local models of stellar interiors.
+
+    \item \textbf{Adiabatic Collapse in Star Formation}\\
+    During later stages of protostellar collapse, the central regions of molecular clouds become optically thick, preventing efficient cooling. Compressional heating dominates, and the gas heats adiabatically. This is critical in setting the first hydrostatic core conditions.
+
+    \item \textbf{Idealized Hydrodynamics and Sound Waves}\\
+    Many textbook problems (e.g., wave propagation, Riemann problems, acoustic oscillations) assume isentropic flow to simplify the analysis and isolate compressibility effects without heat exchange.
+
+    \item \textbf{Neutrino-decoupled Core Collapse Supernovae (Early Phase)}\\
+    In the early, adiabatically collapsing phase of a supernova core (prior to shock breakout or neutrino trapping), entropy remains approximately constant within shells. Isentropic models capture the stiffening of the EOS due to compression.
+
+    \item \textbf{Polytropic Models of Stars and Planets}\\
+    Many equilibrium models for stars and planets use polytropic equations of state with fixed \( \gamma \) to approximate pressure support against gravity, especially when entropy gradients are weak.
+
+    \item \textbf{Ballistic or Rarefied Flows (e.g., Outflows, Ejecta)}\\
+    In expanding flows where radiative losses are negligible (e.g., outer supernova ejecta, stellar winds in the adiabatic zone), entropy is conserved and the flow is well-described by an isentropic EOS.
+\end{enumerate}
+
+\subsection{Polytropic Equations of State}
+
+A wide class of simple closures for the equation of state take the form
+\[
+p = K \rho^{\Gamma},
+\]
+for some constant $K$ and exponent $\Gamma$. Special cases of this relation include
+\begin{itemize}
+    \item $\Gamma = 1$: the \textbf{isothermal} form, $p \propto \rho$, which matches the pressure--density relation of an ideal gas at constant temperature,
+    \item $\Gamma = \gamma$: the \textbf{adiabatic} or \textbf{isentropic} form, corresponding to an ideal gas with constant entropy.
+\end{itemize}
+
+More generally, we may use this as a \textbf{phenomenological equation of state} even when the underlying microphysics is unknown. Suppose the true EOS has some complicated form $F(p,\rho,u)=0$; we then approximate it by a polytropic relation of the above type. In this case, the thermodynamic state is entirely specified by $\rho$, so the specific internal energy $u$ is a function of density alone. From the first law,
+\[
+du = \frac{p}{\rho^2}\, d\rho 
+= \frac{K}{\rho^2}\rho^\Gamma d\rho 
+= K \rho^{\Gamma-2}\, d\rho,
+\]
+which integrates to
+\[
+u(\rho) = \frac{K}{\Gamma - 1}\,\rho^{\Gamma - 1} + \text{const}, \qquad (\Gamma \neq 1).
+\]
+Similarly, the specific enthalpy $h = u + \tfrac{p}{\rho}$ is
+\[
+h(\rho) = \frac{\Gamma}{\Gamma - 1} K \rho^{\Gamma - 1}.
+\]
+
+\begin{remark}
+It is important to emphasize that adopting $p = K \rho^{\Gamma}$ as a closure relation does not, by itself, imply anything about the microphysics. 
+\begin{itemize}
+    \item If $\Gamma = 1$, this does not mean the fluid is \emph{physically isothermal}; it only means that the $p$--$\rho$ relation coincides with that of an ideal gas at constant temperature. 
+    \item If $\Gamma = \gamma$, it does not prove the system is \emph{truly isentropic}; it only reproduces the form expected of an adiabatic ideal gas. 
+\end{itemize}
+In all cases, the polytropic EOS is best understood as a barotropic closure: $p = p(\rho)$. This assumption eliminates entropy as an independent thermodynamic variable, and so necessarily sacrifices information about the detailed microphysics of the fluid.
+\end{remark}
+
+\subsection{Summary}
+
+Before moving on, it is worth taking stock of what has been accomplished by the use of \textbf{barotropic equations of state}. We have identified two cases which are determined on the basis of the relevant time scales:
+\begin{enumerate}
+    \item $(t_{\rm cool} \gg t_{\rm dyn})$: We have efficient cooling which outweighs the influence of any dynamical effects. Therefore, we can treate the fluid as \textbf{isothermal}.
+    \item $(t_{\rm dyn} \ll t_{\rm cool})$: We have dynamical changes (pressure changes) which influence the fluid on time scales which are far too short for effective heat transfer. Therefore, we can use the \textbf{adiabatic approximation}.
+\end{enumerate}
+
+As such, we see that our two barotropic approximations are really two sides of a scale balancing cooling and dynamical effects. We can therefore address any problem in astrophysical fluid dynamics by first examining what processes are dominant: cooling or dynamics.
+
+\section{The Energy Equation}
+
+So far in this chapter of the notes, we've discussed only the details of \textbf{phenomenological equations of state}, where we can reduce the thermodynamic phase space to a single variable (generally $\rho$). What if we have a general equation of state, which (critically), does \textbf{not provide closure}? In this scenario, we need to be considerably more concrete about our treatment and instead introduce an entire equation describing the energy transport. In this section, we'll treat the details of this approach and introduce the last of our critical equations: the \textbf{Energy Equation}.
+
+\subsection{The Internal Energy}
+
+Consider a single fluid element in a fluid. It is subject to the first law of thermodynamics, which requires that the energy per unit mass behave as
+\[
+d\epsilon = dq + \frac{P}{\rho^2} d\rho,
+\]
+where $dq$ is the \textbf{heating per unit mass}, and the second term is the work done by the system. Because we are working in the \textbf{Lagrangian Frame}, we may describe the change of $\epsilon$ with time as
+\begin{equation}
+\label{eq:lagrangian_internal_energy}
+    \boxed{
+    \frac{D\epsilon}{Dt} = \frac{P}{\rho^2} \frac{D\rho}{Dt} -\dot{q}_{\rm cool},
+    }
+\end{equation}
+where now $\dot{q}_{\rm cool}$ is the rate at which energy \textbf{leaves the fluid} due to cooling. This is effectively the \textbf{first law of thermodynamics} as applied to a single fluid element.
+
+\subsection{Total Energy}
+
+Consider the \textbf{total energy density}
+\[
+\mathcal{E} = \rho\left(\frac{1}{2} u^2 + \Phi + \epsilon\right).
+\]
+The resulting time derivative is going to be
+\[
+\frac{D\mathcal{E}}{Dt} = \frac{D}{Dt}\left(\rho\left[\frac{1}{2}u^2 + \Phi + \epsilon\right]\right).
+\]
+Applying the product rule yields
+\[
+\frac{D\mathcal{E}}{Dt} = \frac{\mathcal{E}}{\rho} \frac{D\rho}{Dt} + \rho \left({\bf u} \cdot \frac{D{\bf u}}{Dt} + \frac{D\Phi}{Dt} + \frac{D\epsilon}{Dt}\right).
+\]
+Now, we can exploit several instances of known quantities in order to manipulate this to our designs. Most usefully, we will use the \textbf{continuity equation} and the \textbf{Euler equation} to get rid of some extraneous variables:
+\[
+\frac{D\mathcal{E}}{Dt} = \frac{\mathcal{E}}{\rho} \underbrace{\frac{D\rho}{Dt}}_{\text{continuity}} + \rho \left({\bf u} \cdot \underbrace{\frac{D{\bf u}}{Dt}}_{\text{Euler}} + \frac{D\Phi}{Dt} + \frac{D\epsilon}{Dt}\right).
+\]
+From this, we see that
+\[
+\frac{D\mathcal{E}}{Dt} = - \mathcal{E}\; \nabla \cdot {\bf u} + \rho\left({\bf u} \cdot \left[- \frac{\nabla P}{\rho} - \nabla \Phi\right] + \frac{D\Phi}{Dt} + \frac{D\epsilon}{Dt}\right)
+\]
+
+Substituting for the Euler equation, the continuity equation, and expanding the gravitational derivative, we obtain
+\begin{align}
+\frac{D\mathcal{E}}{Dt} 
+&= - \mathcal{E}\,\nabla\cdot{\bf u} 
+- {\bf u}\cdot\nabla P 
+- \rho\,{\bf u}\cdot\nabla \Phi 
++ \rho \left(\frac{\partial \Phi}{\partial t} + {\bf u}\cdot\nabla \Phi \right) 
++ \rho \frac{D\epsilon}{Dt} \\
+&= - \mathcal{E}\,\nabla\cdot{\bf u} - {\bf u}\cdot\nabla P 
++ \rho \frac{\partial \Phi}{\partial t} + \rho \frac{D\epsilon}{Dt}.
+\end{align}
+
+Now, invoking the first law of thermodynamics in the Lagrangian frame [Eq.~\eqref{eq:lagrangian_internal_energy}],
+\[
+\rho \frac{D\epsilon}{Dt} = \frac{P}{\rho} \frac{D\rho}{Dt} - \rho \dot{q}_{\rm cool} 
+= - P \nabla \cdot {\bf u} - \rho \dot{q}_{\rm cool},
+\]
+where we used the continuity equation in the final step.
+
+Thus the total energy equation becomes
+\begin{equation}
+\frac{D\mathcal{E}}{Dt} 
+= - \mathcal{E}\,\nabla\cdot{\bf u} 
+- {\bf u}\cdot\nabla P 
+- P \nabla\cdot{\bf u} 
++ \rho \frac{\partial \Phi}{\partial t} 
+- \rho \dot{q}_{\rm cool}.
+\end{equation}
+
+Notice that the two pressure terms can be combined:
+\[
+-{\bf u}\cdot\nabla P - P \nabla\cdot{\bf u} = - \nabla\cdot(P {\bf u}),
+\]
+so the Lagrangian form simplifies to
+\begin{equation}
+\label{eq:lagrangian_energy}
+\boxed{
+\frac{D\mathcal{E}}{Dt} + \mathcal{E}\,\nabla\cdot{\bf u} 
++ \nabla\cdot(P{\bf u})
+= \rho \frac{\partial \Phi}{\partial t} - \rho \dot{q}_{\rm cool}.}
+\end{equation}
+
+\subsection{Eulerian Conservation Form}
+
+By converting the Lagrangian energy equation into Eulerian form, we obtain
+\begin{equation}
+\label{eq:eulerian_energy}
+\boxed{
+\frac{\partial \mathcal{E}}{\partial t} 
++ \nabla \cdot \left[ \left(\mathcal{E} + P\right) {\bf u} \right] 
+= \rho \frac{\partial \Phi}{\partial t} - \rho \dot{q}_{\rm cool}.
+}
+\end{equation}
+This is the Eulerian conservation-law form of the total energy equation,
+with flux
+\[
+{\bf F}_{\mathcal{E}} = \left(\mathcal{E}+P\right){\bf u}
+= \rho\left(\tfrac{1}{2}u^2 + \Phi + h\right){\bf u},
+\]
+where $h = \epsilon + P/\rho$ is the specific enthalpy. 
+
+\medskip
+
+In the absence of time-dependent gravitational fields and cooling, the
+conservation law reduces to
+\[
+\frac{\partial \mathcal{E}}{\partial t} 
++ \nabla \cdot \left[\rho\left(\tfrac{1}{2}u^2 + \Phi + h\right){\bf u}\right] = 0,
+\]
+which shows that the quantity
+\[
+B = \tfrac{1}{2}u^2 + \Phi + h
+\]
+acts as an \textbf{energy potential}. This is exactly the
+\textbf{Bernoulli function}, familiar from Bernoulli’s theorem. 
+
+\begin{remark}
+One can therefore view the Eulerian energy equation as nothing more than
+the local conservation of Bernoulli’s function: energy is transported in
+the flow via the flux of $B$. This provides a useful mnemonic: the entire
+equation can be remembered as a generalization of Bernoulli’s theorem to
+time-dependent, compressible flows with sources and sinks.
+\end{remark}
+
+
+
+
+
+\section{Energy Transport}
+
+We have now achieved the primary goal of this section: \textbf{deriving all 3 fundamental equations} of fluid dynamics.
+
+\begin{tcolorbox}[colback=blue!3!white, colframe=blue!50!black, title={Summary of Ideal Fluid Equations}]
+\textbf{1. Continuity Equation (Mass Conservation)}  
+\begin{align*}
+\text{Lagrangian:} \quad & \frac{D\rho}{Dt} = -\rho \nabla \cdot {\bf u} \\
+\text{Eulerian:} \quad & \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho {\bf u}) = 0
+\end{align*}
+
+\vspace{0.5em}
+\textbf{2. Momentum Equation (Euler's Equation)}  
+\begin{align*}
+\text{Lagrangian:} \quad & \rho \frac{D{\bf u}}{Dt} = -\nabla p + \rho {\bf f}_{\rm ext} \\
+\text{Eulerian:} \quad & \frac{\partial {\bf u}}{\partial t} + ({\bf u} \cdot \nabla) {\bf u} = -\frac{1}{\rho} \nabla p + {\bf f}_{\rm ext}
+\end{align*}
+
+\vspace{0.5em}
+\textbf{3. Energy Equation (Total Energy Conservation)}  
+\begin{align*}
+\text{Lagrangian:} \quad & \frac{D\mathcal{E}}{Dt} + \mathcal{E}\,\nabla\cdot{\bf u} 
++ \nabla\cdot(P{\bf u})
+= \rho \frac{\partial \Phi}{\partial t} - \rho \dot{q}_{\rm cool} \\
+\text{Eulerian:} \quad & \frac{\partial E}{\partial t} + \nabla \cdot \left[(E + p) {\bf u} \right] = \rho \frac{\partial \phi}{\partial t} - \rho \dot{q}_{\rm cool}
+\end{align*}
+\end{tcolorbox}
+
+We are still left with a serious quandry: \textbf{what is $\dot{q}_{\rm cool}$?} That is the question that we will address in this section.
+
+\subsection{Cosmic Ray Heating}
+
+Cosmic rays are \textbf{ultra-relativistic} particles (primarily protons and heavier nuclei) produced in high-energy astrophysical processes such as supernova shocks or active galactic nuclei. They propagate throughout the interstellar medium (ISM), often with energies far exceeding \( 1\, \mathrm{MeV} \), and can penetrate deep into shielded regions such as molecular clouds where UV photons cannot reach.
+
+When a cosmic ray collides with a \textbf{neutral hydrogen atom}, it can ionize the atom, producing a free electron with substantial kinetic energy. This high-energy \textbf{secondary electron} subsequently interacts with the surrounding medium and deposits energy through several possible channels:
+
+\begin{itemize}
+    \item \textbf{Secondary Ionization}: The energetic electron may ionize additional atoms or molecules (especially in mostly neutral environments).
+    \item \textbf{Excitation}: It may excite atoms or molecules, which subsequently de-excite and emit photons (often lost from the system).
+    \item \textbf{Elastic (Coulomb) Collisions}: It may scatter off ambient electrons and ions, transferring energy to thermal motion—this constitutes \textbf{heating}.
+    \item \textbf{Bremsstrahlung Radiation}: Emission from electron deceleration, typically a subdominant cooling channel in cold gas.
+\end{itemize}
+
+In practice, rather than track all these processes in detail, we parameterize the effect by assuming that each \textbf{primary ionization} event deposits a mean thermal energy \( \Delta E_{\rm heat} \) into the gas. The total \textbf{volumetric heating rate} is then given by:
+\[
+\Gamma_{\rm CR} = n_{\rm H} \, \zeta_{\rm CR} \, \Delta E_{\rm heat}
+\]
+where:
+\begin{itemize}
+    \item \( n_{\rm H} \): Number density of hydrogen atoms [cm\(^{-3}\)],
+    \item \( \zeta_{\rm CR} \): Cosmic ray ionization rate per H atom [s\(^{-1}\)],
+    \item \( \Delta E_{\rm heat} \): Mean thermal energy deposited per ionization [erg] (typically \( \sim 10\text{–}20 \, \mathrm{eV} \)).
+\end{itemize}
+
+This expression captures the essential thermal impact of cosmic rays in dense or UV-shielded astrophysical environments, where they often dominate over radiative heating sources.
+
+\begin{ideabox}
+    Note that these scale with the density \textbf{linearly}, so they are generally sub-dominant processes in most scenarios.
+\end{ideabox}
+
+\subsection{Thermal Conduction}
+
+Thermal conduction is the process by which heat energy is transferred through a medium due to random microscopic motion of particles — primarily electrons in ionized gas and atoms or molecules in neutral gas. It is \textbf{fundamentally driven by temperature gradients}: heat flows from hot regions to cold ones, acting to equilibrate temperature differences.
+\vspace{0.5cm}
+\begin{proposition}[Fourier's Law of Conduction]
+To formalize this flux due to temperature gradients, we introduce \textbf{Fourier's Law of Conduction}: 
+
+The conductive heat flux \( \mathbf{F}_{\rm cond} \) (energy per unit area per unit time) is proportional to the negative gradient of temperature:
+\[
+\mathbf{F}_{\rm cond} = -\kappa \nabla T.
+\]
+Here, \( \kappa \) has units of erg cm\(^{-1}\) s\(^{-1}\) K\(^{-1} \), and the negative sign reflects the fact that heat flows from higher to lower temperature.
+\end{proposition}
+\vspace{0.5cm}
+We may use this to derive a \textbf{diffusion equation} for the transfer of heat. Consider a fluid element in a volume $V$ with density $\rho$ and temperature $T$. Now, the \textbf{total heat flux} due to conduction into the volume element is
+\[
+\delta E = \int_{\partial V} -\kappa \nabla T \cdot d{\bf S} = -\kappa \int_V \nabla^2T dV
+\]
+by \textbf{divergence theorem}. Now, that energy will increase the temperature by a factor determined by the \textbf{specific heat at constant volume} $c_v$. Thus, $\rho c_v \delta T =  \delta E$. Thus,
+\begin{equation}
+    \label{eq:heat_equation}
+    \boxed{
+    \frac{\partial T}{\partial t} = \frac{\kappa}{\rho c_v} \nabla^2 T = \chi \nabla^2 T,
+    }
+\end{equation}
+where $\chi$ is the \textbf{thermal diffusivity}. 
+
+\subsubsection{Relevance in Astrophysics}
+
+In any system, thermal conduction is bound to play a role; however, the impact created will vary significantly. Note that $\chi$ has units $\left[\chi\right] = \left[L\right]^2 \left[T\right]^{-1}$, which means that the \textbf{conduction timescale} for a system with a particular \textbf{length scale} $L$ is
+\[
+t_{\rm cond} = \frac{L^2}{\chi} = \frac{\rho c_v}{\kappa} L^2.
+\]
+\begin{remark}
+    Note that $t_{\rm cond} \sim \rho$ , which means that \textbf{denser fluids are LESS efficient conductors}. This is a counterintuitive statement; clearly we think that interactions occur more frequently in denser environments. The resolution is that, while \textbf{interactions are more frequent}, there is more mass to heat and scattering prevents the conduction from occurring over large spatial scales. This is why conduction is so important in the intracluster medium of galaxy clusters which are extremely diffuse.
+\end{remark}
+
+\subsubsection{Magnetic Influence}
+One of the critical elements of the above derivation is that the \textbf{thermal diffusivity} is \textbf{isotropic} (always the same in all directions). For charged ions in \textbf{magnetic fields}, this assumption breaks down and has a dramatic influence on conduction. Because the magnetic field lines dictate the direction of the particle stream, conduction perpendicular to the field lines will be significantly reduced while it will be enhanced in the direction of the field lines.
+
+\subsection{Convection}
+Convection occurs as a fluid instability, which cases marginally hotter fluid elements to rise relative to cooler ones and relatively cooler ones to sink under specific circumstances. This can create thermal transfer on scales larger than the conduction scale.
+
+\subsection{Free-Free Emission (Bremsstrahlung)}
+
+\textbf{Free-free emission}, or \textbf{thermal bremsstrahlung}, arises when free electrons are decelerated or deflected in the Coulomb fields of ions. This acceleration leads to the emission of radiation, even though the electron remains unbound before and after the interaction. The process is especially important in ionized plasmas where temperatures are high and densities moderate to large.
+
+The approximate volumetric emissivity (energy loss per unit volume per unit time) is:
+\[
+\Lambda_{\rm ff} \approx 1.42 \times 10^{-40} \, Z^2 \, T^{1/2} \, g_{\rm ff}(T) \, n_e \, n_p \;\; \text{[erg cm}^{-3}\text{ s}^{-1}\text{]},
+\]
+where:
+\begin{itemize}
+    \item \( Z \): Charge number of the ion (typically \( Z = 1 \) for hydrogen),
+    \item \( T \): Temperature of the gas [K],
+    \item \( n_e \): Electron number density [cm\(^{-3}\)],
+    \item \( n_p \): Proton (or ion) number density [cm\(^{-3}\)],
+    \item \( g_{\rm ff}(T) \): Gaunt factor (dimensionless correction factor, weakly dependent on temperature, usually \( \sim 1 \text{–} 1.5 \)).
+\end{itemize}
+
+\textbf{Key Properties:}
+\begin{itemize}
+    \item Emissivity increases with \( T^{1/2} \), and especially with \( n_e n_p \sim \rho^2 \), so it is significant in hot, dense plasmas.
+    \item Dominant in X-ray emission from the intracluster medium, stellar coronae, and hot winds.
+    \item Spectral shape is broadband and roughly flat until the exponential drop at high frequencies due to the Maxwell-Boltzmann tail.
+\end{itemize}
+
+
+\subsection{Recombination Emission (Free-Bound Radiation)}
+
+\textbf{Recombination radiation} occurs when a free electron is captured by a positive ion, transitioning to a bound state. The excess energy (kinetic + potential) is radiated away as a photon. The process dominates in regions of partial ionization (e.g., H\textsc{ii} regions, nebulae).
+
+The volumetric energy loss rate is given by:
+\[
+\Lambda_{\rm fb} \approx n_e \, n_p \, kT \, \beta(H^0, T) \;\; \text{[erg cm}^{-3}\text{ s}^{-1}\text{]},
+\]
+where:
+\begin{itemize}
+    \item \( \beta(H^0, T) \): A temperature-dependent recombination coefficient for hydrogen [cm\(^3\) s\(^{-1}\)], representing the rate at which energy is released per recombination,
+    \item Other symbols as previously defined.
+\end{itemize}
+
+\textbf{Notes:}
+\begin{itemize}
+    \item The recombination coefficient \( \beta \) is related to the case-A or case-B recombination rate \( \alpha(T) \), which depends on whether ionizing photons are reabsorbed or escape.
+    \item This emission often appears in emission lines (e.g., Balmer series) and contributes to the continuum at UV/optical wavelengths.
+\end{itemize}
+
+\subsection{Collisional Excitation}
+
+\textbf{Collisional excitation} refers to the process where electrons collide with atoms or ions and excite their electrons to higher energy levels. The atom subsequently decays back to a lower energy state, emitting a photon. This is an important cooling process in ionized or partially ionized gases, particularly at lower temperatures (\( T \sim 10^4 \, \text{K} \)).
+
+The approximate energy loss rate per unit volume is:
+\[
+\Lambda_{\rm cx} \approx n_{\rm ion} \, n_e \, \chi \, \frac{8.6 \times 10^{-12}}{\sqrt{T}} \, \omega \, e^{-\chi/kT} \;\; \text{[erg cm}^{-3}\text{ s}^{-1}\text{]},
+\]
+where:
+\begin{itemize}
+    \item \( n_{\rm ion} \): Number density of the relevant ion or atom,
+    \item \( \chi \): Excitation energy of the transition [erg or eV],
+    \item \( \omega \): A dimensionless factor depending on the collisional cross section (often includes line multiplicity, quantum corrections, etc.),
+    \item \( e^{-\chi/kT} \): Boltzmann factor capturing the energy threshold for excitation.
+\end{itemize}
+
+\textbf{Important Points:}
+\begin{itemize}
+    \item Strong temperature sensitivity due to the exponential Boltzmann suppression at low \( T \).
+    \item Dominates in warm, partially ionized regions (e.g., H\textsc{ii} regions, planetary nebulae).
+    \item Leads to strong line cooling (e.g., [O\textsc{iii}], [N\textsc{ii}], [C\textsc{ii}] lines).
+\end{itemize}
+
+\subsection{The form of $\dot{Q}_{\rm cool}$}
+For many of the mechanisms described above, $\Lambda \sim \rho^2$, which means that the cooling per unit mass is $\dot{Q}_{\rm cool} \sim \rho$. In other cases, we have seen that $\dot{Q}_{\rm cool} \sim C$. In order to incorporate most of these mechanisms heuristically, we let
+\[
+\dot{Q}_{\rm cool} = A\rho T^\alpha - H.
+\]

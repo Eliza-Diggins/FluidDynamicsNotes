@@ -1,0 +1,541 @@
+In this section, we'll discuss the propogation of waves in fluids. In many ways, this is reminiscent of the excercise as it is typically introduced in thermodynamics; however, we will instead formally derive the relevant wave equations and show how the behaviors differ in different scenarios.
+
+This section will primarily utilize \textbf{first-order perturbation theory} to explore what happens when we pertub a fluid dynamic system from equilibrium.
+
+\section{Perturbations to a Fluid}
+
+In general, perturbations are conceptually straightforward: we introduce a small change \( \delta \psi \) to a physical field and study its consequences. However, in fluid dynamics, the presence of two fundamentally distinct viewpoints --- the \textbf{Eulerian} and the \textbf{Lagrangian} descriptions --- provides us with two equally good frameworks for working with perturbations. Once needs to be \textbf{quite careful} to utilize the correct ones in the correct scenarios.
+
+Recall from definitions~\ref{def:Eulerian} and~\ref{def:Lagrangian} that a physical quantity \( \psi \) (e.g., density, pressure, velocity) may be expressed as either
+\[
+\begin{aligned}
+    \textbf{Eulerian:} \quad & \psi_{\rm Euler}(\mathbf{x}, t) := \psi_{\rm Lagrangian}(\boldsymbol{\varphi}^{-1}({\bf x},t),t), \\
+    \textbf{Lagrangian:} \quad & \psi_{\rm Lagrangian}(\mathbf{X}, t) := \psi_{\rm Euler}(\boldsymbol{\varphi}(\mathbf{X}, t), t),
+\end{aligned}
+\]
+where \( \mathbf{X} \in \mathcal{C}_0 \) is the material label of a fluid particle (i.e., its position in the reference configuration), and \( \boldsymbol{\varphi} \) is the \textbf{flow map} that gives the current position \( \mathbf{x} \in \mathcal{C}_t \) of that particle at time \( t \).
+
+If we now attempt to insert a perturbation to $\psi$, we are faced with a question: \textbf{in which framework am I describing the perturbation?} We could introduce some $\Delta \psi({\bf X},t)$ or, equally validly, $\delta \psi({\bf x},t)$. In the end, these are both valid ways to express the perturbation, but they lend themselves to different applications / scenarios. 
+
+We now define both perturbations rigorously:
+
+\begin{definition}[Eulerian Perturbation]
+Let \( \psi(\mathbf{x}, t) \) be a field in the Eulerian description. The \textbf{Eulerian perturbation} \( \delta \psi(\mathbf{x}, t) \) is defined as:
+\[
+\delta \psi(\mathbf{x}, t) := \psi(\mathbf{x}, t) - \psi_0(\mathbf{x}),
+\]
+where \( \psi_0(\mathbf{x}) \) is the equilibrium value of the field at the same spatial point \( \mathbf{x} \in \mathcal{C}_t \). This measures the change in the field at a fixed location in space as the fluid flows through it.
+\end{definition}
+
+\begin{definition}[Lagrangian Perturbation]
+Let \( \Psi(\mathbf{X}, t) := \psi(\boldsymbol{\varphi}(\mathbf{X}, t), t) \) be the pullback of the Eulerian field to the reference configuration \( \mathcal{C}_0 \). Then the \textbf{Lagrangian perturbation} \( \Delta \psi(\mathbf{X}, t) \) is defined as:
+\[
+\Delta \psi(\mathbf{X}, t) := \Psi(\mathbf{X}, t) - \Psi_0(\mathbf{X}),
+\]
+where \( \Psi_0(\mathbf{X}) := \psi(\boldsymbol{\varphi}(\mathbf{X}, 0), 0) \) is the initial (equilibrium) value of the field associated with the fluid element labeled by \( \mathbf{X} \). This measures the change in the field \textbf{experienced by a given fluid parcel}.
+\end{definition}
+\vspace{0.5cm}
+Let us derive the connection between Eulerian and Lagrangian perturbations using the \textbf{flow map} \( \boldsymbol{\varphi}(\mathbf{X}, t) \) and the associated \textbf{displacement field}.
+
+Suppose a fluid element initially at \( \mathbf{X} \in \mathcal{C}_0 \) is displaced by a small vector \( \boldsymbol{\xi}(\mathbf{X}, t) \) at time \( t \), so that:
+\[
+\boldsymbol{\varphi}(\mathbf{X}, t) = \mathbf{X} + \boldsymbol{\xi}(\mathbf{X}, t).
+\]
+Now observe that:
+\[
+\Delta \psi(\mathbf{X}, t) = \psi(\boldsymbol{\varphi}(\mathbf{X}, t), t) - \psi_0(\mathbf{X}) = \psi(\mathbf{X} + \boldsymbol{\xi}(\mathbf{X}, t), t) - \psi_0(\mathbf{X}).
+\]
+We expand the field \( \psi \) in a Taylor series about the point \( \mathbf{X} \), assuming \( \boldsymbol{\xi} \) is small:
+\[
+\psi(\mathbf{X} + \boldsymbol{\xi}, t) = \psi(\mathbf{X}, t) + \boldsymbol{\xi} \cdot \nabla \psi(\mathbf{X}, t) + \mathcal{O}(\boldsymbol{\xi}^2).
+\]
+
+Substituting into the expression for \( \Delta \psi \), we get:
+\[
+\Delta \psi(\mathbf{X}, t) = \psi(\mathbf{X}, t) - \psi_0(\mathbf{X}) + \boldsymbol{\xi} \cdot \nabla \psi(\mathbf{X}, t) + \mathcal{O}(\boldsymbol{\xi}^2).
+\]
+
+Now note that:
+\[
+\delta \psi(\mathbf{X}, t) = \psi(\mathbf{X}, t) - \psi_0(\mathbf{X}),
+\]
+which leads to:
+\[
+\Delta \psi(\mathbf{X}, t) = \delta \psi(\mathbf{X}, t) + \boldsymbol{\xi} \cdot \nabla \psi(\mathbf{X}, t) + \mathcal{O}(\boldsymbol{\xi}^2).
+\]
+
+However, recall that in the definition of \( \delta \psi \), the field is evaluated at the fixed Eulerian location \( \mathbf{x} \), while in \( \Delta \psi \), the same material point is used — thus the full relationship is written more naturally as:
+\[
+\Delta \psi(\mathbf{X}, t) = \delta \psi(\mathbf{x}, t) + \boldsymbol{\xi} \cdot \nabla \psi_0(\mathbf{x}) + \mathcal{O}(\boldsymbol{\xi}^2),
+\]
+where \( \mathbf{x} = \boldsymbol{\varphi}(\mathbf{X}, t) \) is the current position of the fluid particle.
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Key Identity]
+\begin{equation}
+\label{eq:perturbation_conversion}
+    \boxed{
+\Delta \psi = \delta \psi + \boldsymbol{\xi} \cdot \nabla \psi_0 + \mathcal{O}(\boldsymbol{\xi}^2)
+}
+\end{equation}
+
+This relation expresses how the Lagrangian and Eulerian perturbations differ by an advection term associated with the background gradient of the field and the fluid displacement.
+\end{tcolorbox}
+
+\begin{remark}
+This highlights a tricky detail: \textbf{which one of these should I use?} In truth, this is largely a question of mathematical ease and physical interpretation. Understanding $\Delta \psi({\bf X},t)$ will tell you how an \textbf{individual fluid particle} experiences a perturbation, but it won't tell you about more global aspects of the fluid. Likewise, $\delta \psi({\bf x},t)$ can tell you about the global propogation of perturbations, but not the per-particle / per-parcel details.
+\end{remark}
+
+\subsection{Subtleties of Perturbation}
+
+We have introduced both $\Delta$ and $\delta$ now; however, there is a slight of hand which can be quite tricky to understand. Consider a field $\psi$ subject to a flow field $\boldsymbol{\varphi}$ and perturbation $\Delta \psi$. Now, because the flow is \textbf{smooth / reversible}, we have $\boldsymbol{\varphi}^{-1}$ at our disposal. As such, we could write
+\[
+\Delta \psi({\bf X},t) = \Delta \psi(\boldsymbol{\varphi}^{-1}({\bf x}), t),
+\]
+which allows us to cast the \textbf{Lagrangian perturbation} in terms of the Eulerian variables. This is \textbf{critically} \textbf{NOT} the same thing as the Eulerian perturbation:
+
+This is because the two perturbations compare $\psi$ to \emph{different} reference values.
+
+\paragraph{Eulerian interpretation.} 
+The Eulerian perturbation measures the change at a fixed spatial point:
+\[
+\delta \psi(\mathbf{x},t) 
+= \psi(\mathbf{x},t) - \psi_0(\mathbf{x}),
+\]
+where $\psi_0(\mathbf{x})$ is the equilibrium value at the \emph{same spatial coordinate} $\mathbf{x}$. An Eulerian observer imagines standing still at $\mathbf{x}$ while the fluid moves past, recording the deviation from the equilibrium field at that location.
+
+\paragraph{Lagrangian interpretation.} 
+The Lagrangian perturbation measures the change experienced by a specific fluid element:
+\[
+\Delta \psi(\mathbf{x},t) 
+:= \psi(\mathbf{x},t) - \psi_0(\mathbf{X}(\mathbf{x},t)),
+\]
+where $\mathbf{X}(\mathbf{x},t) = \boldsymbol{\varphi}^{-1}(\mathbf{x},t)$ is the \emph{initial position} of the parcel now at $\mathbf{x}$. This compares the current field value carried by the parcel to what \emph{that same parcel} had in equilibrium, which in general is the equilibrium value at a \emph{different} spatial location.
+
+\paragraph{Connection between the two.}
+If the displacement of a parcel from its original position is 
+\[
+\boldsymbol{\xi}(\mathbf{x},t) = \mathbf{x} - \mathbf{X}(\mathbf{x},t),
+\]
+then for small $\boldsymbol{\xi}$ we can expand
+\[
+\psi_0(\mathbf{X}) 
+= \psi_0(\mathbf{x} - \boldsymbol{\xi}) 
+\approx \psi_0(\mathbf{x}) - \boldsymbol{\xi} \cdot \nabla \psi_0(\mathbf{x}).
+\]
+Substituting into the definition of $\Delta\psi$ yields the exact first-order relationship
+\begin{equation}
+\label{eq:lag_eul_relation}
+\Delta \psi(\mathbf{x},t) 
+= \delta \psi(\mathbf{x},t) 
++ \boldsymbol{\xi}(\mathbf{x},t) \cdot \nabla \psi_0(\mathbf{x}) 
++ \mathcal{O}(\boldsymbol{\xi}^2).
+\end{equation}
+The second term is the \emph{advection correction}---it accounts for the fact that a moving parcel may enter a region where the equilibrium field already differs from its original value. 
+
+\section{The General Approach}
+
+Fluids possess two key physical properties: they can \emph{transmit momentum} through internal stresses, and they can \emph{oscillate about an equilibrium configuration} when displaced. These features make them natural hosts for a wide variety of wave phenomena. In fluid dynamics, the systematic study of such phenomena is most effectively carried out using \textbf{first-order perturbation theory}, in which small deviations from an established equilibrium state are introduced and their subsequent evolution is analyzed.
+
+\subsection*{The Equilibrium Configuration}
+
+The first step in any perturbative analysis is to specify the equilibrium state of the system. In the present context, this corresponds to a hydrostatic configuration in which the velocity field vanishes, ${\bf u} = 0$, and the pressure and density take prescribed background forms, $p = p_0({\bf x})$ and $\rho = \rho_0({\bf x})$. All subsequent perturbations will be defined relative to this reference state.
+
+\begin{remark}
+    As we will see, the spatial structure of the equilibrium configuration can strongly influence both the types of waves that can exist and the manner in which they propagate through the medium.
+\end{remark}
+
+\subsection*{The Perturbation}
+
+As we have described above, there are multiple choices of perturbation to introduce: either Lagrangian or Eulerian. Recall the remark in the previous section:
+
+\begin{center}
+\textit{    ... an Eulerian perturbation requires an explicit specification of how the perturbation evolves at fixed spatial positions — it is an externally imposed modification of the field's dynamics. [For Lagrangian perturbations,] the perturbation is thus "built into" the motion of the fluid parcels from the start, and the resulting changes in fields are tracked along these evolving trajectories. No additional perturbation field is imposed afterward; instead, the evolution emerges from the displaced initial state.}
+\end{center}
+
+As such, our analysis will generally proceed by introducing a \textbf{Lagrangian perturbation} $(\Delta {\bf u}, \Delta p,\Delta \rho)$ to the system. As such, we have
+\[
+\begin{aligned}
+    \rho({\bf X},t) &= \rho_0({\bf X}) + \Delta \rho({\bf X},t)\\
+    p({\bf X},t) &= p({\bf X}) + \Delta p({\bf X},t)\\
+    {\bf u}({\bf X},t) &= \Delta {\bf u}({\bf X},t).
+\end{aligned}
+\]
+
+In addition, it is convenient to introduce the \textbf{Lagrangian displacement vector} $\boldsymbol{\xi}$, which records the cumulative shift of a fluid parcel from its equilibrium position:
+\[
+\mathbf{x} = \varphi(\mathbf{X}, t) = \mathbf{X} + \boldsymbol{\xi}(\mathbf{X}, t).
+\]
+Whereas $\Delta\mathbf{u}$ describes the \emph{instantaneous} velocity perturbation, $\boldsymbol{\xi}$ encodes the \emph{history} of that motion and allows us to express many conservation laws and restoring forces in a compact form. The perturbed velocity is related to the displacement by
+\[
+\Delta \mathbf{u} = \frac{D\boldsymbol{\xi}}{Dt}.
+\]
+In the linear approximation, all products of perturbations are neglected; in particular, the nonlinear advection term $(\mathbf{u} \cdot \nabla)\boldsymbol{\xi}$ is $\mathcal{O}(\Delta^2)$ and is dropped, leaving
+\[
+\Delta \mathbf{u} \approx \partial_t \boldsymbol{\xi}.
+\]
+\rmk{This replacement is valid only to first order in perturbations and is a standard simplification in linear wave theory.}
+
+\subsection*{Linearize the Equations}
+
+Having now introduced our perturbation, we can being doing the actual mathematics of the problem. There are two routes on can take here, and each has its benefits and weaknesses. We will discuss each in this section and continue to present both of the two parallel paths on the following sections.
+
+\subsubsection*{Lagrangian Approach}
+
+In the \textbf{Lagrangian} approach, we proceed by simply inserting the perturbations of the fields and then linearlizing the equation to derive the relevant wave relation. Thus, we begin with the Euler Equations:
+
+\[
+\begin{aligned}
+    \frac{D\rho}{Dt} + \rho \nabla \cdot {\bf u} &= 0\\
+    \rho \frac{D {\bf u}}{Dt} &= - \nabla p + \rho{\bf f}_{\rm ext}.
+\end{aligned}
+\]
+We will focus our attention first on the \textbf{continuity equation}. Inserting our perturbation,
+\[
+\frac{D(\rho_0 + \Delta \rho)}{Dt} + (\rho_0 + \Delta \rho) \nabla \cdot \partial_t \boldsymbol{\xi} = 0 \underbrace{\implies}_{\text{1st Order}} \frac{D\Delta \rho}{Dt} + \rho_0 \nabla \cdot \partial_t \boldsymbol{\xi} = 0.
+\]
+For the \textbf{Euler Equation}, we have
+\[
+(\rho_0 + \Delta \rho) \frac{D^2 \boldsymbol{\xi}}{Dt^2} = - \nabla (p_0 +\Delta p) + (\rho_0 + \Delta \rho){\bf f}_{\rm ext} \implies \rho_0 \frac{D^2\boldsymbol{\xi}}{Dt^2} = - \nabla \Delta p + \Delta \rho {\bf f}_{\rm ext}.
+\]
+\rmk{Here we have taken advantage of the assumption of HSE for $p_0, \rho_0$ which allows us to elminiate some terms. Additionally, we can drop the $D \to \partial$ since the advective term is second order.} Even in this generic form, the problem begins to resemble a wave equation. If we take the divergence of the linearlized Euler equation, we find
+\[
+\nabla \cdot \left(\rho_0 \frac{\partial^2 \boldsymbol{\xi}}{\partial t^2}\right) = \rho_0 \nabla\cdot\left(\frac{\partial ^2\boldsymbol{\xi}}{\partial t^2}\right) + \frac{\partial^2\boldsymbol{\xi}}{\partial t^2} \cdot \nabla \rho_0 = - \nabla^2 \Delta p + \nabla \cdot (\Delta \rho {\bf f}_{\rm ext}).
+\]
+Likewise, the \textbf{material derivative} of the linearlized continuity equation provides
+\[
+\frac{\partial ^2 \Delta \rho}{\partial t^2} + \rho_0 \nabla \cdot \frac{\partial ^2\boldsymbol{\xi}}{\partial t^2} = 0
+\]
+We may therefore combine these two equations to find that 
+\[
+\frac{\partial^2 \Delta \rho}{\partial t^2} - \nabla^2 \Delta p + \nabla \cdot (\Delta \rho {\bf f}_{\rm ext}) = \frac{\partial^2 \boldsymbol{\xi}}{\partial t^2} \cdot \nabla \rho_0.
+\]
+Let's now introduce a \textbf{barotropic equation of state}, such that $p = p(\rho)$. Then
+\[
+dp = \frac{\partial p}{\partial \rho} d\rho,
+\]
+and the equation becomes
+\[
+    \frac{\partial^2 \Delta \rho}{\partial t^2} - \nabla^2 \left(\frac{\partial p}{\partial \rho} \Delta \rho\right) = \frac{\partial^2 \boldsymbol{\xi}}{\partial t^2} \cdot \nabla \rho_0 -\nabla \cdot (\Delta \rho {\bf f}_{\rm ext}).
+\]
+We can, of course, simplify the notation by adding a spatially varying sound speed:
+\[
+c_s^2 = \partial_\rho p.
+\]
+
+Now, from the \textbf{Euler Equation}, we have
+\[
+\frac{D^2 \boldsymbol{\xi}}{Dt^2} = \frac{-\nabla \Delta p}{\rho_0}  + \frac{\Delta \rho}{\rho_0}{\bf f}_{\rm ext} = \partial^2_t \boldsymbol{\xi}.
+\]
+Thus, 
+
+\begin{equation}
+    \label{eq:lagrangian_wave_equation}
+    \boxed{
+    \underbrace{\frac{\partial^2 \Delta \rho}{\partial t^2} - \nabla^2 \left(c_s^2\Delta \rho\right)}_{\text{classical wave terms}} = \underbrace{- \frac{\nabla \rho_0}{\rho_0} \cdot  \left[\nabla \left(c_s^2 \Delta \rho\right) - \Delta \rho {\bf f}_{\rm ext} \right]}_{\text{Background Coupling}}- \underbrace{\nabla \cdot \left(\Delta \rho {\bf f}_{\rm ext}\right)}_{\text{Buoyancy}}
+    }
+\end{equation}
+\begin{remark}
+    There are a number of takeaways here that we should keep in mind:
+    
+    \begin{enumerate}
+        \item \textbf{General waves couple:} In a general context, barotropic waves can couple to the \textbf{background (HSE) solution field}, creating various interesting behaviors. Additionally, external forces which act on the fluid can introduce structure analogous to \textbf{bouyancy} in the equation.
+        \item \textbf{Different Modes Might Emerge}: In general, various different oscillatory modes can emerge and drive various interesting phenomena: this leads to many of the details in astroseismology.
+    \end{enumerate}
+
+There are also a number of assumptions here:
+
+\begin{enumerate}
+\item \textbf{A barotropic equation of state}: which we know is not always viable. In some scenarios, other equations of state are required and lead to other wave formulations.
+\item \textbf{Linearity (perturbation theory)}: We require that the initial perturbation is relatively small. If it is not, we will get much different behavior.
+\end{enumerate}
+\end{remark}
+
+In many astrophysical applications, the Lagrangian formulation is particularly valuable because it follows the motion of individual fluid elements. This makes it the natural framework for studying the \emph{internal structure} of oscillation modes, deriving self-adjoint eigenvalue problems, and applying variational principles. It also allows buoyancy, stratification, and free-surface effects to enter transparently, which is especially useful in stellar oscillation theory, planetary atmospheres, and other strongly stratified systems where the displacement field $\boldsymbol{\xi}$ itself is of primary physical interest.
+
+\subsubsection*{The Eulerian Approach}
+
+An alternative to the approach previously presented is to proceed in the \textbf{Eulerian Frame}. To do so, we must recast our perturbations (which were \textbf{Lagrangian}) into an Eulerian form. As we described in equation~\ref{eq:perturbation_conversion}, this can be done with
+\[
+\Delta \psi = \delta \psi + \boldsymbol{\xi} \cdot \nabla \psi_0 + \mathcal{O}(\boldsymbol{\xi}^2).
+\]
+The key here is that we still want to introduce the \textbf{lagrangian perturbation} (Eulerian perturbations are not useful in this context) but we want to then convert the whole picture to an \textbf{Eulerian} context. Let's consider an
+\textbf{Eulerian perturbation} $(\delta \rho, \delta p, \delta {\bf u})$. In the Eulerian frame, the equations take the form
+\[
+\begin{aligned}
+ \frac{\partial \delta \rho}{\partial t} + \nabla \cdot (\rho_0 \delta {\bf u}) &= 0.\\
+\rho_0 \partial_t \delta {\bf u} &= -\nabla \delta p + \delta \rho {\bf f}_{\rm ext}.
+\end{aligned}
+\]
+If we take a second time derivative of the \textbf{linearized continuity equation}, then
+\[
+\partial^2_t \delta \rho + \partial_t \left[\nabla \cdot (\rho_0 \delta {\bf u})\right] = 0
+\]
+Likewise, the divergence of the \textbf{linearized Euler equation}, yields
+\[
+\nabla \cdot (\rho_0 \partial_t \delta {\bf u}) =\nabla\cdot(\partial_t[\rho_0 \delta{\bf u}]) = -\nabla^2\delta p + \nabla \cdot (\delta \rho {\bf f}_{\rm ext})\]
+We can therefore combine these two equations in the form
+\[
+\partial^2_t \delta \rho - \nabla^2 \delta p = - \nabla \cdot (\delta \rho {\bf f}_{\rm ext}).
+\]
+Again, if we assume a barotropic equation of state, 
+\[
+\partial_t^2 \delta \rho - \nabla^2 (c_s^2 \delta \rho) = - \nabla \cdot (\delta \rho {\bf f}_{\rm ext}).
+\]
+
+\begin{remark}
+    So far, this looks relatively simple: we have the \textbf{classical wave form} and the \textbf{external force driving term}. So we don't see the stratification from the Lagrangian approach. This will change when we correct for the fact that we don't know $\delta$'s and instead started with $\Delta$'s.
+\end{remark}
+
+Now, we have yet to connect our Eulerian perturbations to the Lagrangian perturbations we began with. To do so, we rely on the conversion equation so that
+\[
+\begin{aligned}
+    \delta \rho &= \Delta \rho - \boldsymbol{\xi} \cdot \nabla \rho_0\\
+    \delta p &= \Delta p - \boldsymbol{\xi} \cdot \nabla p_0\\
+    \delta {\bf u} &= \Delta {\bf u}\\
+\end{aligned}
+\]
+If you proceed with this manipulation, you will recover precisely equation~\ref{eq:lagrangian_wave_equation}.
+
+\begin{remark}
+There is an important subtlety here: although $\Delta$ denotes a \textbf{Lagrangian perturbation}---formally a function of the material coordinates $\mathbf{X}$ and time $t$---we have chosen to \textbf{represent} it in terms of the Eulerian spatial coordinates $\mathbf{x}$ and time $t$ via the flow map $\mathbf{x} = \varphi(\mathbf{X}, t)$. This change of variables does not alter the physical meaning of $\Delta$; it is still defined as the change experienced by a specific fluid element. However, by re-expressing it in $(\mathbf{x}, t)$ we make it compatible with the standard Eulerian PDE framework, allowing us to treat $\Delta$ as if it were a conventional field in space and time while retaining its Lagrangian interpretation.
+\end{remark}
+
+\section{Wave in a Uniform Medium}
+
+The uniform medium is the simplest example available to us. Here, $\rho_0$, $p_0$ are each spatially constant and so any terms involving their
+spatial variation drop out. In this example, we also ignore any external forces, which means that the wave equation simplifies to the form
+\[
+\partial_t^2 \Delta \rho - c_s^2\nabla^2 \Delta \rho = 0.
+\]
+This is a \textbf{classical wave equation} which permits \textbf{plane wave solutions} of the form
+\[
+\Delta \rho(\textbf{x},t) = \exp\left(i\left[{\bf x}\cdot {\bf k} - \omega t\right]\right).
+\]
+Notice here that we are making use of the remark posed in the previous section by writing a Lagrangian perturbation in Eulerian form. If we plug this ansatz into the equation, we find
+\[
+-\omega^2 + c_s^2 |{\bf k}|^2 = 0.
+\]
+and so
+\[
+\frac{\omega^2}{|{\bf k}|^2} = c_s^2.
+\]
+Thus, we see that the wave speed is, in fact, $c_s$. Additionally, because
+\[
+\omega({\bf k}) = \pm c_s|{\bf k}|,
+\]
+the wave is \textbf{non-dispersive.} Because $p = p(\rho)$, if 
+\[
+\Delta \rho = \frac{\partial \rho}{\partial p} \Delta p = \frac{1}{c_s^2} \Delta p.
+\]
+As such, the pressure and the density perturbations evolve \textbf{in-phase}. The same can be shown for the \textbf{velocity perturbation}.
+
+\begin{tcolorbox}[colback=yellow!5!white, colframe=yellow!50!black, title=Takeaways]
+\begin{itemize}
+    \item In a \textbf{uniform medium} ($\nabla \rho_0 = \nabla p_0 = 0$), Eulerian and Lagrangian perturbations coincide to first order: $\Delta\psi = \delta\psi$.
+    \item The wave equation reduces to the classical form with dispersion relation $\omega^2 = c_s^2 |{\bf k}|^2$.
+    \item Waves are \textbf{non-dispersive} and propagate at the constant sound speed $c_s$ in both directions along ${\bf k}$.
+    \item Density and pressure perturbations are \textbf{in-phase}; the velocity perturbation is in quadrature with them for traveling waves.
+    \item In non-uniform media, background gradients introduce extra terms, potentially leading to dispersion, phase shifts, and differences between $\Delta$ and $\delta$.
+\end{itemize}
+\end{tcolorbox}
+
+\section{Waves in a Stratified Isothermal Atmosphere}
+
+\subsection*{Equilibrium Configuration}
+
+Consider an \textbf{isothermal atmosphere} with $p(\rho) = K\rho$ under a constant downward acceleration $\mathbf{g} = - g \, \hat{\mathbf{z}}$. Hydrostatic balance,
+\[
+0 = -\frac{\nabla p}{\rho} - g \, \hat{\mathbf{z}},
+\]
+together with $\nabla p = K \nabla \rho$, gives
+\[
+\partial_z \log \rho = -\frac{g}{K}
+\quad\Rightarrow\quad
+\rho_0(z) = \tilde{\rho} \, e^{-z/H},
+\]
+where the \textbf{scale height} is
+\[
+H \equiv \frac{K}{g} = \frac{c_s^2}{g}.
+\]
+
+\subsection*{Perturbative Analysis}
+
+We introduce a first-order \textbf{Lagrangian perturbation}
+\[
+\rho = \rho_0 + \Delta\rho, \quad
+p = p_0 + \Delta p, \quad
+\mathbf{u} = \Delta \mathbf{u}.
+\]
+In the Eulerian frame, the linearized 1D equations are
+\begin{align}
+\frac{\partial \delta \rho}{\partial t} + \frac{\partial}{\partial z} (\rho_0 \delta u) &= 0, \label{cont_eul}\\
+\rho_0 \frac{\partial \delta u}{\partial t} &= - \frac{\partial \delta p}{\partial z} - g \, \delta \rho. \label{mom_eul}
+\end{align}
+The Lagrangian and Eulerian perturbations are related by
+\[
+\Delta \psi = \delta\psi + \xi_z \, \partial_z \psi_0.
+\]
+For $\psi = \rho$ and $\partial_z \rho_0 = -\rho_0/H$, we have
+\[
+\delta \rho = \Delta\rho - \frac{\rho_0}{H} \, \xi_z.
+\]
+With $\Delta u = \partial_t \xi_z$ and barotropic $p = K \rho$ so that $\delta p = K\,\delta\rho$, the equations become:
+
+\paragraph{Continuity:} Substituting $\delta\rho$ into \eqref{cont_eul}:
+\[
+\partial_t\!\left[ \Delta\rho - \frac{\rho_0}{H} \xi_z \right]
++ \partial_z\!\left( \rho_0 \, \partial_t \xi_z \right) = 0.
+\]
+Using $\partial_z \rho_0 = -\rho_0/H$, the $\xi_z$ terms cancel exactly, leaving
+\begin{equation}
+\partial_t \Delta\rho + \rho_0 \, \partial_z \Delta u = 0.
+\label{cont_lag}
+\end{equation}
+
+\paragraph{Momentum:} From \eqref{mom_eul} and $\delta p = K \delta\rho$:
+\[
+\rho_0 \, \partial_t \Delta u = -K \, \partial_z\!\left[ \Delta\rho - \frac{\rho_0}{H} \xi_z \right]
+- g\!\left[ \Delta\rho - \frac{\rho_0}{H} \xi_z \right].
+\]
+Expanding $\partial_z(\rho_0 \xi_z/H) = -\rho_0 \xi_z/H^2 + (\rho_0/H)\,\partial_z \xi_z$ and using $H = K/g$, the $\xi_z$ terms proportional to $\rho_0 \xi_z/H^2$ cancel, leaving
+\begin{equation}
+\rho_0 \, \partial_t \Delta u = -K \, \partial_z \Delta\rho - g \, \Delta\rho - \frac{K}{H} \rho_0 \, \partial_z \xi_z.
+\label{mom_lag}
+\end{equation}
+
+\subsection*{Wave Equation Derivation}
+
+Take $\partial_z$ of \eqref{mom_lag}:
+\begin{equation}
+\rho_0 \, \partial_{tz}^2 \Delta u + (\partial_z\rho_0)\, \partial_t \Delta u
+= -K \, \partial_z^2 \Delta\rho - g \, \partial_z \Delta\rho - \frac{K}{H} \left[ (\partial_z\rho_0)\,\partial_z\xi_z + \rho_0\,\partial_z^2 \xi_z \right].
+\label{mom_z}
+\end{equation}
+From \eqref{cont_lag}:
+\begin{equation}
+\partial_t^2 \Delta\rho + \rho_0 \, \partial_{zt}^2 \Delta u + (\partial_z\rho_0)\, \partial_t \Delta u = 0.
+\label{cont_t}
+\end{equation}
+The bracketed terms in \eqref{cont_t} and \eqref{mom_z} match, so substituting \eqref{mom_z} into \eqref{cont_t} gives:
+\[
+\partial_t^2 \Delta\rho - K \, \partial_z^2 \Delta\rho - g \, \partial_z \Delta\rho - \frac{K}{H} \left[ (\partial_z\rho_0)\,\partial_z\xi_z + \rho_0\,\partial_z^2 \xi_z \right] = 0.
+\]
+
+\subsection*{Eliminating $\xi_z$}
+
+From \eqref{cont_lag} with $\Delta u = \partial_t \xi_z$:
+\[
+\partial_t \Delta\rho + \rho_0 \, \partial_z \partial_t \xi_z = 0
+\quad\Rightarrow\quad
+\Delta\rho + \rho_0 \, \partial_z \xi_z = 0
+\quad\Rightarrow\quad
+\partial_z \xi_z = - \frac{\Delta\rho}{\rho_0}.
+\]
+Differentiating once more:
+\[
+\partial_z^2 \xi_z = -\frac{\partial_z \Delta\rho}{\rho_0} + \frac{\Delta\rho}{\rho_0^2} \,\partial_z\rho_0
+= -\frac{\partial_z \Delta\rho}{\rho_0} - \frac{\Delta\rho}{\rho_0 H}.
+\]
+
+\subsection*{Final Wave Equation}
+
+Substitute into the $\xi_z$ terms:
+\[
+(\partial_z\rho_0)\,\partial_z\xi_z + \rho_0\,\partial_z^2 \xi_z
+= \left(-\frac{\rho_0}{H}\right)\left( -\frac{\Delta\rho}{\rho_0} \right)
++ \rho_0\left[ -\frac{\partial_z\Delta\rho}{\rho_0} - \frac{\Delta\rho}{\rho_0 H} \right]
+= \frac{\Delta\rho}{H} - \partial_z\Delta\rho - \frac{\Delta\rho}{H}.
+\]
+The $\pm \Delta\rho/H$ terms cancel, leaving
+\[
+(\partial_z\rho_0)\,\partial_z\xi_z + \rho_0\,\partial_z^2 \xi_z = - \partial_z\Delta\rho.
+\]
+Thus the $\xi_z$-dependent piece becomes
+\[
+-\frac{K}{H}\left[ (\partial_z\rho_0)\,\partial_z\xi_z + \rho_0\,\partial_z^2\xi_z \right]
+= \frac{K}{H} \, \partial_z\Delta\rho
+= g\,\partial_z\Delta\rho.
+\]
+This exactly cancels the $-g\,\partial_z\Delta\rho$ term in the earlier equation, giving:
+\begin{equation}
+\boxed{
+\partial_t^2 \Delta\rho - K \,\partial_z^2 \Delta\rho + \frac{g}{H}\,\Delta\rho = 0
+}.
+\end{equation}
+
+\subsection*{Specialization to Isothermal Atmosphere}
+
+For an isothermal gas $K = c_s^2$ and $H = c_s^2/g$, the constant term is
+\[
+\frac{g}{H} = \frac{g^2}{c_s^2}.
+\]
+The wave equation becomes
+\begin{equation}
+\boxed{
+\partial_t^2 \Delta\rho - c_s^2\,\partial_z^2 \Delta\rho + \frac{g^2}{c_s^2}\,\Delta\rho = 0
+}.
+\end{equation}
+
+\subsection*{Dispersion Relations}
+
+Let's proceed by assuming a plane wave ansatz: $\exp(i({\bf k}\cdot{\bf x} - \omega t)).$ Substituting this into the equation, we have
+\[
+-\omega^2 + c_s^2 |{\bf k}|^2 + \frac{g^2}{c_s^2} = 0.
+\]
+We can glean information by figuring out when $k$ is / isn't a real value. \rmk{If $k$ is not real, then $ikx$ will be real and lead to exponential growth / decay. As such, the wave will not be able to propagate.} Thus,
+\[
+k^2 = \frac{1}{c_s^2}\left[\omega^2 - \frac{g^2}{c_s^2}\right] > 0
+\]
+is only satisfied when
+\[
+\omega^2 > \frac{g^2}{c_s^2}.
+\]
+This introduces an \textbf{acoustic cutoff} which prevents these long period waves from propagating.
+\begin{remark}
+    In a stratified atmosphere, a local density enhancement (a ``bump'') at some position $x_0$ sits out of hydrostatic balance: gravity pulls the denser fluid downward, while the surrounding pressure gradient adjusts to restore equilibrium. 
+    If the temporal variation of the wave is \emph{slow} compared to this natural adjustment rate (i.e. $\omega < \omega_c$), the density perturbation is equalized by mass motions before the pressure disturbance can propagate as an acoustic wave. 
+    In this case, the perturbation becomes an \emph{evanescent mode}, decaying locally rather than carrying energy away.
+\end{remark}
+
+\subsection*{Conclusions and Takeaways}
+
+\begin{itemize}
+\item The background stratification enters the wave equation through the term $\frac{g}{H}\,\Delta\rho$, which produces a finite acoustic cutoff frequency.
+\item For $\omega < \omega_c$, vertical propagation is evanescent — waves become exponentially decaying with height.
+\item The cancellation of the $g\,\partial_z\Delta\rho$ term after eliminating $\xi_z$ is a direct consequence of hydrostatic equilibrium in the background state.
+\item In the isothermal limit, the dispersion relation for plane waves $\Delta\rho \propto e^{i(kz-\omega t)}$ is
+\[
+\omega^2 = c_s^2 k^2 + \omega_c^2,
+\]
+where $\omega_c = c_s/(H)$ is the cutoff.
+\end{itemize}
+
+\section{Boundary Conditions}
+Consider two uniform media sharing a boundary. Let each of them be governed by a \textbf{barotropic equation of state} so that $p = K_1\rho$ and $p = K_2 \rho$ in each of the media respectively. In order for the behavior at the interface to be sensible, we require that all of the relevant variables ($\rho, p, u$) be \textbf{continuous} and single valued. Consider a general solution to the standard wave equation in the first medium:
+\[
+\Delta \rho = I \exp(i[kx-\omega t]) + R\exp(i[kx+\omega t]).
+\]
+Likewise, consider a wave in the second media 
+\[
+\Delta \rho_2 = T \exp(i[k_2x-\omega_2t]).
+\]
+If the interface is at $x=0$, then for continuity,
+\[
+I e^{-i\omega t} + Re^{i\omega t} = Te^{i\omega_2t}.
+\]
+We clearly see that the waves must have \textbf{the same angular frequency}. Thus,
+\[
+Ie^{-i\omega t} + Re^{i\omega t} = Te^{i\omega t} \implies I + R = T.
+\]
+In a uniform media, we also need continuity of the derivative, so
+\[
+Iik_1 -Rik_1 = iTk_2 \implies (I-R)k_1 = Tk_2.
+\]
+Letting $I = 1$, we have
+\[
+1+R = T, \text{and}\;(1-R)k_1 = k_2T,
+\]
+so
+\[
+T = \frac{2k_1}{k_1+k_2},\; R= \frac{k_1-k_2}{k_1+k_2}.
+\]

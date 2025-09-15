@@ -1,0 +1,271 @@
+As it concerns our purposes in these notes, a fluid may be (roughly) defined as
+\begin{definition}[Fluid]
+A fluid is some spatially distributed material which is able to freely deform. In effect, this distinguishes solids from fluids (gas and liquid). 
+\end{definition}
+\begin{remark}
+    It isn't hard to find instances where this sort of treatment breaks down; however, in astrophysical scenarios we are almost always concerned with material which is distinctively gaseous and therefore do not care to make too much effort in refining the above definition.
+\end{remark}
+
+In classical fluid dynamics, the \textbf{incompressibility} of the flow is often introduced early and kept as a core assumption throughout. This is not a valid approximation in most astrophysical scenarios as gas is often compressed. We therefore do not benefit from any of the theory regarding incompressible flow.
+
+\section{Elementary Definitions}
+To begin our discussion, we will make some elementary remarks about important definitions and concepts.
+
+\subsection{The Fluid Element}
+
+\textbf{Fluid Dynamics} is, first and foremost, an \textbf{effective (ensemble) theory}, meaning it describes the collective behavior of an enormous number of discrete constituents (particles) using a small set of continuous fields, such as the mass density $\rho$ and velocity field ${\bf u}$. For this coarse-grained description to be valid, we must identify a characteristic length scale $\ell$ satisfying two key conditions:
+\vspace{0.25cm}
+\begin{enumerate}
+    \item \textbf{Sufficiently small:} The scale $\ell$ must be much smaller than the length scales over which any relevant quantity $q$ varies appreciably. In other words, relative variations $\delta q/q$ across $\ell$ should satisfy 
+\begin{equation}
+    \label{eq:fluid_condition_1}
+    \delta q/q \ll 1
+\end{equation}
+This ensures we can meaningfully associate a well-defined, approximately uniform value of $q$ to each fluid element, neglecting internal fluctuations within that element.
+\end{enumerate}
+
+In addition,
+
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item \textbf{Sufficiently statistical:} The scale $\ell$ must be large enough to contain many particles, so that microscopic, particle-level fluctuations are negligible compared to the collective, ensemble behavior. Formally, this requires the particle number density $n$ to satisfy
+\begin{equation}
+    \label{eq:fluid_conditions_2}
+    \ell^3 n \gg 1.
+\end{equation}
+\end{enumerate}
+
+\vspace{0.25cm}
+The above criteria are sufficient to define a \textbf{fluid} in the context of an \textbf{effective field theory}, where the microscopic particle description is replaced by continuous fields. However, even when these conditions are met, a subtle distinction remains concerning the dynamical behavior of the system.
+
+In general, such a fluid may retain some degree of \textbf{phase-space memory}: its present evolution can depend not only on the instantaneous values of the fluid fields, but also on the detailed history of the system's distribution function. In other words, perturbations to the microscopic particle distribution at an earlier time $\delta t$ may still influence the system's current state.
+
+The extent to which this phase-space memory affects the dynamics depends on whether the fluid is \textbf{collisional} or \textbf{collisionless}:
+\begin{itemize}
+    \item In a \textbf{collisional fluid}, frequent particle interactions drive the system toward local thermodynamic equilibrium on timescales short compared to the macroscopic evolution. In this regime, the fluid fields $\rho$, ${\bf u}$, etc., contain all necessary information, and the system rapidly forgets its microscopic history. The dynamics are thus determined entirely by local field values and their gradients. In order for a fluid to be \textbf{collisional}, we require that the \textbf{mean free path} between interactions satisfy
+\begin{equation}
+    \label{eq:fluid_condition_collisional}
+    \lambda_{\rm mfp} \ll \ell.
+\end{equation}
+Recalling that
+\begin{equation}
+    \lambda_{\rm mfp} = \frac{1}{n\sigma} \implies n\sigma \gg \ell^{-1}.
+\end{equation}
+    
+    \item In a \textbf{collisionless fluid}, particle interactions are sufficiently rare or absent that the system does not locally equilibrate. Instead, the evolution retains dependence on the detailed particle distribution function in phase space. In this case, a purely field-based description is incomplete, and additional information about the microscopic state—often encapsulated by the distribution function $f({\bf x}, {\bf p}, t)$—is required.
+\end{itemize}
+
+Thus, while the field-theoretic description of fluids is powerful, its completeness depends critically on whether the underlying system rapidly equilibrates (collisional) or preserves phase-space structure over dynamical timescales (collisionless).
+
+\subsection{View of Fluid Dynamics: Eulerian and Lagrangian Perspectives}
+
+Fluid dynamics can be formulated from two mathematically distinct but physically equivalent viewpoints: the \textbf{Eulerian} and the \textbf{Lagrangian} descriptions. These perspectives differ in how they \textbf{label fluid elements} and in what domain the physical fields are defined.
+
+\vspace{0.2cm}
+\begin{center}
+\textit{
+Consider a continuum which, at initial time \( t = 0 \), occupies a reference configuration \( \mathcal{C}_0 \subset \mathbb{R}^3 \). As time progresses, the fluid deforms into new spatial configurations \( \mathcal{C}_t \), flowing and evolving through space. This notion leads us to the rather formal definition of the \textbf{flow map}, which tells us how to go from one deformation space to a later one.
+}
+\end{center}
+\vspace{0.2cm}
+\begin{definition}[Flow Map / Configuration Map]
+Let \( \mathcal{C}_0 \subset \mathbb{R}^3 \) be the reference configuration describing the fluid position at $t=t_0$. The \textbf{flow map}
+\[
+\boldsymbol{\varphi}: \mathcal{C}_0 \times \mathbb{R} \to \mathbb{R}^3
+\]
+is defined by
+\[
+\boldsymbol{\varphi}(\mathbf{X}, t) = \mathbf{x},
+\]
+where \( \mathbf{X} \in \mathcal{C}_0 \) is the \textbf{label} of a material particle (its initial position), and \( \boldsymbol{\varphi}(\mathbf{X}, t) \) gives its position in physical space at time \( t \). For each fixed \( t \), the map \( \boldsymbol{\varphi}_t := \boldsymbol{\varphi}(\cdot, t) \) takes the reference configuration to the \textbf{current configuration} \( \mathcal{C}_t = \boldsymbol{\varphi}_t(\mathcal{C}_0) \subset \mathbb{R}^3 \).
+\end{definition}
+\vspace{0.2cm}
+
+This flow map naturally defines the velocity field:
+\[
+\mathbf{u}(\mathbf{x}, t) = \left. \frac{\partial \boldsymbol{\varphi}}{\partial t}(\mathbf{X}, t) \right|_{\mathbf{X} = \boldsymbol{\varphi}^{-1}(\mathbf{x}, t)}.
+\]
+
+The unfortunate outcome of this picture is that there are \textbf{two equally good ways to look at the world}. We could label every particle based on $\mathcal{C}_0$ and then use $\varphi$ to move forward into $C_t$, or we could label particles based on $C_t$ and go backward with $\varphi^{-1}$. These are both perfectly good ways to look at the world and they are beneficial in different scenarios. Formally,
+\vspace{0.5cm}
+\begin{definition}[Eulerian Field]
+\label{def:Eulerian}
+In the \textbf{Eulerian} description, fluid properties are described as functions on the \textbf{current configuration} \( \mathcal{C}_t \subset \mathbb{R}^3 \). That is, a scalar field \( \psi \) (such as pressure, density, etc.) is defined by:
+\[
+\psi: \mathcal{C}_t \to \mathbb{R}, \quad \mathbf{x} \mapsto \psi(\mathbf{x}, t),
+\]
+where \( \mathbf{x} \in \mathcal{C}_t \) is a point in space occupied by the fluid at time \( t \), and \( \psi(\mathbf{x}, t) \) gives the value of the field at that location.
+
+If we wish to express this quantity in terms of the \textbf{reference configuration} \( \mathcal{C}_0 \), we must \textbf{pull back} the field along the flow map \( \boldsymbol{\varphi}: \mathcal{C}_0 \times \mathbb{R} \to \mathcal{C}_t \). The associated Lagrangian field is:
+\[
+\Psi(\mathbf{X}, t) := \psi(\boldsymbol{\varphi}(\mathbf{X}, t), t),
+\]
+where \( \mathbf{X} \in \mathcal{C}_0 \) labels a material particle.
+
+Conversely, the Eulerian field is the \textbf{pushforward} of the \textbf{Lagrangian field}:
+\[
+\psi(\mathbf{x}, t) = \Psi(\boldsymbol{\varphi}^{-1}(\mathbf{x}, t), t), \quad \text{for } \mathbf{x} \in \mathcal{C}_t.
+\]
+\end{definition}
+\vspace{0.1cm}
+As was hinted about in definition~\ref{def:Eulerian}, the \textbf{Lagrangian view} is effectively the inverse:
+\vspace{0.1cm}
+\begin{definition}[Lagrangian Field]
+\label{def:Lagrangian}
+In the \textbf{Lagrangian} description, fluid properties are described as functions on the \textbf{reference configuration} \( \mathcal{C}_0 \subset \mathbb{R}^3 \), which labels material particles by their initial positions. 
+
+Let \( \boldsymbol{\varphi}: \mathcal{C}_0 \times \mathbb{R} \to \mathbb{R}^3 \) be the \textbf{flow map}, such that for each material label \( \mathbf{X} \in \mathcal{C}_0 \), \( \boldsymbol{\varphi}(\mathbf{X}, t) \) gives the spatial position of that particle at time \( t \).
+
+Then, for a physical observable \( \psi: \mathcal{C}_t \to \mathbb{R} \), the corresponding \textbf{Lagrangian field} is defined by the \textbf{pullback} of \( \psi \) along \( \boldsymbol{\varphi} \):
+\[
+\Psi: \mathcal{C}_0 \times \mathbb{R} \to \mathbb{R}, \qquad \Psi(\mathbf{X}, t) := \psi(\boldsymbol{\varphi}(\mathbf{X}, t), t).
+\]
+
+That is, \( \Psi(\mathbf{X}, t) \) gives the value of the field as experienced by the material particle labeled by \( \mathbf{X} \), as it evolves in time.
+
+Conversely, the Eulerian field can be recovered by the \textbf{pushforward}:
+\[
+\psi(\mathbf{x}, t) = \Psi(\boldsymbol{\varphi}^{-1}(\mathbf{x}, t), t), \quad \text{for } \mathbf{x} \in \mathcal{C}_t.
+\]
+\end{definition}
+\vspace{0.5cm}
+
+\begin{remark}
+    In general, \textbf{Eulerian} methods are more powerful for most uses analytically. We are generally more interested in the benefits of having a simple, stationary coordinate system than the benefits of being able to track individual packets of material. There are some exceptions to this however. 
+
+    In computational fluid dynamics, this is dramatically different as both approaches lead to powerful computational methods.
+\end{remark}
+\vspace{0.5cm}
+
+We can naturally connect the \textbf{Eulerian} and \textbf{Lagrangian} descriptions of fluid dynamics. Consider a flow characterized by a \textbf{velocity field} ${\bf u}({\bf r}, t)$ and a scalar field $\psi({\bf r}, t)$ defined in the Eulerian frame.
+
+Suppose a fluid particle is initially located at position ${\bf r}_0$ at time $t = 0$. After an infinitesimal time interval $\delta t$, the particle moves to
+\[
+{\bf r}_1 = {\bf r}_0 + {\bf u}({\bf r}_0, 0) \, \delta t.
+\]
+The change in $\psi$ experienced by the particle along its trajectory—the \textbf{Lagrangian change}—is given by
+\[
+\delta \psi_{\rm lagrangian} = \psi({\bf r}_1, \delta t) - \psi({\bf r}_0, 0).
+\]
+
+Assuming $\psi$ is sufficiently smooth (at least $C^2$ continuous), we expand $\psi$ to first order:
+\[
+\psi({\bf r}_1, \delta t) \approx \psi({\bf r}_0, 0) + \delta {\bf r} \cdot \nabla \psi + \delta t \, \frac{\partial \psi}{\partial t} + \mathcal{O}(\delta {\bf r}^2, \delta t^2).
+\]
+Since $\delta {\bf r} = {\bf u} \, \delta t$, this becomes:
+\[
+\delta \psi_{\rm lagrangian} = {\bf u} \cdot \nabla \psi \, \delta t + \frac{\partial \psi}{\partial t} \, \delta t + \mathcal{O}(\delta t^2).
+\]
+Dividing both sides by $\delta t$ and taking the limit $\delta t \to 0$, we obtain the \textbf{material derivative} (or \textbf{Lagrangian derivative}):
+\begin{equation}
+    \label{eq:euler-lagrange-convert}
+    \boxed{
+    \frac{d \psi_{\rm lagrangian}}{dt} = \frac{D \psi}{D t} = \frac{\partial \psi}{\partial t} + {\bf u} \cdot \nabla \psi.}
+\end{equation}
+
+This expression shows how the time rate of change of a field $\psi$ as experienced by a moving fluid element (Lagrangian perspective) relates to the local, fixed-position time derivative and spatial variations in the Eulerian description.
+\begin{remark}
+    It is important to remember that the \textbf{Lagrangian derivative} is NOT written in the lagrangian frame. Really, we are representing $D/Dt$ in the Eulerian frame as $\partial_t + {\bf u} \cdot \nabla$,  which then reminds us that, formally, we regard ${\bf u}$ as ${\bf u}({\bf x},t) = {\bf u}(\varphi({\bf X},t),t)$ and $\nabla$ as $\nabla_{\bf x}$, not $\nabla_{\bf X}$.
+\end{remark}
+
+\section{Structure of the Velocity Field}
+
+An extremely important field present in fluid dynamical flows is the \textbf{velocity field} ${\bf u}$, which describes the instantaneous velocity at a point $(x,t) \in \mathbb{R}^d \times \mathbb{R}$. There are a number of things to be said about this velocity field which are relevant throughout this subject.
+
+\subsection{The Velocity Gradient}
+
+A common construct in fluid kinematics is the \textbf{velocity gradient}, which is a $(1,1)$ tensor field over the domain defined such that
+\[
+{\bf V}(\omega, X) = \omega\!\left(X({\bf u})\right).
+\]
+In a particular basis, this is equivalent to
+\[
+V_\mu^\nu = \nabla_\mu u^\nu,
+\]
+where $\nabla_\mu$ is the \textbf{covariant derivative}. \rmk{In Cartesian coordinates, this may be taken as the standard gradient.}
+
+\par
+Like any rank-2 tensor, the velocity gradient can be decomposed into its symmetric and antisymmetric parts:
+\[
+V_{\mu}^\nu 
+= \tfrac{1}{2}\left(\nabla_\mu u^\nu + \nabla_\nu u^\mu\right) 
++ \tfrac{1}{2}\left(\nabla_\mu u^\nu - \nabla_\nu u^\mu\right) 
+= S_{\mu}^\nu + \Omega_\mu^\nu.
+\]
+
+\subsubsection*{The Rate of Strain Tensor}
+
+The symmetric component is called the \textbf{rate-of-strain tensor}:
+\vspace{0.5cm}
+\begin{definition}[Rate-of-Strain Tensor]
+The \textbf{rate-of-strain tensor} (or \textbf{strain rate tensor}) is defined by
+\[
+S_{\mu}^\nu = \tfrac{1}{2}\left(\nabla_\mu u^\nu + \nabla_\nu u^\mu\right).
+\]
+It encodes both the isotropic \emph{expansion} of fluid elements and the \emph{shear} which distorts their shape without changing volume.
+\end{definition}
+\vspace{0.5cm}
+
+The trace of $S_{\mu\nu}$ yields the \textbf{expansion scalar}:
+\[
+\theta = \nabla_\mu u^\mu,
+\]
+which measures the local volumetric dilation of the flow. Subtracting this isotropic part leaves the \textbf{shear tensor}:
+\[
+\sigma_{\mu\nu} = S_{\mu\nu} - \tfrac{1}{3}\theta\, g_{\mu\nu},
+\]
+a symmetric, trace-free object describing pure shape distortion. 
+
+\par
+This decomposition is directly relevant for fluid dynamics: in Newtonian fluids the viscous stress tensor is proportional to $S_{\mu\nu}$, with separate coefficients (bulk and shear viscosity) multiplying its trace and trace-free parts. Thus $S_{\mu\nu}$ is the quantity that determines how velocity gradients are converted into internal stresses and, ultimately, into heat through viscous dissipation.
+
+\subsubsection*{The Vorticity Tensor}
+
+The antisymmetric component is called the \textbf{vorticity tensor}:
+\vspace{0.5cm}
+\begin{definition}[Vorticity Tensor]
+\label{def:vorticity}
+The \textbf{vorticity tensor} is defined by
+\[
+\Omega_{\mu}{}^{\nu} = \tfrac{1}{2}\left(\nabla_\mu u^\nu - \nabla_\nu u^\mu\right).
+\]
+It encodes the local \emph{rotation} of fluid elements, i.e.\ the rigid-body spin of a small fluid parcel.
+\end{definition}
+\vspace{0.5cm}
+
+In three-dimensional Euclidean space, $\Omega_{\mu\nu}$ corresponds directly to the familiar \textbf{vorticity vector} 
+\[
+\boldsymbol{\omega} = \nabla \times \mathbf{u},
+\]
+which provides an intuitive picture of the local axis of rotation of the flow. 
+
+\par
+Vorticity is central in the classification of flows. When $\Omega_{\mu\nu} = 0$, the flow is called \textbf{irrotational}, and the velocity can be expressed as the gradient of a scalar potential. This condition underlies many classical results such as Bernoulli’s theorem. Conversely, nonzero vorticity characterizes rotational flows, vortex dynamics, and ultimately turbulence, where the stretching and diffusion of vorticity dominate the behavior of the system.
+
+\subsubsection*{Summary}
+
+Altogether, the velocity gradient admits a canonical decomposition:
+\[
+\nabla_\mu u_\nu = \sigma_{\mu\nu} + \tfrac{1}{3}\theta\, g_{\mu\nu} + \Omega_{\mu\nu},
+\]
+into \emph{shear}, \emph{expansion}, and \emph{vorticity}. Each piece has distinct physical significance:
+\begin{itemize}
+  \item $\theta$ controls local compression or expansion of the fluid.
+  \item $\sigma_{\mu\nu}$ governs shape distortion and is directly linked to viscous stresses and dissipation.
+  \item $\Omega_{\mu\nu}$ (or $\boldsymbol{\omega}$) measures local rigid-body rotation, with vanishing vorticity defining irrotational flow.
+\end{itemize}
+This decomposition provides a complete kinematic description of how fluid elements evolve in time.
+
+\begin{bigidea}
+The \textbf{velocity gradient} $\nabla_\mu u_\nu$ can always be decomposed into three geometrically and physically distinct parts:
+\[
+\nabla_\mu u_\nu = \sigma_{\mu\nu} + \tfrac{1}{3}\theta\, g_{\mu\nu} + \Omega_{\mu\nu}.
+\]
+This canonical splitting encodes the full local behavior of a fluid element:
+\begin{itemize}
+  \item $\theta$: the \textbf{expansion scalar}, measuring isotropic compression or dilation (volume change).
+  \item $\sigma_{\mu\nu}$: the \textbf{shear tensor}, capturing pure shape distortion. It is the driver of viscous stresses and dissipation.
+  \item $\Omega_{\mu\nu}$: the \textbf{vorticity tensor}, representing rigid-body rotation of the fluid element. In 3D, this is equivalent to the familiar vorticity vector $\boldsymbol{\omega} = \nabla \times \mathbf{u}$, whose vanishing defines \emph{irrotational flow}.
+\end{itemize}
+Together, these components form the cornerstone of fluid kinematics: they describe how small parcels of fluid move, deform, and spin, and they connect directly to the physics of viscosity, potential flows, and turbulence.
+\end{bigidea}

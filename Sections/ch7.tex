@@ -1,0 +1,278 @@
+\section{Intuition}
+
+Supersonic flows occur when a \textbf{disturbance propagates faster than the local speed of sound}. In this regime, information cannot propagate upstream to ``warn'' the undisturbed medium, and discontinuities in the flow (shock waves) form.
+\medskip
+
+\noindent
+Consider the following simple scenario: you (the observer) sit at the origin $(0,0)$, while a uniform flow with velocity $v$ and sound speed $c_s$ moves past you in the $+x$ direction. At some time $t_0 = 0$, you insert a tuning fork into the flow, generating periodic disturbances with period $\tau$.
+\begin{remark}
+    Intuitively, if the disturbance speed is much smaller than the sound speed ($v \ll c_s$), then the tuning fork generates small-amplitude density and pressure waves that propagate outward through the fluid at speed $c_s$ in all directions (in the fluid frame). Because these waves travel much faster than the source itself, they can reach the upstream fluid before the source arrives, giving the medium time to adjust smoothly. As a result, successive wavefronts remain separated, and the flow changes continuously without sharp discontinuities.
+
+    In contrast, if the disturbance speed is much greater than the sound speed ($v \gg c_s$), the fluid upstream cannot receive any ``advance notice'' of the approaching source. The chain of particle collisions that transmits pressure changes cannot outpace the source, so the medium only reacts when the source is already upon it. This leads to a pile-up of wavefronts into a narrow region where the density, pressure, and velocity change abruptly --- a shock front. In the supersonic regime, the envelope of these piled-up wavefronts forms the Mach cone downstream of the disturbance.
+\end{remark}
+
+In the frame of the fluid, each disturbance propagates spherically with speed $c_s$. The center of the $k$-th disturbance in the lab frame is located at:
+\[
+x_\mathrm{center} = k\,\tau\, v .
+\]
+Thus, the equation for the $k$-th wavefront is
+\begin{equation}
+    (x - k\tau v)^2 + y^2 = c_s^2 \, (t - k\tau)^2 .
+\end{equation}
+At the downstream edge of the $k$-th wavefront, we have:
+\begin{align}
+    x - k\tau v &= c_s \, (t - k\tau) , \\
+    \implies x_k &= c_s t + k\tau (v - c_s) .
+\end{align}
+The longitudinal spacing between successive wavefronts is therefore:
+\begin{equation}
+    \Delta x = x_{k+1} - x_k = \tau (v - c_s) .
+\end{equation}
+
+We can now classify the flow regimes:
+\begin{enumerate}
+    \item \textbf{Subsonic} ($v < c_s$): Wavefronts remain in order; disturbances can propagate upstream.
+    \item \textbf{Sonic} ($v = c_s$): Wavefronts ``pile up'' downstream, producing a stationary compression region.
+    \item \textbf{Supersonic} ($v > c_s$): Successive wavefronts overtake one another downstream, forming a shock front.
+\end{enumerate}
+
+
+\subsection{Mach Cone Formation}
+
+In the supersonic case ($v > c_s$), the envelope of all wavefronts forms a conical shock surface,the \emph{Mach cone} --- that trails the disturbance in the downstream direction.
+
+At time $t$, the furthest extent of any disturbance in the $y$-direction is
+\[
+y_{\max} = c_s t ,
+\]
+while the furthest downstream extent in $x$ is
+\[
+x_{\max} = v t .
+\]
+The half-opening angle $\theta$ of the Mach cone is therefore:
+\begin{equation}
+    \sin\theta = \frac{c_s}{v} .
+\end{equation}
+
+\begin{definition}[Mach Number]
+The \emph{Mach number} $M$ is the ratio of the object's speed to the local speed of sound:
+\[
+M \equiv \frac{v}{c_s} .
+\]
+In terms of $M$, the Mach angle is:
+\[
+\theta = \sin^{-1} \left( \frac{1}{M} \right) .
+\]
+\end{definition}
+
+A larger Mach number corresponds to a narrower cone, while $M \to 1^+$ corresponds to a very wide, weak cone.
+
+\section{The Rankine-Hugoniot Conditions}
+
+Consider a \textbf{shock front} dividing two regions of fluid. We refer to each side as the \textbf{upstream} and \textbf{downstream} side of the shock front. For the same of simplicity, we assume the front occurs at $x = 0$ in some reference frame and that, on either side of the front, we have some $\rho_{1,2},p_{1,2}, \;\text{and}\; u_{1,2}$. Now, certain conservation laws must still be true, namely those which provide us with the \textbf{Euler Equations}. As such, we can define some elements of the behavior across the shock front in terms of these conservation rules.
+
+\subsection*{The Continuity Equation}
+
+In Eulerian form,
+\[
+\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho u) = 0.
+\]
+if we integrate across some infinitesmal width $\delta x$ on either side of the shock front,
+\[
+\frac{\partial}{\partial t} \int_{-\delta x}^{\delta x} \rho \;dx + (\rho u)_{\delta x} - (\rho u)_{-\delta x} =0.
+\]
+Now, as $\delta x \to 0$, we clearly have that the integral term vanishes and
+\[
+\boxed{\rho_1u_1 = \rho_2u_2}.
+\]
+
+\subsection*{The Momentum Equation}
+
+In one-dimensional inviscid flow with an external body force ${\bf f}_{\rm ext}$, the momentum equation in \emph{conservative form} is
+\begin{equation}
+\frac{\partial (\rho u)}{\partial t} 
++ \frac{\partial}{\partial x} \left( \rho u^2 + p \right)
+= \rho {\bf f}_{\rm ext}.
+\end{equation}
+Here $\rho u$ is the momentum density, and $\rho u^2 + p$ is the momentum flux (mass flux of momentum plus the pressure force).
+
+\medskip
+
+We now integrate this equation across a thin control volume enclosing a discontinuity at $x = 0$, extending from $x = -\delta x$ to $x = +\delta x$. In the shock rest frame (steady state), the time derivative vanishes upon integration:
+\begin{equation}
+\int_{-\delta x}^{+\delta x} 
+\frac{\partial}{\partial x} \left( \rho u^2 + p \right) dx
+= \int_{-\delta x}^{+\delta x} \rho {\bf f}_{\rm ext} \, dx.
+\end{equation}
+
+If ${\bf f}_{\rm ext}$ is bounded, its contribution is $O(\delta x)$ and vanishes as $\delta x \to 0$. Therefore, in the limit we obtain
+\begin{equation}
+\left[ \rho u^2 + p \right]_{1}^{2} = 0,
+\end{equation}
+where $[A]_1^2 \equiv A_2 - A_1$ denotes the jump across the discontinuity. This is the \textbf{momentum Rankine–Hugoniot condition}:
+\begin{equation}
+\boxed{
+\rho_1 u_1^2 + p_1 \;=\; \rho_2 u_2^2 + p_2.}
+\end{equation}
+\subsection*{The Energy Equation}
+
+In one-dimensional inviscid, adiabatic flow with no external body force ${\bf f}_{\rm ext}$ and no heat addition, the total energy equation in \emph{conservative form} is (equation~\ref{eq:energy_equation_lagrangian})
+\begin{equation}
+\frac{\partial E}{\partial t} + \nabla \cdot [(E+p){\bf u}] = 0
+\end{equation}
+Integrating across a thin control volume enclosing the discontinuity and taking the steady shock rest frame,
+\begin{equation}
+\int_{-\delta x}^{+\delta x}
+\frac{\partial}{\partial x}
+\left[(E+p)u \right] dx
+= 0
+\end{equation}
+ Therefore we obtain the \textbf{energy Rankine--Hugoniot condition}:
+\begin{equation}
+\left[ u \left(E + p \right) \right]_{1}^{2} = 0.
+\end{equation}
+
+Additionally, because $\rho u$ is already known to be constant (from the first condition), we have
+\[
+\left[(\mathcal{E} + p/\rho)\right]_{1}^{2} = 0
+\]
+
+\begin{definition}[Rankine--Hugoniot Conditions]
+The \emph{Rankine--Hugoniot conditions} express the jump relations for conserved quantities across a shock or other discontinuity in an inviscid fluid, obtained by integrating the Euler equations in conservative form across the discontinuity.  
+For a steady, one-dimensional shock in the shock rest frame, they are:
+\begin{equation}
+\label{eq:rankine_huginiot}
+    \begin{aligned}
+&\text{Mass conservation:} & \rho_1 u_1 &= \rho_2 u_2, \\
+&\text{Momentum conservation:} & \rho_1 u_1^2 + p_1 &= \rho_2 u_2^2 + p_2, \\
+&\text{Energy conservation:} & \left(\mathcal{E}_1 + p_1/\rho_1\right) &= \left(\mathcal{E}_2 + p_2/\rho_2\right),
+\end{aligned}
+\end{equation}
+where $\rho$ is the density, $u$ is the normal velocity relative to the shock, $p$ is the pressure, and $\mathcal{E} = U + \tfrac{1}{2} u^2$ is the total energy density (internal $+$ kinetic).  
+
+These relations hold for any inviscid, adiabatic flow without body forces or heat addition, and they form the basis for determining the downstream state $(\rho_2,u_2,p_2)$ from a given upstream state $(\rho_1,u_1,p_1)$ and equation of state.
+\end{definition}
+\vspace{0.5cm}
+Now, in their current form, equations~\ref{eq:rankine_huginiot} are dependent on the flow velocity, the internal energy, and the density / pressure. In many scenarios, these are not all measurable properties of the flow and instead we seek to find a simpler / more useful way to cast these relationships. The first step in doing so is to better understand the internal energy $E$ which appears in the above equations. Formally, for an adiabatic flow,
+\[
+p = \rho^\gamma,
+\]
+and the internal energy is
+\[
+U_1 = \frac{1}{2}u^2 + \frac{1}{\gamma -1} \frac{p}{\rho}
+\]
+If $\gamma$ is the same across the shock (\rmk{as it generally is because we are unlikely to be moving from monatomic to diatomic gasses or some other similar change...}), then we may write the energy condition (equation~\ref{eq:rankine_huginiot}) as
+\[
+\frac{1}{2}u_1^2 + \frac{\gamma}{\gamma -1} \frac{p_1}{\rho_1} = \frac{1}{2}u_2^2 + \frac{\gamma}{\gamma -1} \frac{p_2}{\rho_2}.
+\]
+Likewise, recall that
+\[
+c_s^2 = \frac{\partial p}{\partial \rho} = \gamma \rho^{\gamma -1 } = \gamma \frac{p}{\rho},
+\]
+so
+\[
+\boxed{
+\frac{1}{2}u_1^2 + \frac{c_1^2}{\gamma -1} = \frac{1}{2}u_2^2 + \frac{c_2^2}{\gamma -1}.
+}
+\]
+This form of the \textbf{Rankine-Huginiot condition} is already quite nice, but we generally do not observe easily $u$ or $c$. \rmk{In fact, in the context of galaxy clusters, we have $\rho$ and $kT$ available to us. When we use the ideal gas law, we get $\rho, p$ easily, so we'd like to state the condition in terms of $\rho$ and $p$.} To do so, we need to do a fair bit of algebra, the details of which are in the textbook. The end result is that
+\begin{equation}
+    \label{eq:rankine_huginiot_2}
+    \boxed{
+    \frac{\rho_2}{\rho_1} = \frac{(\gamma + 1)p_2 + (\gamma - 1)p_1}{(\gamma + 1)p_1 + (\gamma -1) p_2} = \frac{u_1}{u_2}.
+    }
+\end{equation}
+In this form the \textbf{Rankine Huginiot} condition contains a great deal of physical information! Notably, in the limit of \textbf{strong shocks}, where $p_1 \gg p_2$, we have
+\[
+\frac{\rho_2}{\rho_1} = \frac{u_1}{u_2} = \frac{\gamma -1}{\gamma + 1},
+\]
+so for a monatomic gas with $\gamma = 5/3$, the result is that
+\[
+\frac{\rho_2}{\rho_1} = \frac{2/3}{8/3} = \frac{1}{4}.
+\]
+\section{Isothermal Shocks}
+
+In the adiabatic treatment above, we neglected cooling in the energy equation. This is not always valid. When the gas is strongly coupled to a cooling process (e.g.\ radiation, conduction to a cold reservoir), thermal energy generated in the shock is \textbf{removed rapidly and the temperature remains approximately constant across the discontinuity}. Such shocks are well described by the \emph{isothermal} limit.
+
+\begin{remark}
+Adiabatic shocks apply when the cooling time is long compared to the advection time through the shock layer; isothermal shocks apply in the opposite limit:
+\[
+t_{\mathrm{cool}} \gg t_{\mathrm{adv}} \quad \text{(adiabatic)}, 
+\qquad
+t_{\mathrm{cool}} \ll t_{\mathrm{adv}} \quad \text{(isothermal)}.
+\]
+\end{remark}
+
+The conservative forms of the Euler equations (1D, steady, shock at $x=0$) are
+\begin{align}
+&\text{Mass:} && \frac{d}{dx}(\rho u) = 0
+\;\;\Longrightarrow\;\;
+\rho_1 u_1 = \rho_2 u_2 \equiv m', \label{eq:iso_mass}\\[4pt]
+&\text{Momentum:} && \frac{d}{dx}\!\left(\rho u^2 + p\right) = 0
+\;\;\Longrightarrow\;\;
+\rho_1 u_1^2 + p_1 = \rho_2 u_2^2 + p_2, \label{eq:iso_mom}\\[4pt]
+&\text{Energy (with cooling):} && 
+\frac{d}{dx}\!\left[u\,(E+p)\right] = -\,\mathcal{L}(x), \label{eq:energy_cooling}
+\end{align}
+where $E=\rho e + \tfrac{1}{2}\rho u^2$ is the total energy density and $\mathcal{L}$ is the (positive) volumetric cooling rate.
+
+Integrating \eqref{eq:energy_cooling} across the thin shock layer gives the \emph{corrected} energy jump:
+\begin{equation}
+\big[u(E+p)\big]_1^2 \;=\; - \int_{-\delta x}^{+\delta x} \mathcal{L}(x)\,dx.
+\label{eq:energy_jump_with_cooling}
+\end{equation}
+In the \textbf{isothermal limit}, cooling is efficient enough to maintain $T_2 \approx T_1 \equiv T$, so the ideal-gas equation of state reads
+\begin{equation}
+p = \rho c_s^2, \qquad c_s^2 \equiv \frac{k_B T}{\mu} = \text{const.}
+\label{eq:isothermal_eos}
+\end{equation}
+In practice, one then uses \eqref{eq:iso_mass}, \eqref{eq:iso_mom}, and \eqref{eq:isothermal_eos}; the energy jump \eqref{eq:energy_jump_with_cooling} is \emph{implicitly} satisfied by the cooling that enforces $T=\text{const.}$
+
+Insert $p=c_s^2\rho$ into the momentum jump \eqref{eq:iso_mom} and use $m'=\rho u$:
+\[
+\rho_1 u_1^2 + c_s^2 \rho_1 
+= \rho_2 u_2^2 + c_s^2 \rho_2.
+\]
+With $u_i = m'/\rho_i$ this becomes
+\[
+\frac{m'^2}{\rho_1} + c_s^2 \rho_1
+= \frac{m'^2}{\rho_2} + c_s^2 \rho_2
+\;\;\Longrightarrow\;\;
+m'^2\!\left(\frac{1}{\rho_1}-\frac{1}{\rho_2}\right)
+= c_s^2\,(\rho_2-\rho_1).
+\]
+For a nontrivial jump ($\rho_2\neq\rho_1$), cancel $(\rho_2-\rho_1)$ to obtain
+\begin{equation}
+m'^2 = c_s^2\,\rho_1\rho_2.
+\label{eq:mprime_iso}
+\end{equation}
+Using $m'=\rho_1 u_1$ or $m'=\rho_2 u_2$ then gives the classic isothermal relations:
+\begin{align}
+\frac{\rho_2}{\rho_1} 
+&= \frac{u_1^2}{c_s^2} \;=\; M_1^2, \label{eq:iso_density_jump}\\[4pt]
+\frac{u_2}{u_1} 
+&= \frac{\rho_1}{\rho_2} \;=\; \frac{1}{M_1^2}, \label{eq:iso_velocity_jump}\\[4pt]
+\frac{p_2}{p_1} 
+&= \frac{\rho_2}{\rho_1} \;=\; M_1^2, \label{eq:iso_pressure_jump}
+\end{align}
+where $M_1 \equiv u_1/c_s$ is the \emph{isothermal Mach number} upstream. Thus, for an isothermal shock the compression (and pressure) ratio is simply $M_1^2$.
+
+\begin{remark}
+In contrast to adiabatic shocks (where the maximum compression is finite, e.g.\ $\rho_2/\rho_1 \le (\gamma+1)/(\gamma-1)$ for $\gamma>1$), an isothermal shock can in principle achieve arbitrarily large compression as $M_1$ increases. The trade-off is that the shock must radiate away the corresponding thermal energy to keep $T$ fixed.
+\end{remark}
+
+\subsection*{Cooling Length and Relevance}
+
+Let $\mathcal{L}$ be the volumetric cooling rate and define an \emph{isobaric} or \emph{isochoric} cooling time $t_{\mathrm{cool}}$ appropriate to the downstream state (model-dependent). The \emph{cooling length} is the distance over which the post-shock flow loses the shock-generated thermal energy:
+\begin{equation}
+\ell_{\mathrm{cool}} \;\sim\; u_2\, t_{\mathrm{cool}}.
+\end{equation}
+The isothermal approximation is valid if the thermal energy is removed on a length scale short compared to the advection/dynamical scale of interest $L$:
+\[
+\ell_{\mathrm{cool}} \ll L
+\quad\Longleftrightarrow\quad
+t_{\mathrm{cool}} \ll \frac{L}{u_2}.
+\]
+Physically: microscopic collisions in the shock layer still convert bulk kinetic energy into random motion, but efficient cooling immediately removes that energy, preventing a temperature rise and enforcing the equation of state $p=c_s^2\rho$.
+
+

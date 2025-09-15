@@ -1,0 +1,199 @@
+A common scenario in both theory and application is that of the \textbf{blast-wave} created by depositing energy $E$ into a medium effectively instantaneously and seeing the evolution. When $E$ is large, the inevitable result is a \textbf{blast-wave} led by a \textbf{shock front}. It is the properties of such shocks that we will study in this chapter. To begin, consider the following scenario:
+
+\begin{center}
+    \textit{Consider an equilibrated region of fluid subject to no external gradients and with temperature $T \sim 0$. When a large quantity $E_0$ of energy is deposited at the center of the medium, the result is a shock wave which sweeps up the material.}
+\end{center}
+
+\section{Approximate Method}
+
+As the explosion propagates, we have a shock wave which will be a \textbf{strong shock} (\rmk{the reason being that $T \sim 0$ in the ambient fluid makes the sound speed very low, which means the velocity ratio will be very large}). To be clear about our notation and conventions, we identify two regions:
+\vspace{0.25cm}
+
+\begin{itemize}
+    \item The \textbf{downstream region} is \textbf{inside the shock}: this is the material which makes up the shell of the ejecta.
+    \item The \textbf{upstream region} is \textbf{outside the shock}: this is the ambient material which is (in the frame of the shock) going to flow into it.
+\end{itemize}
+
+\vspace{0.25cm}
+Because the shock is \textbf{strong}, we adopt the treatment that $M = \infty$ and, therefore, the \textbf{Rankine-Huginiot conditions} require that (equation~\ref{eq:rankine_huginiot_2})
+\[
+\frac{\rho_1}{\rho_0} = \frac{\gamma +1 }{\gamma -1},
+\]
+where $\rho_0$ is the \textbf{upstream (ambient) density} and $\rho_1$ is the \textbf{downstream (shock front) density}. This is useful because it permits us to calculate the width of the shock: assuming that all of the mass is carried outward by the explosion, it will displace $(4/3)\pi \rho_0 R^3$  (\rmk{since $\rho_0$ was the ambient density everywhere}) mass, which then must be contained in a shell of thickness $D$ and density $\rho_1$, so
+\[
+4\pi D R^2 \rho_1 = \frac{4\pi R^3 \rho_0}{3} \implies D = \frac{R}{3}\frac{\rho_0}{\rho_1} = \frac{R}{3} \frac{\gamma - 1}{\gamma + 1}.
+\]
+For a reasonable gas, $\gamma \sim 1$ and so if $\gamma = 1 + \chi$, then
+\[
+\frac{\gamma - 1}{\gamma +1} = \frac{\chi}{2+\chi} \ll 1.
+\]
+As such, we conclude that the shock width $D$ is \textbf{quite thin}. In making that assumption, we can also assume that the entire shell moves with the same velocity. Thus, in the frame of the shock, the RH conditions require that
+\[
+\rho_0u_0 = u_1\rho_1 \implies u_1 = \frac{\rho_0}{\rho_1}u_0 = \frac{\gamma - 1}{\gamma + 1} u_0.
+\]
+Now, relative to the ambient environment (velocity $u_1$), the shock has velocity $u = u_0-u_1$, so
+\[
+U = u_0-u_1  = \frac{2u_0}{\gamma + 1}.
+\]
+The \textbf{momentum of the shock} is then
+\[
+p_{\rm shock} = 4\pi D R^2 \rho_1 U = \frac{4}{3}\pi R^3 \rho_0 \frac{2u_0}{\gamma + 1}.
+\]
+Clearly,
+\[
+\dot{p}_{\rm shock} = \frac{8\pi \rho_0}{3(\gamma + 1)} \frac{d}{dt}(u_0R^3) \ge 0. 
+\]
+So the shock is \textbf{gaining momentum}. This must be because there is a pressure gradient at play! Now, we need the pressure $p_{\rm in}$ to drive the shock outward, which means it must be higher than $p_1$ (the shock pressure), and obviously higher than $p_0$ (which is zero since we set the temperature to 0). We consider the ansatz
+\[
+P_{\rm in} = \alpha P_{1}.
+\]
+\rmk{This is not an entirely justifiable assumption, but it serves to illustrate things.} For an adiabatic shock, the RH conditions give us that
+\[
+\rho_0 u_0^2 + p_0 = \rho_1u_1^2 + p_1.
+\]
+We assume that $p_0 = 0$, so 
+\[
+p_1 = \rho_0u_0^2 - \rho_1 u_1^2 = \rho_0u_0^2 - \frac{\gamma - 1}{\gamma + 1} \rho_0 u_0^2 = \frac{2}{\gamma +1} \rho_0 u_0^2.
+\]
+Thus, if $P_{\rm in} = \alpha p_1$, then
+\[
+\frac{8\pi \alpha}{\gamma +1} R^2\rho_0u_0^2 = \dot{p}_{\rm shock} = \frac{8\pi \rho_0}{3(\gamma + 1)} \frac{d}{dt}\left(u_0R^3\right),
+\]
+so
+\[
+3\alpha R^2 u_0^2 = \frac{d}{dt} \left(u_0 R^3\right) .
+\]
+Now,
+\[
+u_0 = \frac{dR}{dt},
+\]
+since \rmk{$u_0$ is the ambient gas velocity in the \textbf{frame of the shock}, which means that it is moving into the shock at the same speed the shock is moving through the medium.} Thus,
+\[
+3\alpha R^2 \dot{R}^2 = \frac{d}{dt} R^3 \dot{R} = 3R^2 \dot{R}^2 + R^3 \ddot{R}.
+\]
+Let's assume a \textbf{power law solution:}
+\[
+R \propto t^\beta.
+\]
+Then, 
+\[
+3\alpha \beta^2 t^{4\beta -2} = 3\beta^2t^{4\beta -2} + \beta(\beta-1)t^{4\beta -2}
+\]
+so
+\[
+(3\alpha -4)\beta = - 1 \implies \beta =\frac{1}{4-3\alpha}.
+\]
+So
+\[
+\boxed{
+R \sim t^{1/(4-3\alpha)}
+}
+\]
+and
+\[
+\boxed{
+u_0 \sim t^{(3\alpha -3)/(4-3\alpha)} \sim R^{3\alpha -3}.
+}
+\]
+Now, we come to the next clear question: \textbf{what is $\alpha$?} To determine this, we rely on the energetics of the explosion. If the blast wave is \textbf{adiabatic}, then it loses no energy as it evolves, so we need that $E_0$ to convert into internal energy and kinetic energy. Clearly, the kinetic energy of the wave is
+\[
+K = \frac{1}{2} \frac{4\pi}{3} \rho_0 R^3 U^2 = \frac{8\pi}{3(\gamma +1)^2} \rho_0u_0^2R^3.
+\]
+Likewise, the internal energy needs to be computed. Now, for an adiabatic gas, we likewise have
+\[
+p =K \rho^\gamma,
+\]
+and the first law of thermodynamics implies that
+\[
+dU = - pdV \implies d\mathcal{E} = - K\rho^\gamma d\log V,
+\]
+but $V = m/\rho \implies dV = m d \log \rho  = V d\log \rho$, so
+\[
+d\log \rho = - d\log V,
+\]
+and
+\[
+d\mathcal{E} = K \rho^{\gamma} d\log \rho = K \rho^{\gamma -1} d\rho,
+\]
+so
+\[
+\mathcal{E} = p/(\gamma -1).
+\]
+Now, we assumed (because the shock is thin) that the bulk of the internal energy is located in the less dense post-shocked gas, which means that we have internal energy
+\[
+U = \frac{4}{3}\pi R^3\frac{P_{\rm in}}{\gamma -1}.
+\]
+If we now write the entire energy in terms of time $t$, we have
+\[
+\begin{aligned}
+    E &= \frac{4}{3(\gamma -1)}\pi R^3\left[\alpha p_1 + \frac{2}{\gamma +1} \rho_0u_0^2\right]\\
+    E &=  \frac{4}{3(\gamma -1)(\gamma+1)}\pi R^3\left(\alpha+ 2\right) \rho_0u_0^2,\\
+\end{aligned}
+\]
+so 
+\[
+E \sim R^3u_0^2 \sim t^{(6\alpha -3)/(4-3\alpha)},
+\]
+which, for \textbf{energy conservation}, requires that $\alpha = 0.5$, so
+\begin{equation}
+    \boxed{
+    \begin{aligned}
+        R\sim t^{2/5},\; u_0\sim t^{-3/5},\;p_1\sim t^{-6/5}.
+    \end{aligned}
+    }
+\end{equation}
+In the next section, we will explore a fully rigorous solution.
+
+\section{Similarity Solution}
+Let us now consider a rigorous treatment of the material within the blast. We consider $v(r,t)$, $\rho(r,t)$, and $p(r,t)$. The \textbf{Euler Equations} take the form
+\[
+\begin{aligned}
+    \partial_t v + v\partial_r v = -\partial_rp / \rho\\
+    \partial_t \rho + \partial_r (\rho v) = - 2\rho v/r\\
+    \left(\partial_t + v\partial_r\right) \log p / \rho^\gamma = 0
+\end{aligned}
+\]
+\rmk{they look this way because they are in spherical symmetry. We are assuming an adiabatic system.} Now, it can be observed that for the blast wave problem we have been considering, these equations are \textbf{scale invariant}, meaning that there is no natural length scale to the problem. We therefore cannot permit a solution to insert some arbitrary scale into the problem where none was before. As such, we will cast the problem in terms if the \textbf{only available dimensionless scale}:
+\[
+\xi = r \left(\frac{\rho_0}{E_0t^2}\right)^{1/5}.
+\]
+Now, we will endeavor to find solutions to our equations which place the shock front at $\xi = 1$ and the
+center of the blast at $\xi = 0$. Clearly, if $R$ is the blast radius, then
+\[
+R(t) = \left(\frac{E_0t^2}{\rho_0}\right)^{1/5}.
+\]
+The velocity of the shock wave relative to the lab frame is then
+\[
+\dot{R} = \frac{2}{5} \frac{R}{t}. 
+\]
+Now, we would like to understand the various \textbf{post-shock quantities} (index 1) in terms of the \textbf{pre-shock quantities} (index 0) and our derived attributes. These are provided by the \textbf{Rankine-Huginiot Conditions}, which provide us with connections between the relevant quantities. We have (in the case of a strong shock)
+\[
+\begin{aligned}
+    u_1 = \frac{2}{\gamma +1} \dot{R}\\
+    p_1 = \frac{2}{\gamma +1} \rho_0 \dot{R}^2\\
+    \rho_1 = \rho_0 \frac{\gamma +1}{\gamma -1}
+\end{aligned}
+\]
+Now, if we assume that each of our various quantities is scale invariant, then we can assume equations of the form
+\[
+\begin{aligned}
+    \xi &= r/R\\
+    V(\xi) &= \frac{5}{2}\frac{t}{r} u_1\\
+    G(\xi) &= \frac{\rho}{\rho_0}\\
+    Z(\xi) &= \frac{25 t^2 c_s^2}{4r^2}.
+\end{aligned}
+\]
+\rmk{the constant factors just make things turn out nicely. The relevant parts here are that we combine $r, t, \rho_0, c_s$ to facilitate the correct dimensions.} With $\xi = 1$ acting as the boundary, we can derive a set of ODEs. These equations can be numerically integrated when relevant.
+
+\section{Breakdown of the Blast Wave}
+At a certain point, the blast wave solution will diminish because the condition that there be negligible pressure outside the blast will no longer be satisfied. Formally, once the blast wave is moving at $\sim c_s$ in the ambient medium, the shock will fail to hold and the wave behavior will take over, propogating the disturbance outward.
+
+Formally, if we set the criterion that $p_1 \sim p_0 = \rho_0 c_s^2/\gamma$, then $u_0^2 \sim c_s^2(\gamma +1)/(2\gamma).$ Using conservation of energy, we can compute the radius at which this happens as
+\[
+E = \frac{4\pi }{3} R^3 \left[\frac{1}{2}\rho \left(\frac{2u_0}{\gamma +1}\right)^2 + \frac{\alpha}{\gamma -1} \frac{2\rho_0 u_0^2}{\gamma +1}\right]
+\]
+which leads (after some algebra) to
+\[
+E \sim \frac{3\gamma - 1}{2(\gamma + 1)} \frac{4\pi}{3}\rho_0 R^3_{\rm max} \frac{c_0^2}{\gamma(\gamma -1)}.
+\]
+This generally works out to $\sim 100 {\rm pc}$ for most supernovae.
