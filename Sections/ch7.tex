@@ -69,11 +69,15 @@ A larger Mach number corresponds to a narrower cone, while $M \to 1^+$ correspon
 
 \section{The Rankine-Hugoniot Conditions}
 
-Consider a \textbf{shock front} dividing two regions of fluid. We refer to each side as the \textbf{upstream} and \textbf{downstream} side of the shock front. For the same of simplicity, we assume the front occurs at $x = 0$ in some reference frame and that, on either side of the front, we have some $\rho_{1,2},p_{1,2}, \;\text{and}\; u_{1,2}$. Now, certain conservation laws must still be true, namely those which provide us with the \textbf{Euler Equations}. As such, we can define some elements of the behavior across the shock front in terms of these conservation rules.
+Consider a \textbf{shock front} dividing two regions of fluid. We refer to each side as the \textbf{upstream} and \textbf{downstream} side of the shock front. For the sake of simplicity, we assume the front occurs at $x = 0$ in some reference frame and that, on either side of the front, we have some $\rho_{1,2},p_{1,2}, \;\text{and}\; u_{1,2}$. Now, certain conservation laws must still be true, namely those which provide us with the \textbf{Euler Equations}. As such, we can define some elements of the behavior across the shock front in terms of these conservation rules.
+\begin{remark}
+    An \textbf{critical} realization is that the Rankine-Hugoniot relations which we are soon to derive are  valid \textbf{only in the rest frame of the shock}. As such, we are always implicitly performing a Galilean transformation into that frame when we use them. 
+    \par
+    In many cases, this makes the intuition for which side of the shock is which tricky: if a bow shock is driven into the ICM of a galaxy cluster, the gas in the galaxy cluster is the \textbf{upstream side} since it moves towards the shock in the shock's reference frame. 
+\end{remark}
 
-\subsection*{The Continuity Equation}
-
-In Eulerian form,
+\subsection*{The Continuity Condition}
+In Eulerian form the continuity equation is,
 \[
 \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho u) = 0.
 \]
@@ -86,8 +90,7 @@ Now, as $\delta x \to 0$, we clearly have that the integral term vanishes and
 \boxed{\rho_1u_1 = \rho_2u_2}.
 \]
 
-\subsection*{The Momentum Equation}
-
+\subsection*{The Momentum Condition}
 In one-dimensional inviscid flow with an external body force ${\bf f}_{\rm ext}$, the momentum equation in \emph{conservative form} is
 \begin{equation}
 \frac{\partial (\rho u)}{\partial t} 
@@ -114,82 +117,310 @@ where $[A]_1^2 \equiv A_2 - A_1$ denotes the jump across the discontinuity. This
 \boxed{
 \rho_1 u_1^2 + p_1 \;=\; \rho_2 u_2^2 + p_2.}
 \end{equation}
-\subsection*{The Energy Equation}
+An equivalent statement may be created where the force is not bounded. See, for example, Thorne+Blandford.
 
-In one-dimensional inviscid, adiabatic flow with no external body force ${\bf f}_{\rm ext}$ and no heat addition, the total energy equation in \emph{conservative form} is (equation~\ref{eq:energy_equation_lagrangian})
-\begin{equation}
-\frac{\partial E}{\partial t} + \nabla \cdot [(E+p){\bf u}] = 0
-\end{equation}
-Integrating across a thin control volume enclosing the discontinuity and taking the steady shock rest frame,
-\begin{equation}
-\int_{-\delta x}^{+\delta x}
-\frac{\partial}{\partial x}
-\left[(E+p)u \right] dx
-= 0
-\end{equation}
- Therefore we obtain the \textbf{energy Rankine--Hugoniot condition}:
-\begin{equation}
-\left[ u \left(E + p \right) \right]_{1}^{2} = 0.
-\end{equation}
+\subsection*{The Energy Condition}
 
-Additionally, because $\rho u$ is already known to be constant (from the first condition), we have
+To derive the relevant condition for energy conservation across a shock, we adopt two simplifying assumptions:
+
+\begin{enumerate}
+    \item \textbf{Adiabatic flow}: there is no external heating or cooling, so we may ignore source terms in the energy equation.
+    \item \textbf{Inviscid flow}: viscous dissipation is neglected.
+\end{enumerate}
+
+\noindent
+Under these assumptions, the energy equation takes the form
 \[
-\left[(\mathcal{E} + p/\rho)\right]_{1}^{2} = 0
+\frac{\partial E}{\partial t} + \nabla \cdot \left[(E+p)\,\mathbf{u}\right] = 0,
 \]
+where $E = \tfrac{1}{2}\rho u^2 + \rho \epsilon$ is the total energy density, with $\epsilon$ the specific internal energy.  
+
+\medskip
+This equation can also be expressed in terms of enthalpy, $h \equiv \epsilon + p/\rho$, as
+\[
+\frac{\partial E}{\partial t} + \nabla \cdot \left[\left(\tfrac{1}{2}\rho u^2 + \rho h\right)\mathbf{u}\right] = 0.
+\]
+\medskip
+
+Assuming steady state and integrating across a vanishingly thin control volume that encloses the shock, we obtain equivalent jump conditions:
+\begin{equation}
+    \begin{aligned}
+        \big[u(E+p)\big]_1^2 &= 0 
+        &&\;\;\; \text{(flux of total energy + pressure)} \\[6pt]
+        \big[u(\tfrac{1}{2}\rho u^2 + \rho h)\big]_1^2 &= 0
+        &&\;\;\; \text{(flux of kinetic + enthalpy energy)} .
+    \end{aligned}
+\end{equation}
+
+\noindent
+Finally, using the mass conservation condition $\rho u =$ const across the shock, we can eliminate $u$ and write the energy condition in more compact forms:
+\begin{equation}
+    \boxed{ \;\;\left[ \mathcal{E} + \tfrac{p}{\rho} \right]_1^2 = 0 \;\;} ,
+    \qquad\text{or equivalently}\qquad
+    \boxed{ \;\;\left[ \tfrac{1}{2}u^2 + h \right]_1^2 = 0 \;\;} .
+\end{equation}
+Here $\mathcal{E} = \epsilon + \tfrac{1}{2}u^2$ is the specific total energy.
+
+\subsection{The Rankine--Hugoniot Conditions}
 
 \begin{definition}[Rankine--Hugoniot Conditions]
-The \emph{Rankine--Hugoniot conditions} express the jump relations for conserved quantities across a shock or other discontinuity in an inviscid fluid, obtained by integrating the Euler equations in conservative form across the discontinuity.  
-For a steady, one-dimensional shock in the shock rest frame, they are:
-\begin{equation}
-\label{eq:rankine_huginiot}
-    \begin{aligned}
-&\text{Mass conservation:} & \rho_1 u_1 &= \rho_2 u_2, \\
-&\text{Momentum conservation:} & \rho_1 u_1^2 + p_1 &= \rho_2 u_2^2 + p_2, \\
-&\text{Energy conservation:} & \left(\mathcal{E}_1 + p_1/\rho_1\right) &= \left(\mathcal{E}_2 + p_2/\rho_2\right),
-\end{aligned}
-\end{equation}
-where $\rho$ is the density, $u$ is the normal velocity relative to the shock, $p$ is the pressure, and $\mathcal{E} = U + \tfrac{1}{2} u^2$ is the total energy density (internal $+$ kinetic).  
+The \emph{Rankine--Hugoniot (RH) conditions} express the conservation of mass, momentum, and energy across a steady, planar shock front.  
+They are valid only in the \textbf{rest frame of the shock}, where the discontinuity is stationary and the upstream fluid flows into the front.  
+Together, they constrain the allowed discontinuities in density, velocity, pressure, and temperature.
 
-These relations hold for any inviscid, adiabatic flow without body forces or heat addition, and they form the basis for determining the downstream state $(\rho_2,u_2,p_2)$ from a given upstream state $(\rho_1,u_1,p_1)$ and equation of state.
-\end{definition}
-\vspace{0.5cm}
-Now, in their current form, equations~\ref{eq:rankine_huginiot} are dependent on the flow velocity, the internal energy, and the density / pressure. In many scenarios, these are not all measurable properties of the flow and instead we seek to find a simpler / more useful way to cast these relationships. The first step in doing so is to better understand the internal energy $E$ which appears in the above equations. Formally, for an adiabatic flow,
-\[
-p = \rho^\gamma,
-\]
-and the internal energy is
-\[
-U_1 = \frac{1}{2}u^2 + \frac{1}{\gamma -1} \frac{p}{\rho}
-\]
-If $\gamma$ is the same across the shock (\rmk{as it generally is because we are unlikely to be moving from monatomic to diatomic gasses or some other similar change...}), then we may write the energy condition (equation~\ref{eq:rankine_huginiot}) as
-\[
-\frac{1}{2}u_1^2 + \frac{\gamma}{\gamma -1} \frac{p_1}{\rho_1} = \frac{1}{2}u_2^2 + \frac{\gamma}{\gamma -1} \frac{p_2}{\rho_2}.
-\]
-Likewise, recall that
-\[
-c_s^2 = \frac{\partial p}{\partial \rho} = \gamma \rho^{\gamma -1 } = \gamma \frac{p}{\rho},
-\]
-so
-\[
-\boxed{
-\frac{1}{2}u_1^2 + \frac{c_1^2}{\gamma -1} = \frac{1}{2}u_2^2 + \frac{c_2^2}{\gamma -1}.
-}
-\]
-This form of the \textbf{Rankine-Huginiot condition} is already quite nice, but we generally do not observe easily $u$ or $c$. \rmk{In fact, in the context of galaxy clusters, we have $\rho$ and $kT$ available to us. When we use the ideal gas law, we get $\rho, p$ easily, so we'd like to state the condition in terms of $\rho$ and $p$.} To do so, we need to do a fair bit of algebra, the details of which are in the textbook. The end result is that
+\medskip
+For upstream quantities $(\rho_1, u_1, p_1)$ and downstream quantities $(\rho_2, u_2, p_2)$, the RH conditions are:
+
+\begin{enumerate}
+    \item \textbf{Mass conservation (continuity):}
 \begin{equation}
-    \label{eq:rankine_huginiot_2}
+    \label{eq:rh_continuity}
+    \rho_1u_1 = \rho_2 u_2
+\end{equation}
+    The mass flux through the shock is the same on both sides.
+
+    \item \textbf{Momentum conservation:}
+    \begin{equation}
+   \label{eq:rh_momentum}
+                \rho_1 u_1^2 + p_1 \;=\; \rho_2 u_2^2 + p_2 .
+    \end{equation}
+    The sum of momentum flux and pressure force is conserved.
+
+    \item \textbf{Energy conservation:}
+    \begin{equation}
+        \label{eq:rh_energy}
+        \frac{1}{2}u_1^2 + h_1 \;=\; \frac{1}{2}u_2^2 + h_2 ,
+    \end{equation}
+    where $h = \epsilon + p/\rho$ is the specific enthalpy.  
+    This states that the specific total energy (kinetic plus thermal) is continuous across the shock.
+\end{enumerate}
+
+\noindent
+Together, these three relations define the \emph{Rankine--Hugoniot conditions}.  
+They show that shocks are not arbitrary discontinuities: only those jumps that satisfy mass, momentum, and energy conservation are physically possible.
+\end{definition}
+
+
+\subsection{Additional Forms of the RH Conditions}
+
+Now, in their current form, equations~\ref{eq:rh_energy}, \eqref{eq:rh_momentum}, and \eqref{eq:rh_energy} are dependent on the flow velocity, the internal energy, and the density / pressure. In many scenarios,\textbf{ these are not all measurable properties of the flow} and instead we seek to find a simpler / more useful way to cast these relationships. The first step in doing so is to better understand the internal energy $E$ which appears in the above equations. Let us formally \textbf{assume} a polytropic equation of state of the form,
+\[
+p = \rho^\Gamma,
+\]
+The convenience of this assumption is that the enthalpy is 
+\[
+h = \int^P \frac{dP}{\rho} = \int^\rho \Gamma \rho^{\Gamma -2} \;d \rho = \frac{\Gamma}{\Gamma -1} \rho^{\Gamma -1}.
+\]
+Noting that
+\[
+c_s^2 = \frac{\partial P}{\partial \rho} = \Gamma \rho^{\Gamma -1} \implies \boxed{h = \frac{c_s^2}{\Gamma -1}.}
+\]
+We can therefore get the very convenient form of the energy condition \eqref{eq:rh_energy}:
+\begin{equation}
+    \label{eq:rh_energy_enth}
     \boxed{
-    \frac{\rho_2}{\rho_1} = \frac{(\gamma + 1)p_2 + (\gamma - 1)p_1}{(\gamma + 1)p_1 + (\gamma -1) p_2} = \frac{u_1}{u_2}.
+    \frac{1}{2}u_1^2 + \frac{c_1^2}{\Gamma -1} = \frac{1}{2}u_2^2 +\frac{c_2^2}{\Gamma -1}
     }
 \end{equation}
-In this form the \textbf{Rankine Huginiot} condition contains a great deal of physical information! Notably, in the limit of \textbf{strong shocks}, where $p_1 \gg p_2$, we have
+This form of the \textbf{Rankine-Huginiot condition} is already quite nice, but there are many manipulations to be made to these expressions in order to get various forms worth exploration. At this stage, it is worth developing something of a heuristic picture of how these can be used.
+\par
+We have, in this form of the RH conditions, 4 sets of variables: $\rho_{[1,2]}$, $u_{[1,2]}$, $c_{[1,2]}^2$, and $P_{[1,2]}$. Now, the RH conditions (and the EOS) provide the following relationships:
+\vspace{0.5cm}
+\begin{enumerate}
+    \item \textbf{Continuity}: Relates $\rho$ and $u$.
+    \item \textbf{Momentum}: Relates $P$ and $u$.
+    \item \textbf{Energy}: Relates $u$ and $c_s^2$.
+    \item \textbf{EOS}: Relates $P$ and $\rho$.
+\end{enumerate}
+\vspace{0.5cm}
+\subsubsection*{Mach Number Form of the RH Conditions}
+
+It is often useful to re–express the Rankine--Hugoniot conditions in terms of the
+\textbf{Mach number},
 \[
-\frac{\rho_2}{\rho_1} = \frac{u_1}{u_2} = \frac{\gamma -1}{\gamma + 1},
+M \equiv \frac{u}{c_s},
 \]
-so for a monatomic gas with $\gamma = 5/3$, the result is that
+which combines the flow speed $u$ and the sound speed $c_s$ into a single dimensionless variable.  
+This is particularly helpful in astrophysical contexts, where shocks are commonly characterized by their upstream Mach number $M_1$.
+
+\medskip
+
+Starting from the energy condition across the shock, we can write
 \[
-\frac{\rho_2}{\rho_1} = \frac{2/3}{8/3} = \frac{1}{4}.
+\frac{1}{2} + \frac{M_1^{-2}}{\Gamma -1}
+= \frac{1}{2}\frac{u_2^2}{u_1^2} + \frac{(c_2^2/u_1^2)}{\Gamma -1},
 \]
+where $\Gamma$ is the adiabatic index.  
+
+\medskip
+
+From the continuity condition (\eqref{eq:rh_continuity}) we know that
+\[
+\frac{\rho_1}{\rho_2} = \frac{u_2}{u_1} \equiv x ,
+\]
+so that
+\[
+\frac{1}{2} + \frac{M_1^{-2}}{\Gamma -1}
+= \frac{1}{2}x^2 + \frac{c_2^2}{c_1^2}\frac{M_1^{-2}}{\Gamma -1}.
+\]
+Rearranging gives
+\[
+\frac{1}{2}(1-x^2) = \frac{M_1^{-2}}{\Gamma -1}\left(\frac{c_2^2}{c_1^2} - 1\right).
+\]
+
+\medskip
+
+The ratio of sound speeds follows from the equation of state:
+\[
+\frac{c_2^2}{c_1^2} = \frac{P_2}{P_1}\frac{\rho_1}{\rho_2} = \frac{P_2}{P_1}x.
+\]
+
+To eliminate $P_2/P_1$, we use the momentum Rankine--Hugoniot condition:
+\[
+\rho_1 u_1^2 + P_1 = \rho_2 u_2^2 + P_2.
+\]
+Dividing through by $P_1$ and using $x \equiv u_2/u_1 = \rho_1/\rho_2$, we can rewrite the right-hand side:
+\[
+\frac{\rho_2 u_2^2}{P_1} = \frac{\rho_2 (x u_1)^2}{P_1}
+= \frac{\rho_1 u_1^2}{P_1}\,x.
+\]
+\noindent
+Therefore the momentum condition becomes
+\[
+\frac{\rho_1 u_1^2}{P_1} + 1 = \frac{\rho_1 u_1^2}{P_1}\,x + \frac{P_2}{P_1}.
+\]
+
+\noindent
+Rearranging gives
+\[
+1 - \frac{P_2}{P_1} = \frac{\rho_1 u_1^2}{P_1}(x-1).
+\]
+Next, we express the prefactor in terms of the Mach number. Since
+\[
+M_1^2 = \frac{u_1^2}{c_1^2}, \qquad c_1^2 = \frac{\Gamma P_1}{\rho_1},
+\]
+we have
+\[
+\frac{\rho_1 u_1^2}{P_1} = \frac{\rho_1}{P_1} M_1^2 c_1^2
+= \frac{\rho_1}{P_1} M_1^2 \frac{\Gamma P_1}{\rho_1}
+= \Gamma M_1^2.
+\]
+
+\noindent
+Thus the pressure jump condition is
+\[
+\frac{P_2}{P_1} = 1 + \Gamma M_1^2(1-x).
+\]
+Finally, recalling that $c^2 = \Gamma P/\rho$, the sound speed ratio may be expressed as
+\[
+\frac{c_2^2}{c_1^2} = \frac{P_2}{P_1}\frac{\rho_1}{\rho_2}
+= \frac{P_2}{P_1}\,x
+= x\left[1 + \Gamma M_1^2(1-x)\right].
+\]
+Substituting this into the modified energy equation yields
+\[
+\frac{M_1^2}{2}(x^2-1) = \frac{1}{\Gamma -1}\left[\Gamma x(1-x)M_1^{2} + x - 1\right].
+\]
+
+Factoring out $(x-1)$ from the modified energy equation and simplifying gives
+\[
+\frac{1}{2}(\Gamma -1) M_1^2 (x+1) + \Gamma x - M_1^2 = 0.
+\]
+Solving this quadratic relation for $x = \rho_1/\rho_2$ and inverting, we obtain the 
+classic \textbf{compression ratio} across a shock:
+\begin{equation}
+\label{eq:rh_density_ratio_from_mach}
+\boxed{\;\;\frac{\rho_2}{\rho_1} \;=\; \frac{(\Gamma+1)M_1^2}{(\Gamma-1)M_1^2 + 2}\;\;}
+\end{equation}
+\noindent
+This compact expression shows that the density jump depends only on the upstream Mach number.  
+In the strong shock limit ($M_1 \to \infty$), the ratio saturates at
+$\rho_2/\rho_1 = (\Gamma+1)/(\Gamma-1)$, which equals \framebox{$4$ for a monatomic ideal gas ($\Gamma = 5/3$)}. As the shock weakens, the density ratio becomes $1$.
+\par
+From the derivation above, we can also write down the \textbf{pressure ratio} in the form
+\begin{equation}
+\boxed{\;\;\frac{P_2}{P_1} = 1 + \frac{2\Gamma}{\Gamma+1}\,(M_1^2 - 1)\;\;},
+\end{equation}
+where we have used the fact that $x = u_2/u_1 = \rho_1/\rho_2$ and the expression we derived from $P_2/P_1$ in terms of $x$ above.
+\par
+
+\subsubsection*{The Density-Pressure Form}
+It is sometimes convenient to eliminate the Mach number entirely and express
+the compression ratio $\rho_2/\rho_1$ directly in terms of the pressure ratio
+$P_2/P_1$. Starting from the momentum condition in dimensionless form,
+\[
+\frac{P_2}{P_1} = 1 + \Gamma M_1^2 (1 - x),
+\]
+with $x \equiv \rho_1/\rho_2$, we can rearrange this relation to isolate $M_1^2$:
+\[
+M_1^2 = \frac{ \tfrac{P_2}{P_1} - 1 }{ \Gamma(1 - x) }.
+\]
+On the other hand, from the density ratio expressed in terms of Mach number
+(eq.~\ref{eq:rh_density_ratio_from_mach}),
+\[
+\frac{\rho_2}{\rho_1} = \frac{(\Gamma+1) M_1^2}{(\Gamma-1)M_1^2 + 2}.
+\]
+
+Substituting the above expression for $M_1^2$ into this equation and simplifying
+yields a direct relation between the density and pressure ratios:
+\[
+\frac{\rho_2}{\rho_1} =
+\frac{ \tfrac{P_2}{P_1} + \tfrac{\Gamma -1}{\Gamma +1} }
+     { \tfrac{\Gamma}{\Gamma +1}\,\tfrac{P_2}{P_1} + \tfrac{1}{\Gamma +1} } .
+\]
+Equivalently, this can be written in a slightly cleaner form:
+\begin{equation}
+\boxed{\;\;
+\frac{\rho_2}{\rho_1}
+= \frac{ (\Gamma - 1)P_1 + (\Gamma + 1)P_2 }
+       { (\Gamma + 1)P_1 + (\Gamma - 1)P_2}
+\;\;}
+\end{equation}
+\noindent
+This form of the Rankine--Hugoniot condition is particularly useful in practice:
+if the pressure jump across a shock is measured (for example in X-ray
+observations of galaxy clusters), the corresponding compression ratio of the
+gas can be inferred directly.
+
+\subsubsection*{The Temperature RH Conditions}
+
+The behavior of the temperature across the RH conditions is determined from the
+other ratios we have already derived. Specifically,
+\[
+\frac{T_2}{T_1} = \frac{P_2}{P_1} \cdot \frac{\rho_1}{\rho_2}.
+\]
+Substituting the expressions for the pressure and density ratios in Mach form,
+\[
+\frac{P_2}{P_1} = 1 + \frac{2\Gamma}{\Gamma+1}\left(M_1^2 - 1\right),
+\qquad
+\frac{\rho_2}{\rho_1} = \frac{(\Gamma+1)M_1^2}{(\Gamma-1)M_1^2+2},
+\]
+we arrive at
+\[
+\frac{T_2}{T_1} =
+\left[\,1 + \frac{2\Gamma}{\Gamma+1}\left(M_1^2 - 1\right)\,\right]
+\left[\frac{(\Gamma-1)M_1^2+2}{(\Gamma+1)M_1^2}\right].
+\]
+Simplifying gives the compact form
+\begin{equation}
+\boxed{\;\;
+\frac{T_2}{T_1} =
+\frac{\left[\,2\Gamma M_1^2 - (\Gamma - 1)\,\right]
+      \left[(\Gamma-1)M_1^2+2\right]}
+     {(\Gamma+1)^2 M_1^2}
+\;\;}
+\end{equation}
+\noindent
+As a check, in the strong-shock limit $M_1 \to \infty$,
+\[
+\frac{T_2}{T_1} \;\longrightarrow\;
+\frac{2\Gamma(\Gamma-1)}{(\Gamma+1)^2}\,M_1^2.
+\]
+For a monatomic ideal gas ($\Gamma=5/3$), this reduces to
+\[
+\frac{T_2}{T_1} \;\longrightarrow\; \frac{5}{16}\,M_1^2.
+\]
+
 \section{Isothermal Shocks}
 
 In the adiabatic treatment above, we neglected cooling in the energy equation. This is not always valid. When the gas is strongly coupled to a cooling process (e.g.\ radiation, conduction to a cold reservoir), thermal energy generated in the shock is \textbf{removed rapidly and the temperature remains approximately constant across the discontinuity}. Such shocks are well described by the \emph{isothermal} limit.
