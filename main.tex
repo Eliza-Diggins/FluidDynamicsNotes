@@ -62,7 +62,7 @@
   outer arc=2pt,
   left=6pt, right=6pt, top=8pt, bottom=8pt,
   drop shadow=black!40!white,    % subtle shadow
-  title=Where in the Universe?,  % default title
+  title=Intuition,  % default title
   #1
 }
 
@@ -130,7 +130,9 @@
 %	CHAPTER 1
 %----------------------------------------------------------------------------------------
 \chapterimage{head2.png} % Chapter heading image
+\part{Fundamentals of Fluid Dynamics}
 \chapter{Fundamental Concepts}
+\label{ch:1}
 \input{Sections/ch1}
 \chapter{The Fluid Equations}
 \input{Sections/ch2}
@@ -138,6 +140,13 @@
 \include{Sections/ch3}
 \chapter{Thermodynamics}
 \include{Sections/ch4}
+\chapter{Bernoulli's Theorem}
+\include{Sections/ch9}
+\chapter{Viscosity}
+\input{Sections/ch10}
+
+\part{Equilibria and Perturbation}
+
 \chapter{Hydrostatic Equilibrium}
 \include{Sections/ch5}
 \chapter{Sound Waves}
@@ -146,6 +155,14 @@
 \include{Sections/ch7}
 \chapter{Blastwaves}
 \include{Sections/ch8.tex}
-\chapter{Bernoulli's Theorem}
-\include{Sections/ch9}
+\chapter{Fluid Instabilities}
+\input{Sections/ch11}
+
+\part{Kinetic Theory}
+
+\part{Plasma Physics}
+
+\part{Phenomenology}
+
+\part{Computation}
 \end{document}

@@ -27,7 +27,7 @@ Now, it can be shown that (vector identity),
 \[
 ({\bf A} \cdot \nabla){\bf A} = \frac{1}{2}\nabla(|{\bf A}|^2) - {\bf A} \times (\nabla \times {\bf A}).
 \]
-As such, we may write the second term on the LHS as
+\rmk{If you ever need to show this, the idea is to pull in $A$ to get the derivative of the square (i.e. chain rule) and then add a correction term.} As such, we may write the second term on the LHS as
 \[
 ({\bf u \cdot \nabla}){\bf u}  = \frac{1}{2}\nabla(u^2) - {\bf u} \times (\nabla \times {\bf u}).
 \]
@@ -82,6 +82,13 @@ where $\mathcal{B}$, the \textbf{Bernoulli function}, is given by
 and $h$ is the \textbf{specific enthalpy}, defined by
 \[
 h(\rho) = \int^\rho \frac{dP}{\rho'}.
+\]
+\par
+An \textbf{equivalent (and more useful) statement} is
+\[
+\boxed{
+\frac{D\mathcal{B}}{Dt} = 0.
+}
 \]
 \end{corollary}
 
@@ -225,6 +232,10 @@ If we now apply the \textbf{Euler Equation} in the special case where \textbf{Be
 \[
 \frac{D\Gamma}{Dt} = 0.
 \]
+
+\section{Vorticity Transport and Stretching}
+
+\textcolor{red}{Read / write about this a bit}
 
 \section{Aside: Potential Flow}
 

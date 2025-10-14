@@ -274,6 +274,61 @@ Theorem~\ref{thrm:stress-is-symmetric} gives us a few very interesting corollari
     \end{itemize}
 \end{corollary}
 
+\subsubsection{Boundary Conditions}
+
+In continuum mechanics, boundary conditions arise from the requirement that forces 
+on surfaces balance. The relevant object is the Cauchy stress tensor 
+$\boldsymbol{\sigma}$, which relates to the traction vector (force per unit area) 
+acting on a surface with unit normal $\hat{\mathbf{n}}$ via
+\begin{equation}
+    \mathbf{t} = \boldsymbol{\sigma} \cdot \hat{\mathbf{n}}.
+\end{equation}
+
+At an interface between two media, \textbf{Newton’s third law requires} that the tractions 
+exerted on the surface by each medium, together with any intrinsic surface forces, 
+must balance. In the most general form:
+\begin{equation}
+    \big(\boldsymbol{\sigma}^{(1)} - \boldsymbol{\sigma}^{(2)}\big) \cdot \hat{\mathbf{n}}
+    = \nabla_s \cdot \boldsymbol{\tau}_s,
+\end{equation}
+where
+\begin{itemize}
+    \item $\boldsymbol{\sigma}^{(1)}$, $\boldsymbol{\sigma}^{(2)}$ are the bulk stress tensors 
+          on either side of the interface,
+    \item $\hat{\mathbf{n}}$ is the unit normal to the interface (pointing into medium 1),
+    \item $\boldsymbol{\tau}_s$ is the surface stress tensor (e.g.\ isotropic surface tension),
+    \item $\nabla_s$ denotes the surface divergence operator.
+\end{itemize}
+
+This condition can be decomposed into two parts:
+\begin{enumerate}
+    \item \textbf{Normal stress balance:}
+    \begin{equation}
+        \hat{\mathbf{n}} \cdot 
+        \big(\boldsymbol{\sigma}^{(1)} - \boldsymbol{\sigma}^{(2)}\big) \cdot \hat{\mathbf{n}}
+        = \hat{\mathbf{n}} \cdot \big(\nabla_s \cdot \boldsymbol{\tau}_s\big),
+    \end{equation}
+    which determines the pressure jump across the surface (including, e.g., Laplace pressure if surface tension is present).
+
+    \item \textbf{Tangential stress continuity:}
+    \begin{equation}
+        \hat{\mathbf{t}} \cdot 
+        \big(\boldsymbol{\sigma}^{(1)} - \boldsymbol{\sigma}^{(2)}\big) \cdot \hat{\mathbf{n}} = 0,
+    \end{equation}
+    for all tangent directions $\hat{\mathbf{t}}$, unless additional surface shear stresses 
+    are present.
+\end{enumerate}
+
+\medskip
+\noindent
+\textbf{Physical interpretation.}  
+The boundary condition is simply the statement that the interface, having no bulk inertia, 
+cannot sustain a net unbalanced traction. The normal component enforces pressure or normal 
+stress balance, while the tangential component enforces shear stress continuity. Any intrinsic 
+surface physics (e.g.\ isotropic tension, membrane elasticity) enters through the surface stress 
+tensor $\boldsymbol{\tau}_s$.
+
+
 \section{Euler's Equations}
 
 We are now in a position to derive the \textbf{Euler equations} — the fundamental equations governing the motion of an \emph{inviscid} (non-viscous) fluid. These equations follow naturally by simplifying the general momentum conservation law under the assumption that viscous stresses vanish and only isotropic pressure remains.
@@ -400,73 +455,94 @@ For an inviscid, compressible fluid with mass density $\rho$, velocity field ${\
 These two equations form the foundation of inviscid fluid dynamics. They are generally closed by an \textbf{equation of state} relating pressure $p$ to $\rho$ and potentially other thermodynamic quantities, especially in compressible flows.
 
 \section{Viscosity}
-In many astrophysical settings, viscosity can often be neglected. However, when it does become relevant, it plays a crucial role in the dynamics. Intuitively, \textbf{viscous forces} arise from interactions between neighboring fluid elements that are moving at different velocities. These internal forces act to \textbf{resist deformation} and \textbf{dissipate energy} within the fluid.
 
-\vspace{0.25cm}
-
-\subsection{Velocity Gradients and Deformation}
-Before discussing viscosity itself, we first need to introduce some ideas about the velocity field. The basic input to viscosity is the \textbf{velocity gradient tensor}:
+So far in our discussion of momentum conservation, we have discussed only scenarios with \textbf{bulk transfer of momentum}:
 \[
-\nabla_\ell u_k = \frac{\partial u_k}{\partial x_\ell},
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = {\bf F}_{\rm ext},
 \]
-which quantifies how the velocity varies in space and therefore how a fluid element is being deformed or rotated. 
+where $\boldsymbol{\sigma}$ is an \textbf{isotropic stress tensor} containing only the contribution of thermal pressure. In this section, we'll discuss the advent of \textbf{viscosity} and its role in the dynamics of fluids.
+\par
+\subsection{Intuition for Viscosity}
 
-As with all rank-2 tensors, the velocity gradient can be uniquely decomposed into symmetric and antisymmetric parts:
+Viscosity originates from the \textbf{microscopic transport of momentum by
+particles in thermal motion.} Even in a simple gas, molecules do not
+remain confined to a single ``layer'' of the fluid: they constantly
+move across notional boundaries separating adjacent regions. When a
+molecule crosses such a boundary, it carries with it the momentum
+characteristic of its layer of origin. If the bulk velocity differs
+between neighboring layers, these molecular exchanges create a net
+flux of momentum.
+
+This picture explains why \textbf{velocity gradients} are the key
+ingredient in viscous phenomena. When the flow is spatially uniform,
+particle exchange across layers simply mixes identical momentum
+distributions, producing no net effect. By contrast, if there is a
+velocity gradient, the molecules arriving from the faster layer carry
+more momentum than those arriving from the slower layer. The result is
+an imbalance: momentum is transported down the gradient, and the fluid
+experiences a \textbf{shear stress} opposing the relative motion of
+the layers.
+
+A simple kinetic estimate makes this idea quantitative. Consider a
+shear flow with velocity $u(y)$ in the $x$--direction. Molecules
+originating a distance of order the mean free path $\ell$ away bring
+with them an excess (or deficit) of momentum proportional to
+$\rho\,v_{\rm th}\,\ell\,\partial u/\partial y$, where $\rho$ is the
+mass density and $v_{\rm th}$ the typical thermal speed. This leads to
+an effective shear force per unit area
 \[
-\nabla_\ell u_k = 
-\underbrace{\tfrac{1}{2}\left(\nabla_\ell u_k + \nabla_k u_\ell\right)}_{\text{Symmetric part}} \;+\;
-\underbrace{\tfrac{1}{2}\left(\nabla_\ell u_k - \nabla_k u_\ell\right)}_{\text{Antisymmetric part}}.
+\tau_{xy} \sim \mu \, \frac{\partial u}{\partial y},
 \]
-
-Both of these components play important roles in fluid dynamics and have special names.
-
-\begin{definition}[Rate-of-Strain Tensor]
-The \textbf{rate-of-strain tensor} is the symmetric part of the velocity gradient:
+with a viscosity coefficient of order
 \[
-S_{k\ell} = \tfrac{1}{2}\left(\nabla_\ell u_k + \nabla_k u_\ell\right).
+\mu \sim \tfrac{1}{3}\,\rho\,v_{\rm th}\,\ell.
 \]
-It measures the rate at which a fluid element is stretched, compressed, or sheared. Because $S_{k\ell}$ is symmetric, it can be diagonalized: in an appropriate basis, the eigenvalues correspond to the principal rates of elongation or contraction along orthogonal directions.
-\end{definition}
+While this argument is heuristic, it captures the essential scaling
+and physical mechanism: viscosity is the diffusive transport of
+momentum due to microscopic motion. A more rigorous calculation using
+kinetic theory (e.g.\ the Chapman--Enskog solution for a dilute gas of
+hard spheres) yields a viscosity of the same order of magnitude,
+providing confirmation of this simple picture.
 
-\begin{definition}[Vorticity Tensor]
-The \textbf{vorticity tensor} is the antisymmetric part of the velocity gradient:
+\subsection{The Formal Theory of Viscosity}
+
+We now develop the formal framework for viscosity. Our ultimate goal is
+to build a constitutive law for viscous stresses that, when inserted into
+the momentum conservation equation, yields the celebrated
+Navier--Stokes equations.
+
+\subsubsection*{The Viscous Stress Tensor}
+
+The central physical idea is that \textbf{viscosity encodes how
+\emph{velocity gradients} generate internal stresses in a fluid}.
+Because viscosity represents a dissipative process, the stress must
+depend only on the \emph{local deformation rate} of a fluid element.
+
+The deformation of a fluid element is described by the velocity gradient
+tensor,
 \[
-\Omega_{k\ell} = \tfrac{1}{2}\left(\nabla_\ell u_k - \nabla_k u_\ell\right).
+V_{\mu\nu} \equiv \frac{\partial u_\mu}{\partial x_\nu}.
 \]
-It measures the local rigid-body rotation of a fluid element. In three dimensions, $\Omega_{k\ell}$ is directly related to the vorticity vector
+This tensor can be decomposed into its symmetric and antisymmetric
+parts:
 \[
-\boldsymbol{\omega} = \nabla \times \mathbf{u}, \qquad
-\Omega_{k\ell} = -\tfrac{1}{2}\,\epsilon_{k\ell m}\,\omega_m.
+V_{\mu\nu} = S_{\mu\nu} + A_{\mu\nu},
 \]
-\end{definition}
+where $S_{\mu\nu}$ is the symmetric \emph{rate-of-strain tensor} and
+$A_{\mu\nu}$ is the antisymmetric \emph{vorticity tensor}. The latter
+corresponds to a rigid-body rotation, which does not distort the shape
+of the fluid element and therefore cannot produce internal stresses.
+Only the symmetric part $S_{\mu\nu}$ contributes to viscous effects.
 
-\noindent
-\noindent
-Viscous forces depend only on the symmetric rate-of-strain tensor $S_{k\ell}$. 
-The antisymmetric part $\Omega_{k\ell}$ corresponds to a rigid-body rotation of the fluid element: such a motion does not change the relative distances between neighboring particles and therefore cannot produce internal friction. 
-Formally, any contribution of $\Omega_{k\ell}$ to the stress would imply dissipation under pure rotation, which is unphysical. 
-Moreover, the dissipation rate $\Phi = \tau_{ij} \nabla_j u_i$ vanishes for the antisymmetric part since $\tau_{ij}\Omega_{ij}=0$, confirming that only $S_{k\ell}$ contributes to viscous stresses.
-
+Motivated by these considerations, we postulate the most general linear
+constitutive relation between stress and strain rate:
+\[
+\tau_{ij} = \mu_{ij\mu\nu}\,S_{\mu\nu},
+\]
+where $\tau_{ij}$ is the viscous stress tensor and
+$\mu_{ij\mu\nu}$ is the rank-4 \emph{viscosity tensor} that encodes the
+proportionality between strain rates and stresses. In full generality, $\mu_{ijkl}$ could contain $3^4=81$ components in three dimensions. Physical symmetries reduce this number dramatically. There are a number of such symmetries; however, the following are the most relevant in the theory of viscous fluids:
 \vspace{0.5cm}
-
-\subsection{Constitutive Law for Viscous Stress}
-To first order in the gradients, we postulate a linear constitutive law relating viscous stresses to the rate-of-strain tensor:
-\[
-\tau_{ij} = \mu_{ijkl} \, S_{kl},
-\]
-where:
-\begin{itemize}
-    \item $\tau_{ij}$ is the \textbf{viscous stress tensor},
-    \item $S_{kl}$ is the symmetric rate-of-strain tensor,
-    \item $\mu_{ijkl}$ is the rank-4 \textbf{viscosity tensor}, encoding the proportionality between strain rates and stresses.
-\end{itemize}
-
-In full generality, $\mu_{ijkl}$ could contain $3^4=81$ components in three dimensions. Physical symmetries reduce this number dramatically.
-
-\vspace{0.5cm}
-
-\subsection{Constraints on $\mu_{ijkl}$}
-
 \paragraph{1. Stress symmetry.}
 Because $\tau_{ij} = \tau_{ji}$, only the part of $\mu_{ijkl}$ symmetric under $i \leftrightarrow j$ contributes. Similarly, since $S_{kl}$ is symmetric, only the part symmetric under $k \leftrightarrow \ell$ is relevant.
 
@@ -490,7 +566,7 @@ Thus the most general isotropic form is
 + \beta \,\delta_{ik}\delta_{j\ell}
 + \gamma \,\delta_{i\ell}\delta_{jk},
 \]
-with scalar coefficients $\alpha,\beta,\gamma$.
+with scalar coefficients $\alpha,\beta,\gamma$. (\rmk{Think about acting on the $\delta$-based $\mu$ with the various rotation matrices. It is easy to convince yourself that this is one way to preserve the tensor. Then each of the possible ways to create a pairing can be present.})
 
 \paragraph{4. Reduction.}
 Contracting this form with $S_{kl}$ yields
@@ -501,12 +577,39 @@ This shows that the viscous stress is determined by only two independent constan
 \[
 \tau_{ij} = 2\mu S_{ij} + \lambda \,\delta_{ij} S_{kk},
 \]
-where $\mu = \beta + \gamma$ is the \textbf{shear viscosity} and $\lambda = \alpha$ is the \textbf{bulk viscosity}.
+where $\mu = \beta + \gamma$ and $\lambda = \alpha$.
 
 \subsection{Shear and Bulk Viscosity}
 
-The reduction above shows that all viscous behavior of an isotropic fluid can be described using only two scalar coefficients: the \textbf{shear viscosity} $\mu$ and the \textbf{bulk viscosity} $\lambda$.
-
+We have shown above that the viscous stress tensor takes the form
+\[
+\tau_{ij} = 2\mu S_{ij} + \lambda \delta_{ij} S_{kk},
+\]
+however, we may get an even more intuitive expression where things begin to reflect some degree of \textbf{physical structure}. We first recognize that $S_{ij}$ has \textbf{diagonal elements } $S_{ii}$ which correspond to \textbf{contraction and expansion}. Likewise, it has \textbf{off-diagonal elements} $S_{ij}$ corresponding to \textbf{shearing}. What we can do is break $\boldsymbol{S}$ into these two parts:
+\vspace{0.25cm}
+\begin{enumerate}
+    \item The \textbf{isotropic component}: contains the uniform expansion / contraction of the material,
+    \item The \textbf{traceless (deviatoric) component}: which encodes the shear.
+\end{enumerate}
+\vspace{0.25cm}
+Formally, we write
+\[
+S_{ij} = \underbrace{\frac{1}{3} S_{kk} \delta_{ij}}_{\text{Isotropic Component}} + \underbrace{\left(S_{ij} - \frac{1}{3} S_{kk}\delta_{ij}\right)}_{\text{traceless component}}.
+\]
+\par
+If we now propogate this expansion into the \textbf{viscous stress}, we find
+\begin{equation}
+    \tau_{ij} = \underbrace{2\mu S'_{ij}}_{\text{Deviatoric Component}} + \underbrace{\left(\frac{2}{3}\mu + \lambda\right)\delta_{ij} S_{kk}}_{\text{Trace Component}}.
+\end{equation}
+If we now combine our constants into a nice form, we can write
+\begin{equation}
+    \label{eq:viscous_stress_tensor}
+    \boxed{
+    \tau_{ij} = \underbrace{2\mu S'_{ij}}_{\text{Shear Viscous Stresses}} + \underbrace{\zeta \delta_{ij} S_{kk}}_{\text{Bulk Viscosity}},
+    }
+\end{equation}
+where we have introduced (or reinterpretted in the case of $\mu$) the constants to be the coefficients of \textbf{bulk} and \textbf{shear} viscosity respectively. We now state this result with definitions:
+\vspace{0.5cm}
 \begin{definition}[Shear Viscosity]\label{def:shear-viscosity}
 The \textbf{shear viscosity} $\mu$ quantifies the internal resistance of a fluid to \emph{shearing deformations}, i.e.~motions where parallel fluid layers slide past one another at different velocities. It governs the stresses proportional to the traceless, symmetric part of the strain-rate tensor. Everyday examples include the drag experienced when stirring honey or the laminar shear between plates in Couette flow.
 \end{definition}
@@ -517,7 +620,94 @@ The \textbf{bulk viscosity} $\lambda$ quantifies the fluid's resistance to \emph
 
 
 \subsection{The Navier-Stokes Equations}
+We are now prepared to derive the most famous equation in fluid dynamics: the \textbf{Navier-Stokes equation}. This equation is the equivalent to the Euler equation when we include viscous stresses. Let's consider a system with \textbf{bulk viscosity} $\zeta$ and \textbf{shear viscosity} $\mu$. The stress tensor $\boldsymbol{\sigma}$ will take the form
+\[
+\boldsymbol{\sigma} = -P{\bf I} + \boldsymbol{\tau}.
+\]
+Now, as we derived above \eqref{eq:viscous_stress_tensor},
+\[
+    \tau_{ij} = \underbrace{2\mu S'_{ij}}_{\text{Shear Viscous Stresses}} + \underbrace{\zeta \delta_{ij} S_{kk}}_{\text{Bulk Viscosity}},
+\]
+This form is \textbf{not particularly conducive to manipulation}, as such, we'll use the form without splitting into the deviatoric and bulk terms, but this time, we'll replace $\lambda$ with $\zeta$:
+\[
+\tau_{ij} = 2\mu S_{ij} + \left(\zeta - \frac{2}{3}\mu\right) \delta_{ij} S_{kk} = \mu(u_{i;j} + u_{j;i}) + \left(\zeta-\frac{2}{3}\mu\right) \delta_{ij}u_{k;k},
+\]
+where the $;$ is the \textbf{covariant derivative}. In vector notation,
+\[
+\boldsymbol{\tau} = \mu\left[\nabla {\bf u} + \nabla{\bf u}^T\right] + {\bf I}\left(\zeta-\frac{2}{3}\mu\right)\nabla \cdot {\bf u}.
+\]
+As such, we have
+\[
+\sigma_{ij;j} = - P_{;i} + \tau_{ij;j} = -P_{;i} + \mu\left(u_{i;jj} + u_{j;ij}\right) + \left(\zeta - \frac{2}{3}\mu\right)\delta_{ij} u_{k;ki}.
+\]
+Because the order of operations doesn't matter, this becomes
+\[
+\sigma_{ij;j} = - P_{;i} + \tau_{ij;j} = -P_{;i} + \mu u_{i;jj} + \left(\zeta + \frac{1}{3}\mu\right)\delta_{ij} u_{k;ki}.
+\]
+\rmk{Note the manipulation of the last term...}
+In vector notation, this is
+\[
+\nabla \cdot \boldsymbol{\sigma} = -\nabla P + \mu \nabla^2 {\bf u} + \left(1+\frac{1}{3}\right)\nabla(\nabla \cdot {\bf u}).
+\]
+\noindent
+Starting from the conservative momentum equation in terms of momentum density 
+${\bf p} = \rho {\bf u}$,
+\begin{equation}
+\frac{\partial {\bf p}}{\partial t} + \nabla \cdot ({\bf p} \otimes {\bf u}) + \nabla \cdot \boldsymbol{\sigma} = {\bf F}_{\rm ext},
+\end{equation}
+Hence, we arrive at \textbf{the conservative form of the Navier--Stokes momentum equation} becomes
+\begin{equation}
+\label{eq:navier_stokes_momentum_conservative}
+\boxed{
+\frac{\partial (\rho \mathbf{u})}{\partial t}
++ \nabla \cdot (\rho \mathbf{u}\otimes \mathbf{u})
+= -\nabla P + \mu \nabla^2 \mathbf{u}
++ \left(\zeta + \tfrac{1}{3}\mu\right)\nabla(\nabla \cdot \mathbf{u})
++ {\bf F}_{\rm ext}.}
+\end{equation}
+In its \textbf{convective (non--conservative) form}, we divide through by $\rho$ and use the material derivative
+\[
+\frac{D}{Dt} = \frac{\partial}{\partial t} + \mathbf{u}\cdot\nabla,
+\]
+so that the momentum equation becomes
+\begin{equation}
+\label{eq:navier_stokes_momentum_convective}
+\boxed{
+\rho \frac{D \mathbf{u}}{Dt}
+= -\nabla P + \mu \nabla^2 \mathbf{u}
++ \left(\zeta + \tfrac{1}{3}\mu\right)\nabla(\nabla \cdot \mathbf{u})
++ {\bf F}_{\rm ext}.}
+\end{equation}
 
+\noindent
+In the limit of \textbf{incompressible flow}, the density is constant and the velocity field is solenoidal, $\nabla\cdot \mathbf{u} = 0$. In this case, the bulk viscosity term vanishes and the equation reduces to
+\begin{equation}
+\label{eq:navier_stokes_incompressible}
+\boxed{
+\rho \left(\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u}\cdot\nabla \mathbf{u}\right)
+= -\nabla P + \mu \nabla^2 \mathbf{u} + {\bf F}_{\rm ext},}
+\end{equation}
+subject to the incompressibility condition
+\begin{equation}
+\nabla \cdot \mathbf{u} = 0.
+\end{equation}
+\medskip
+\noindent
+Equations~\eqref{eq:navier_stokes_momentum_conservative}--\eqref{eq:navier_stokes_incompressible}, together with the continuity equation and an appropriate energy equation or equation of state, constitute the \textbf{Navier--Stokes system} of fluid dynamics.
 
+\section{Surfaces and Boundaries}
 
+\textcolor{red}{This needs to be written}
+
+Rigid boundaries (no-slip, slip).
+
+Free surfaces (stress-free + material).
+
+Fluid–fluid interfaces (stress balance between two fluids).
+
+Porous/permeable boundaries (flux across).
+
+Phase-change interfaces (flux + stress balance).
+
+Artificial/far-field boundaries (boundary conditions at infinity or domain edges).
 

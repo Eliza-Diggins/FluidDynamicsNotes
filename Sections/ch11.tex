@@ -1,0 +1,687 @@
+We again use linear perturbation theory. We look for stability and instability in the perturbative solution. In the wave solutions, we studied stability. Now we look at instability. We want to know when they happen and what causes them.
+
+\section{Gravitational Instability}
+
+A self-gravitating fluid may become unstable and collapse under its own gravity.  
+This phenomenon, known in the spherically symmetric case as the \textbf{Jeans instability}, determines the critical conditions under which small perturbations grow instead of oscillating. We analyze this behavior using \textbf{linear perturbation theory} applied to the fluid and Poisson equations. In this section, we'll look at the \textbf{Jeans Instability} as well as the scenario for \textbf{disks}, where we will be introduced to the \textbf{Toorme Q parameter}.
+
+\subsection{The Jeans Instability}
+
+Consider an infinite, homogeneous, and static medium characterized by a density $\rho_0$, pressure $P_0$, and gravitational potential $\Phi_0$.  
+In the unperturbed state,
+\begin{equation}
+\mathbf{u}_0 = 0, 
+\qquad 
+\rho = \rho_0 = \text{const}, 
+\qquad 
+P = P_0 = \text{const}.
+\end{equation}
+The background potential satisfies Poisson’s equation,
+\begin{equation}
+\nabla^2 \Phi_0 = 4\pi G \rho_0.
+\end{equation}
+
+\begin{remark}
+A strictly uniform, infinite medium cannot simultaneously satisfy Poisson’s equation and hydrostatic equilibrium; the potential $\Phi_0$ would diverge.  
+Following the \textbf{Jeans swindle}, we therefore neglect the self-gravity of the uniform background and consider only the gravitational response due to perturbations.  
+Although formally inconsistent, this assumption correctly captures the physics of small-scale gravitational instability.
+\end{remark}
+
+We introduce small perturbations about the background state:
+\begin{equation}
+\rho = \rho_0 + \delta\rho, 
+\qquad 
+P = P_0 + \delta P, 
+\qquad 
+\Phi = \Phi_0 + \delta\Phi, 
+\qquad 
+\mathbf{u} = \delta\mathbf{u},
+\end{equation}
+with $|\delta\rho|, |\delta P|, |\delta\Phi| \ll$ background quantities.  
+Linearizing the governing equations yields:
+\begin{align}
+&\text{Continuity:} && 
+\frac{\partial \delta\rho}{\partial t} + \rho_0 \nabla\cdot\delta\mathbf{u} = 0, 
+\label{eq:lin_cont} \\[4pt]
+&\text{Momentum:} && 
+\rho_0 \frac{\partial \delta\mathbf{u}}{\partial t} 
+= - \nabla \delta P - \rho_0 \nabla \delta\Phi, 
+\label{eq:lin_mom} \\[4pt]
+&\text{Poisson:} && 
+\nabla^2 \delta\Phi = 4\pi G\,\delta\rho.
+\label{eq:lin_poisson}
+\end{align}
+For adiabatic perturbations, the pressure and density are related by
+\begin{equation}
+\delta P = c_s^2 \delta\rho,
+\end{equation}
+where $c_s$ is the adiabatic sound speed.
+
+\subsection*{Derivation of the Wave Equation}
+
+Taking the time derivative of the continuity equation \eqref{eq:lin_cont},
+\begin{equation}
+\frac{\partial^2 \delta\rho}{\partial t^2} + \rho_0 \nabla\cdot\frac{\partial \delta\mathbf{u}}{\partial t} = 0.
+\label{eq:dcont_dt}
+\end{equation}
+From the momentum equation \eqref{eq:lin_mom} and the equation of state,
+\begin{equation}
+\frac{\partial \delta\mathbf{u}}{\partial t}
+= -\frac{c_s^2}{\rho_0}\nabla\delta\rho - \nabla\delta\Phi.
+\label{eq:dudt}
+\end{equation}
+Taking the divergence of \eqref{eq:dudt} and using Poisson’s equation \eqref{eq:lin_poisson},
+\begin{equation}
+\nabla\cdot\frac{\partial \delta\mathbf{u}}{\partial t}
+= -\frac{c_s^2}{\rho_0}\nabla^2\delta\rho - 4\pi G\,\delta\rho.
+\label{eq:div_dudt}
+\end{equation}
+Substituting \eqref{eq:div_dudt} into \eqref{eq:dcont_dt} gives the closed-form \textbf{wave equation} for the density perturbation:
+\begin{equation}
+\boxed{
+\frac{\partial^2 \delta\rho}{\partial t^2}
+= c_s^2 \nabla^2 \delta\rho + 4\pi G \rho_0\,\delta\rho.
+}
+\label{eq:jeans_wave}
+\end{equation}
+
+\subsection*{Dispersion Relation}
+
+We seek plane-wave solutions of the form
+\begin{equation}
+\delta\rho,\,\delta P,\,\delta\Phi,\,\delta\mathbf{u} 
+\propto e^{i(\mathbf{k}\cdot\mathbf{r} - \omega t)}.
+\end{equation}
+Substituting this ansatz into equation \eqref{eq:jeans_wave} yields
+\begin{equation}
+-\omega^2 \delta\rho = -c_s^2 k^2 \delta\rho + 4\pi G\rho_0\,\delta\rho,
+\end{equation}
+or equivalently the \textbf{dispersion relation}
+\begin{equation}
+\boxed{\omega^2 = c_s^2 k^2 - 4\pi G \rho_0.}
+\label{eq:jeans_dispersion}
+\end{equation}
+
+\subsection*{The Jeans Criterion}
+
+Instability requires $\omega^2 < 0$, i.e.
+\begin{equation}
+c_s^2 k^2 < 4\pi G \rho_0.
+\end{equation}
+Hence:
+\begin{itemize}
+    \item For $c_s^2 k^2 > 4\pi G \rho_0$, we have $\omega^2 > 0$: perturbations oscillate as stable \textbf{sound waves}.
+    \item For $c_s^2 k^2 < 4\pi G \rho_0$, we have $\omega^2 < 0$: perturbations grow exponentially, $\delta\rho \propto e^{|\omega| t}$ — this is the \textbf{Jeans instability}.
+\end{itemize}
+
+The critical wavenumber, at which $\omega=0$, defines the \textbf{Jeans wavenumber}:
+\begin{equation}
+k_J = \sqrt{\frac{4\pi G \rho_0}{c_s^2}}.
+\end{equation}
+The corresponding \textbf{Jeans length} is
+\begin{equation}
+\lambda_J = \frac{2\pi}{k_J} = c_s \sqrt{\frac{\pi}{G \rho_0}}.
+\end{equation}
+Perturbations with wavelengths $\lambda > \lambda_J$ are gravitationally unstable and will collapse, while smaller perturbations are stabilized by pressure support.
+
+\subsection*{Physical Interpretation and Timescales}
+
+The Jeans criterion can be understood in terms of competing timescales:
+\begin{align}
+t_{\rm ff} &\sim \frac{1}{\sqrt{G\rho_0}} 
+\quad &\text{(free-fall timescale)},\\
+t_{\rm sound} &\sim \frac{1}{k c_s}
+\quad &\text{(sound-crossing timescale)}.
+\end{align}
+Gravitational collapse occurs when the free-fall time is shorter than the sound-crossing time,
+\begin{equation}
+t_{\rm ff} < t_{\rm sound}
+\quad \Longleftrightarrow \quad
+k < k_J.
+\end{equation}
+
+This effectively means that the system cannot respond to infall compression fast enough to reverse the collapse.
+
+\subsection{Disk Instability and Toomre's Q Parameter}
+
+So far, we have examined the stability of a \textbf{homogeneous, isotropic medium} and found that a self-gravitating fluid becomes unstable above the Jeans length.  However, many astrophysical systems of interest—such as galactic or accretion disks—are \textbf{rotationally supported, flattened structures}.  
+In these systems, rotation and shear play crucial roles in stabilizing against self-gravity.  
+To analyze such systems, we again turn to \textbf{linear perturbation theory}, but this time we work in a \emph{rotating frame} appropriate to the disk geometry.
+\vspace{1em}
+\noindent
+Consider a thin, axisymmetric disk with angular velocity profile $\Omega(R)$ and unperturbed velocity field
+\[
+\mathbf{u}_0 = R\,\Omega(R)\,\hat{\boldsymbol{\phi}}.
+\]
+The disk has an unperturbed surface density $\Sigma_0$ and corresponding vertically integrated pressure $P_0$.  We are interested in small, axisymmetric perturbations to this background configuration.
+\vspace{10pt}
+\begin{definition}[The Shearing Sheet Approximation]
+We analyze the dynamics in a local Cartesian patch centered at radius $R_0$ that co-rotates with the disk.  
+In this local frame, $x$ points radially outward and $y$ lies in the azimuthal direction.  
+The differential rotation of the disk appears as a linear shear:
+\[
+\mathbf{u}_0 \simeq (0,\,-q\,\Omega_0\,x),
+\qquad
+q \;\equiv\; -\frac{d\ln\Omega}{d\ln R}\Big|_{R_0}.
+\]
+This is called the \textbf{shearing sheet} approximation.  
+It captures the local effects of rotation and shear while neglecting global curvature terms, allowing the use of plane-wave perturbations 
+\[
+\propto e^{i(kx - \omega t)}.
+\]
+The approximation is valid when the perturbation wavelength is much smaller than the global scale of the disk: $\lambda \ll R_0$.
+\end{definition}
+\vspace{10pt}
+We can now introduce the notion of the \textbf{epicycle frequency}, which is going to be of chief importance to use as we continue this derivation. When a fluid element in a rotating disk is displaced slightly in radius, it no longer moves at the circular velocity appropriate to its new position. As a result, the imbalance between centrifugal and gravitational forces causes it to execute small oscillations about its equilibrium orbit. The frequency of these oscillations is called the \emph{\textbf{epicyclic frequency}}.
+\par
+Consider an element initially on a circular orbit at radius $R_0$ with angular velocity $\Omega_0$.  
+Let it be displaced radially by a small amount $x \ll R_0$ while keeping its specific angular momentum $L = R^2\dot{\phi}$ approximately conserved. The effective potential for radial motion in the plane of the disk is
+\[
+\Phi_{\text{eff}}(R) = \Phi(R) + \frac{L^2}{2R^2},
+\]
+where $\Phi(R)$ is the gravitational potential.  
+Expanding $\Phi_{\text{eff}}$ to first order about $R_0$ gives the equilibrium condition for circular motion,
+\[
+\left.\frac{d\Phi_{\text{eff}}}{dR}\right|_{R_0} = 0 
+\quad\Rightarrow\quad
+\frac{v_0^2}{R_0} = \left.\frac{d\Phi}{dR}\right|_{R_0},
+\]
+and to second order we find the restoring force per unit mass:
+\[
+\frac{d^2\Phi_{\text{eff}}}{dR^2}\Big|_{R_0} \;=\;
+\frac{d^2\Phi}{dR^2}\Big|_{R_0} + 3\Omega_0^2.
+\]
+The radial equation of motion for small displacements $x(t)$ about $R_0$ is therefore
+\[
+\ddot{x} = - \frac{d^2\Phi_{\text{eff}}}{dR^2}\Big|_{R_0} x
+\;=\; -\kappa^2\,x,
+\]
+which is a simple harmonic oscillator with frequency
+\[
+\boxed{\kappa^2 \;\equiv\; R\frac{d\Omega^2}{dR} + 4\Omega^2
+\;=\; 4\Omega^2 + 2R\,\Omega\,\frac{d\Omega}{dR}
+\;=\; 2(2-q)\Omega^2, \qquad q \equiv -\frac{d\ln\Omega}{d\ln R}.}
+\]
+Thus $\kappa$ quantifies the restoring strength of differential rotation: 
+it measures how rapidly a displaced parcel oscillates around its circular orbit.
+
+\begin{itemize}
+    \item For a \textbf{Keplerian disk}, $\Omega\propto R^{-3/2}$, giving $\kappa=\Omega$.
+    \item For a \textbf{flat rotation curve}, $\Omega\propto R^{-1}$, giving $\kappa=\sqrt{2}\,\Omega$.
+\end{itemize}
+In both cases, the nonzero value of $\kappa$ reflects the stabilizing role of rotation and shear in opposing local gravitational collapse.
+\vspace{10pt}
+\noindent
+We now proceed to derive the dispersion relation for small perturbations in a self-gravitating, differentially rotating, thin gaseous disk.
+
+\subsubsection*{Linearized Equations}
+
+Let $\Sigma = \Sigma_0 + \delta\Sigma$ be the perturbed surface density, $P = P_0 + \delta P$ the perturbed pressure, and $\mathbf{u} = \mathbf{u}_0 + \delta\mathbf{u}$ the velocity field.  
+For an isothermal or adiabatic disk, we use the effective 2D equation of state
+\[
+\delta P = c_s^2\,\delta\Sigma,
+\]
+where $c_s$ is the sound speed.  
+
+In the local co-rotating frame, the linearized hydrodynamic equations are:
+\begin{align*}
+&\text{Continuity:} && \frac{\partial \delta\Sigma}{\partial t} + \Sigma_0 \nabla\cdot\delta\mathbf{u} = 0,\\[4pt]
+&\text{Radial momentum:} && \frac{\partial \delta u_x}{\partial t} - 2\Omega_0\,\delta u_y = -\frac{\partial}{\partial x}\,(\delta h + \delta\Phi),\\[4pt]
+&\text{Azimuthal momentum:} && \frac{\partial \delta u_y}{\partial t} + \frac{\kappa^2}{2\Omega_0}\,\delta u_x = 0,
+\end{align*}
+where $\delta h \equiv \delta P/\Sigma_0 = c_s^2\,\delta\Sigma/\Sigma_0$,  and $\delta\Phi$ is the perturbation to the gravitational potential. The statement for the momentum equation comes directly from the fully general \textbf{Euler Equation} in the form
+\[
+\frac{\partial {\bf u}}{\partial t} +{\bf u}\cdot{\nabla {\bf u}} = - \frac{\nabla P}{\Sigma} - \nabla \Phi - 2\boldsymbol{\Omega} \times {\bf u} + \Omega^2 {\bf r}.
+\]
+At first order, the gravitational force directly balances the centrifugal force and therefore eliminates centrifugal force from the equation. We get the $\kappa$ from the gradients of the potential.
+\par
+For a razor-thin disk, all the mass is confined to the midplane ($z=0$), so 
+perturbations in the surface density $\delta\Sigma(\mathbf{r})$ act as a 2D source for 
+the gravitational potential. Starting from Poisson’s equation,
+\[
+\nabla^2 \,\delta\Phi(\mathbf{r},z) = 4\pi G\,\delta\rho(\mathbf{r},z),
+\]
+the perturbed density may be written as
+\[
+\delta\rho(\mathbf{r},z) = \delta\Sigma(\mathbf{r})\,\delta(z),
+\]
+where $\delta(z)$ enforces confinement to the midplane. 
+
+Taking a 2D Fourier transform in the disk plane and solving for the potential at 
+$z=0$, one finds
+\begin{equation}
+\boxed{\;\;
+\delta\Phi(\mathbf{k}) \;=\; -\,\frac{2\pi G}{|\mathbf{k}|}\,\delta\Sigma(\mathbf{k})
+\;\;}
+\label{eq:toomre_potential}
+\end{equation}
+\rmk{Really we're integrating over a razor thin region of the disk}
+
+This relation is the Fourier-space Green’s function for a razor-thin sheet. 
+The factor of $1/|\mathbf{k}|$ reflects the long-range nature of gravity: 
+large-scale modes ($|\mathbf{k}| \to 0$) produce stronger potentials, while the 
+minus sign ensures the potential is attractive. The exponential $e^{-|k||z|}$ 
+vertical dependence has already been evaluated at the midplane ($z=0$). 
+
+Equation~\eqref{eq:toomre_potential} is essential for disk stability analysis: 
+it provides the link between density perturbations and their self-gravitational 
+potential, which competes with pressure and rotation in the Toomre stability 
+criterion.
+We take all perturbations to have the WKB form
+\[
+\delta\Sigma,\,\delta\Phi,\,\delta u_x,\,\delta u_y \;\propto\; e^{i(kx - \omega t)}.
+\]
+The continuity equation then gives
+\[
+-i\omega\,\delta\Sigma + i k \Sigma_0\,\delta u_x = 0
+\quad\Longrightarrow\quad
+\delta\Sigma = \frac{\Sigma_0 k}{\omega}\,\delta u_x.
+\]
+The azimuthal momentum equation provides
+\[
+-i\omega\,\delta u_y + \frac{\kappa^2}{2\Omega_0}\,\delta u_x = 0
+\quad\Longrightarrow\quad
+\delta u_y = i\,\frac{\kappa^2}{2\Omega_0 \omega}\,\delta u_x.
+\]
+Substituting these results and \eqref{eq:toomre_potential} into the radial momentum equation gives
+\[
+-i\omega\,\delta u_x - i\frac{\kappa^2}{\omega}\,\delta u_x
+= -i\frac{k^2}{\omega}\,\delta u_x
+\left(c_s^2 - \frac{2\pi G \Sigma_0}{|k|}\right).
+\]
+Dividing through by common factors yields the \textbf{dispersion relation}:
+\begin{equation}
+\boxed{
+\omega^2 = \kappa^2 - 2\pi G \Sigma_0 |k| + c_s^2 k^2.
+}
+\label{eq:toomre_dispersion}
+\end{equation}
+
+\subsubsection*{Stability Criterion and Toomre's Q Parameter}
+
+Equation \eqref{eq:toomre_dispersion} shows that rotation ($\kappa^2$) and pressure ($c_s^2 k^2$) act as stabilizing influences, while self-gravity ($-2\pi G\Sigma_0 |k|$) drives collapse. To find the condition for stability, we minimize $\omega^2(k)$ with respect to $k$.  The most unstable wavenumber satisfies
+\[
+\frac{d\omega^2}{dk} = 0 \quad \Rightarrow \quad k_{\text{crit}} = \frac{\pi G \Sigma_0}{c_s^2}.
+\]
+At this $k$, the minimum value of $\omega^2$ is
+\[
+\omega_{\min}^2 = \kappa^2 - \frac{(\pi G \Sigma_0)^2}{c_s^2}.
+\]
+For the disk to be stable for all wavelengths, we require $\omega_{\min}^2 > 0$, giving the \textbf{Toomre stability criterion}:
+\begin{equation}
+\boxed{
+Q \;\equiv\; \frac{c_s\,\kappa}{\pi G \Sigma_0} \;>\; 1.
+}
+\end{equation}
+If $Q < 1$, some wavenumbers yield $\omega^2 < 0$, and the corresponding perturbations grow exponentially—indicating \textbf{gravitational instability}.
+
+\subsubsection*{Physical Interpretation}
+
+The Toomre parameter quantifies the competition between three effects:
+\[
+Q \;=\; 
+\frac{\text{pressure support (}c_s\text{)} \times \text{rotational support (}\kappa\text{)}}
+{\text{self-gravity (}\pi G \Sigma_0\text{)}}.
+\]
+\begin{itemize}
+    \item For $Q > 1$, the combination of pressure and rotational shear stabilizes the disk.
+    \item For $Q < 1$, gravity overwhelms these effects, leading to fragmentation or ring-like collapse.
+\end{itemize}
+
+The most unstable (fastest-growing) wavelength is obtained by substituting $k_{\text{crit}}$:
+\begin{equation}
+\lambda_{\text{crit}} = \frac{2 c_s^2}{G \Sigma_0}.
+\end{equation}
+Perturbations with $\lambda < \lambda_{\text{crit}}$ are stabilized by pressure,  
+while those with $\lambda > \lambda_{\text{crit}}$ are stabilized by shear.  
+Instability is confined to scales near $\lambda_{\text{crit}}$, where self-gravity dominates both effects.
+
+\section{Interface Instabilities}
+\label{sec:interface_instabilities}
+
+We consider two inviscid, incompressible, irrotational fluids separated by a planar interface at $z=0$. The lower fluid (region $z<0$) has density $\rho_0$ and uniform horizontal velocity $U_0\,\hat{\mathbf{x}}$; the upper fluid (region $z>0$) has density $\rho_1$ and uniform horizontal velocity $U_1\,\hat{\mathbf{x}}$. A constant gravitational acceleration $\mathbf{g} = -g\,\hat{\mathbf{z}}$ acts downward. We allow for surface tension $\sigma$ (set $\sigma=0$ to recover the purely gravitational case).
+
+Because the base state is incompressible and irrotational, we introduce velocity potentials $\Psi_i$
+such that
+\[
+\mathbf{u}_i = \nabla \Psi_i
+\]
+and
+\[
+\nabla^2 \Psi_i = 0
+\]
+in each layer $i\in\{0,1\}$. In the unperturbed state, in the uperturbed state, we have a simple integration to find that
+\[
+\Psi_i = u_i x.
+\]
+Applying the \textbf{Bernoulli Theorem} in the case of an \textbf{unsteady flow}, yields
+\begin{equation}
+\label{eq:Bernoulli_full}
+\frac{\partial \Psi_i}{\partial t} + \frac{1}{2}\,\lvert\nabla\Psi_i\rvert^2 + \frac{P_i}{\rho_i} + \Phi = F(t),
+\end{equation}
+where $\Phi = gz$ is the gravitational potential and $F(t)$ is a spatially uniform Bernoulli function.
+\par
+Now that we have set up the equilibrated scenario, let's start trying to derive the behavior of a perturbation to the surface. We perturb the interface to $z=\xi(x,t)$ with $\lvert\xi\rvert \ll 1$, and write
+\[
+\Psi^{(1)}_i = \Psi_i^{(0)} + \delta \psi_i= U_i x + \delta \psi_i, \qquad P^{(1)}_i = P_i^{(0)} + \delta P_i,
+\]
+where $\delta \Psi_i, \delta P_i$ are first order linear perturbations about the mean. Since we still maintain \textbf{incompressibility and irrotational flow}, we have
+\[
+\nabla^2 \delta \psi_i = 0.
+\]
+\rmk{This can be made formal by invoking the Kelvin Circulation Theorem.} We adopt a normal-mode (plane-wave) ansatz
+\begin{equation}
+\label{eq:ansatz}
+\left\{\phi_i,\,p_i,\,\xi\right\} \propto e^{\,i(kx-\omega t)} ,
+\end{equation}
+and require decay away from the interface:
+\begin{align}
+\label{eq:harmonic_solutions}
+\phi_0(x,z,t) &= A_0\,e^{\,k z}\,e^{\,i(kx-\omega t)} , \qquad z<0,\\
+\phi_1(x,z,t) &= A_1\,e^{-k z}\,e^{\,i(kx-\omega t)} , \qquad z>0,
+\end{align}
+so that $\partial_z \phi_0 \to 0$ as $z\to -\infty$ and $\partial_z \phi_1 \to 0$ as $z\to +\infty$. This allows us to provide a self-consistent solution to the vertical Laplace equation without allowing divergence of the flow field. Our task now is to understand the structure of this solution and its implications for phenomenology.
+
+\subsection*{Boundary Conditions}
+As is typical in perturbation problems, we can explore relevant boundary conditions to obtain consistency conditions for our ansatz. Let's begin by looking at the interface, at which there will be both a \textbf{kinematic condition} describing the velocities and also a \textbf{traction condition} determining the pressures.
+\par
+\paragraph{The Kinematic Condition}
+Since the interface is a so-called \textbf{free-interface}, we cannot allow a particle on the surface to leave the surface. Thus, the vertical velocity of a particle $u_z$ must be related to the perturbed surface such that (to linear order)
+\[
+\frac{D\xi}{Dt} = \partial_t \xi + u_{ix} \partial_x \xi = \partial_z \delta \psi_i.
+\]
+\rmk{The idea here is that we have a vertical displacement which must match the change in the surface for the particle. We get the fluid velocity from the $z$ derivative of the perturbed potential and from the surface.} With the ansatz \eqref{eq:ansatz} this relationship yields for each surface that
+\begin{equation}
+\label{eq:kinematic_amplitudes}
+-i(\omega - k U_0)\,\xi = k A_0, \qquad
+-i(\omega - k U_1)\,\xi = -k A_1,
+\end{equation}
+so that
+\begin{equation}
+\label{eq:A0A1}
+A_0 = -\,\frac{i}{k}\,(\omega - k U_0)\,\xi, \qquad
+A_1 = \;\;\frac{i}{k}\,(\omega - k U_1)\,\xi.
+\end{equation}
+
+\paragraph{The Traction (Dynamic) Condition}
+At the interface, the \textbf{Cauchy traction balance law} requires that the jump in normal stress equals the restoring force due to surface tension. 
+For an inviscid, isotropic fluid, the only stress contribution is the scalar pressure, so we may write
+\begin{equation}
+\label{eq:traction_balance}
+\left[\,p\,\right]_{1}^{0} \;\equiv\; p_1 - p_0 \;=\; -\,\sigma\,\nabla_{\!s}\!\cdot\!\hat{\mathbf{n}},
+\end{equation}
+where $\hat{\mathbf{n}}$ is the local unit normal to the interface and $\nabla_{\!s}\!\cdot\!\hat{\mathbf{n}}$ is the mean curvature. 
+For a weakly perturbed interface of the form $z=\xi(x,t)$, where $\lvert\xi\rvert \ll 1$, we may linearize the curvature as
+\[
+\nabla_{\!s}\!\cdot\!\hat{\mathbf{n}} \;\approx\; -\,\partial_{xx}\xi.
+\]
+Substituting this into \eqref{eq:traction_balance} gives
+\begin{equation}
+\label{eq:dynamic_sigma_clean}
+p_1 - p_0 \;=\; \sigma\,\partial_{xx}\xi \;=\; -\,\sigma k^2\,\xi,
+\end{equation}
+where we have used $\partial_{xx}\xi = -k^2\xi$ under the plane-wave ansatz. \textbf{This expresses the tendency of surface tension to resist curvature (short-wavelength) perturbations.}
+\par
+To relate the pressure perturbations to the perturbed potentials, we now linearize the \textbf{unsteady Bernoulli equation} \eqref{eq:Bernoulli_full} about the background flow. 
+Starting from
+\begin{equation}
+\frac{\partial \Psi_i}{\partial t} + \frac{1}{2}\,\lvert\nabla\Psi_i\rvert^2 + \frac{P_i}{\rho_i} + \Phi = F(t),
+\end{equation}
+we substitute in the perturbed quantities,
+\[
+\Psi_i = \Psi_i^{(0)} + \delta\psi_i, 
+\qquad
+P_i = P_i^{(0)} + \delta P_i.
+\]
+Expanding to first order, we find
+\[
+\frac{\partial}{\partial t}\left(\Psi_i^{(0)} + \delta\psi_i\right)
++ \frac{1}{2}\left|\nabla(\Psi_i^{(0)} + \delta\psi_i)\right|^2
++ \frac{P_i^{(0)} + \delta P_i}{\rho_i} + \Phi
+= F(t).
+\]
+Separating equilibrium and perturbation terms, and noting that the background flow $(\Psi_i^{(0)},P_i^{(0)})$ already satisfies Bernoulli’s equation, we retain only the linear perturbations:
+\[
+\frac{\partial \delta\psi_i}{\partial t}
++ \nabla \Psi_i^{(0)} \!\cdot\! \nabla \delta\psi_i
++ \frac{\delta P_i}{\rho_i} = 0.
+\]
+\paragraph{Evaluating at the Displaced Interface}
+The difficulty with the above expression is that we really know $P_i^{(0)}$ at the $z=0$ interface, 
+so it is not straightforward to apply the traction balance condition directly at the displaced surface $z=\xi(x,t)$.  
+To address this, we use a Taylor expansion to relate the pressure field at the moving interface to that at the reference plane $z=0$. Expanding the total pressure to first order gives
+\[
+P_i(z=\xi) \;\approx\; P_i(0) + \xi \left.\frac{\partial P_i}{\partial z}\right|_{0}.
+\]
+We now separate this into equilibrium and perturbation components:
+\[
+P_i^{(0)}(z=\xi) + \delta P_i(z=\xi)
+\;\approx\;
+\big[ P_i^{(0)}(0) + \delta P_i(0) \big]
++ \xi \left.\frac{\partial P_i^{(0)}}{\partial z}\right|_{0}.
+\]
+Subtracting the equilibrium balance at $z=0$, the pressure perturbation at the displaced interface becomes
+\begin{equation}
+\label{eq:pressure_expansion_displaced}
+\delta P_i(z=\xi) = \delta P_i(z=0) - \xi \left.\frac{\partial P_i^{(0)}}{\partial z}\right|_{0}.
+\end{equation}
+From hydrostatic equilibrium,
+\[
+\frac{\partial P_i^{(0)}}{\partial z} = -\,\rho_i g,
+\]
+so that
+\begin{equation}
+\label{eq:pressure_shift_interface}
+\delta P_i(z=\xi) = \delta P_i(z=0) + \rho_i g\,\xi.
+\end{equation}
+In other words, a fluid parcel displaced upward by $\xi$ experiences a lower local pressure at the new interface, as expected from hydrostatic balance. We now use this to evaluate the Bernoulli relation at the displaced boundary. At $z=0$, the linearized Bernoulli equation is
+\[
+\frac{\delta P_i(z=0)}{\rho_i}
+= -\left(\frac{\partial}{\partial t} + U_i\frac{\partial}{\partial x}\right)\delta\psi_i.
+\]
+Using the propagation relation \eqref{eq:pressure_shift_interface} to move this result up to $z=\xi$, we obtain
+\[
+\frac{\delta P_i(z=\xi)}{\rho_i}
+= -\left(\frac{\partial}{\partial t} + U_i\frac{\partial}{\partial x}\right)\delta\psi_i
+- g\,\xi.
+\]
+This is the form we will use at the boundary for the traction balance.
+
+\par\vspace{6pt}
+Using the plane-wave ansatz $\delta\psi_i = A_i e^{\pm k z} e^{i(kx-\omega t)}$, evaluated at $z=0$, gives
+\[
+\left(\frac{\partial}{\partial t} + U_i\frac{\partial}{\partial x}\right)\delta\psi_i
+= -i(\omega - kU_i)\,A_i\,e^{\,i(kx-\omega t)}.
+\]
+Substituting this into the previous expression yields
+\begin{equation}
+\delta P_i(z=\xi) = 
+\rho_i\left[i(\omega - kU_i)A_i - g\xi\right] e^{\,i(kx-\omega t)}.
+\end{equation}
+We now substitute the amplitudes $A_i$ from the kinematic condition
+\[
+A_0 = -\frac{i}{k}(\omega - kU_0)\xi,
+\qquad
+A_1 = \frac{i}{k}(\omega - kU_1)\xi,
+\]
+to obtain
+\begin{align}
+\delta P_0 &= \rho_0
+\left[\frac{(\omega - kU_0)^2}{k} - g\right]\xi\,e^{i(kx-\omega t)},\\
+\delta P_1 &= -\,\rho_1
+\left[\frac{(\omega - kU_1)^2}{k} + g\right]\xi\,e^{i(kx-\omega t)}.
+\end{align}
+\rmk{The negative sign for $\delta P_1$ arises because $\partial_z\phi_1 = -kA_1$ at $z=0$, reversing the vertical velocity direction above the interface.}
+
+\par\vspace{6pt}
+Finally, we apply the traction balance condition \eqref{eq:dynamic_sigma_clean} at $z=0$,
+\[
+\delta P_1 - \delta P_0 = -\,\sigma k^2\xi.
+\]
+Substituting the above expressions for $\delta P_i$ and canceling the common factor $\xi e^{i(kx-\omega t)}$, 
+we obtain after rearranging:
+\begin{equation}
+\label{eq:compact_dispersion_clean}
+\rho_0\,(\omega - k U_0)^2 + \rho_1\,(\omega - k U_1)^2
+\;=\;
+(\rho_0 - \rho_1)\,g\,k + \sigma k^3.
+\end{equation}
+\rmk{This is the canonical dispersion relation for a two-layer, inviscid, incompressible interface under gravity and surface tension, derived by relating the traction balance at the displaced interface to pressures referenced at $z=0$.}
+
+
+\paragraph{Solving for $\omega$}
+Equation~\eqref{eq:compact_dispersion_clean} is quadratic in $\omega$. Solving explicitly yields
+\begin{equation}
+\label{eq:omega_solution_clean}
+\boxed{
+\omega
+\;=\;
+k\,\bar{U}
+\;\pm\;
+\sqrt{
+-\frac{\rho_0\rho_1}{(\rho_0+\rho_1)^2}\,(\Delta U)^2\,k^2
+\;+\;
+\frac{\rho_0 - \rho_1}{\rho_0+\rho_1}\,g\,k
+\;+\;
+\frac{\sigma}{\rho_0+\rho_1}\,k^3
+},
+}
+\end{equation}
+where
+\[
+\bar{U} \equiv \frac{\rho_0 U_0 + \rho_1 U_1}{\rho_0+\rho_1},
+\qquad
+\Delta U \equiv U_1 - U_0.
+\]
+\rmk{The term under the square root determines the stability of the interface: it is positive for oscillatory (stable) motion and negative for exponential (unstable) growth. The relative magnitudes of the shear term, gravity term, and surface tension term determine whether the instability is of the Kelvin--Helmholtz or Rayleigh--Taylor type.}
+
+\subsection{Rayleigh--Taylor Instability}
+\label{sec:rayleigh_taylor}
+
+The \textbf{Rayleigh--Taylor instability (RTI)} describes the situation in which a heavy fluid lies above a lighter one in a gravitational field. To isolate this effect, \textbf{we neglect both surface tension and shear} by setting $\sigma = 0$ and $U_0 = U_1 = 0$. The dispersion relation \eqref{eq:compact_dispersion_clean} then simplifies to
+\begin{equation}
+\omega^2 = -\,\frac{\rho_1 - \rho_0}{\rho_0 + \rho_1}\,g\,k.
+\end{equation}
+If the \textbf{heavier fluid is below the lighter fluid} ($\rho_0 > \rho_1$), then $\rho_1 - \rho_0 < 0$ and $\omega^2 > 0$, giving 
+\[
+\omega = \pm \sqrt{\frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k}.
+\]
+The system oscillates with a real frequency $\omega$, corresponding to small-amplitude gravity waves at the interface. \textbf{If the heavier fluid is \emph{above} the lighter one} ($\rho_1 > \rho_0$), then $\omega^2 < 0$ and the growth rate becomes imaginary:
+\begin{equation}
+\label{eq:rt_growth_rate}
+\gamma = \sqrt{\frac{\rho_1 - \rho_0}{\rho_0 + \rho_1}\,g\,k}.
+\end{equation}
+In this case, perturbations grow exponentially as $e^{\gamma t}$, forming the characteristic ``mushroom'' plumes of the Rayleigh--Taylor instability.
+
+\subsubsection{Surface Tension}
+If surface tension is present, small wavelengths are stabilized. Including $\sigma$ in the dispersion relation gives
+\[
+\omega^2 = -\frac{\rho_1 - \rho_0}{\rho_0 + \rho_1}\,g\,k + \frac{\sigma}{\rho_0 + \rho_1}\,k^3.
+\]
+Setting $\omega^2 = 0$ \textbf{defines the \emph{critical wavenumber} separating stable and unstable modes:}
+\begin{equation}
+\label{eq:rt_critical_wavenumber}
+\boxed{
+k_c = \frac{(\rho_1 - \rho_0)\,g}{\sigma}.}
+\end{equation}
+Modes with $k > k_c$ (short wavelengths) are stabilized by surface tension, while long waves ($k < k_c$) remain unstable.
+\begin{bigidea}{Rayleigh--Taylor Instability}
+When a \textbf{heavier fluid lies above a lighter fluid} in a gravitational field, any small displacement of the interface causes the heavy fluid to sink and the light fluid to rise, further amplifying the initial disturbance. 
+This leads to \textbf{exponential growth} of perturbations with growth rate
+\[
+\gamma_{\mathrm{RT}} = \sqrt{\frac{\rho_1 - \rho_0}{\rho_0 + \rho_1}\,g\,k},
+\]
+and produces characteristic ``spike-and-bubble'' structures as the two fluids mix.  
+Gravity provides the energy source, while surface tension and viscosity act to stabilize short-wavelength modes. 
+The RT instability is fundamentally driven by the conversion of gravitational potential energy into kinetic motion.
+\end{bigidea}
+
+\subsection{Kelvin-Helmholtz Instability}
+\label{sec:kelvin_helmholtz}
+
+The \textbf{Kelvin--Helmholtz instability (KHI)} arises from shear between two fluid layers with different velocities. 
+To isolate this effect, we neglect gravity and surface tension by setting $g = 0$ and $\sigma = 0$. The dispersion relation \eqref{eq:compact_dispersion_clean} then reduces to
+\begin{equation}
+\rho_0 (\omega - k U_0)^2 + \rho_1 (\omega - k U_1)^2 = 0.
+\end{equation}
+Solving for $\omega$ gives
+\begin{equation}
+\label{eq:kh_solution}
+\omega = k \bar{U} \pm i \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|,
+\end{equation}
+where $\bar{U}$ and $\Delta U$ are the mean and differential velocities, respectively. The imaginary component of $\omega$ implies exponential growth with rate
+\begin{equation}
+\label{eq:kh_growth_rate}
+\gamma = \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|.
+\end{equation}
+Thus, \textbf{any finite shear $\Delta U$ produces instability at all wavelengths in an inviscid, surface-tensionless fluid.} The physical origin of the instability lies in the coupling between vorticity and pressure perturbations at the interface: a crest of the wave locally slows the upper flow and speeds up the lower one, amplifying the displacement.
+\par
+If we include both surface tension and gravity, the dispersion relation becomes
+\[
+\omega = k \bar{U} 
+\pm 
+\sqrt{
+-\frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2 k^2
++ \frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k
++ \frac{\sigma}{\rho_0 + \rho_1}\,k^3 }.
+\]
+The interface is unstable when the term under the square root is negative, i.e.
+\begin{equation}
+\label{eq:kh_instability_condition}
+\frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k + \frac{\sigma}{\rho_0 + \rho_1}\,k^3 
+< \frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2\,k^2.
+\end{equation}
+This condition \textbf{shows that gravity stabilizes the system when the heavy fluid lies below}, 
+while\textbf{ surface tension suppresses short-wavelength perturbations}. When both effects are weak, the shear term dominates and the system is unstable for all $k$.
+
+\begin{bigidea}{Kelvin--Helmholtz Instability}
+When two fluids move past each other with a \textbf{velocity shear} across their interface, pressure and velocity perturbations can couple to extract energy from the mean flow. 
+This interaction amplifies wave-like disturbances, producing \textbf{rolling vortices and billows} characteristic of shear instabilities.  
+In the inviscid, surface-tensionless limit, the growth rate is
+\[
+\gamma_{\mathrm{KH}} = \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|,
+\]
+so that any finite shear is unstable at all wavelengths.  
+Surface tension stabilizes short waves, and gravity stabilizes configurations where the heavy fluid lies below.  
+The KH instability represents a transfer of energy from large-scale shear flow into interfacial wave motion and turbulence.
+\end{bigidea}
+
+\subsection{Taylor-Couette Instability}
+
+\subsection{Centrifugal Instability}
+
+\subsection{Richtmyer-Meshkov Instability}
+
+\section{Thermal Instability}
+Fluid instabilities due to \textbf{thermodynamics} are also possible. In essense, these are the scenarios where runaway heating or cooling leads to \textbf{multi-phase materials}. This is famously the case with the ISM ... insert more detail.
+
+The details of thermal instability depend on the form you choose to use for the cooling law $\dot{Q}$; however, a full treatement may be made in terms of the behavior of $\dot{Q}$ in response to variations in various thermodynamic variables.
+
+\subsection*{Perturbative Analysis}
+As we have done in so many previous cases, we here assume an equilibrated fluid which satisfies the \textbf{continuity equation} and the \textbf{Euler equation}. For simplicity, we consider the scenario where there is no gravitation. In most cases previously, we used a barotropic equation of state to avoid the need for an energy equations; however, that will not be sufficient in this case. As such, we need to presume some \textbf{reasonable energy equation}. Let's start from the \textbf{First Law of Thermodynamics}:
+\[
+du = dq - P d \left(\frac{1}{\rho}\right) = dq + \frac{P}{\rho^2} d\rho.
+\]
+We know that $u$ may be written as a thermodynamic potential of the \textbf{specific entropy} $s$ and the density $\rho$. Thus,
+\[
+du = \left(\frac{du}{ds}\right)_\rho ds + \left(\frac{du}{d\rho}\right)_s d\rho = Tds + \frac{P}{\rho^2} d\rho.
+\]
+We can therefore \textbf{identify that $dq = T ds$}, and therefore, we introduce the \textbf{effective energy equation}
+\begin{equation}
+    \label{eq:therm_instability_energy_eq}
+    T \frac{ds}{dt} = - \dot{Q}.
+\end{equation}
+\rmk{We have included the $-$ here because $\dot{Q} > 0$ for a cooling fluid.} Now, we don't typically like to work in $T$ and $s$, we'd rather work in $\rho$ and the \textbf{polytropic index $K$.} With the 
+
+
+(the book uses this, im unclear wky that's permissible or the correct choice)
+\[
+- dQ = -T dS.
+\]
+We can then substitute $K$ and $\rho$ (what are these)?
+
+
+\section{Convection}
+
+
+

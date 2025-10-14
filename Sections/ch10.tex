@@ -1,0 +1,245 @@
+In this chapter, we'll dive more cleanly into the world of viscous flows and their relevance to astrophysical fluid dynamics. We begin from where we left off on the topic in the first few chapters: We have seen that viscosity can be formed into a stress tensor $\tau_{ij}$ 
+\[
+\boldsymbol{\tau} = \mu\left[\nabla {\bf u} + \nabla{\bf u}^T\right] + {\bf I}\left(\zeta-\frac{2}{3}\mu\right)\nabla \cdot {\bf u},
+\]
+where $\mu$ is the \textbf{shear viscosity} and $\zeta$ is the \textbf{bulk viscosity}. From this, we transformed the Euler Equation into the \textbf{Navier-Stokes Equation} in the form (see equation~\ref{eq:navier_stokes_momentum_conservative})
+\begin{equation}
+\boxed{
+\frac{\partial (\rho \mathbf{u})}{\partial t}
++ \nabla \cdot (\rho \mathbf{u}\otimes \mathbf{u})
+= -\nabla P + \mu \nabla^2 \mathbf{u}
++ \left(\zeta + \tfrac{1}{3}\mu\right)\nabla(\nabla \cdot \mathbf{u})
++ {\bf F}_{\rm ext}.}
+\end{equation}
+In this chapter, we will attempt to build a more concrete understanding of the implications of viscosity on astrophysical flows. Now, in \textbf{astrophysical fluids}, the \textbf{bulk viscosity is generally negligible} and so we can ignore it in most scenarios. From equation~\eqref{eq:navier_stokes_momentum_convective}, we obtain the standard analog to the Euler Equation that we will use:
+\begin{equation}
+    \boxed{
+    \rho \frac{D{\bf u}}{Dt} = -\nabla P + \mu \nabla^2 {\bf u} + \frac{1}{3}\mu \nabla(\nabla \cdot {\bf u}) + {\bf F}_{\rm ext}.
+    }
+\end{equation}
+We will find it useful to introduce the \textbf{kinematic viscosity parameter} $\nu = \mu/\rho$ so that this equation takes the form
+\begin{equation}
+    \boxed{
+    \frac{D{\bf u}}{Dt} = -\frac{\nabla P}{\rho} + \nu \nabla^2 {\bf u} + \frac{1}{3}\nu \nabla(\nabla \cdot {\bf u}) + {\bf F}_{\rm ext}.
+    }
+\end{equation}
+\section{Vorticity in Viscous Flows}
+As we did previously for the Euler Equation, we will now take the curl of the above equation and thereby study the behavior of the fluid's vorticity throughout the flow. Clearly
+\[
+\nabla \times \frac{D{\bf u}}{Dt} = \frac{\partial \boldsymbol{\omega}}{\partial t} + \nabla \times ({\bf u} \cdot \nabla {\bf u}),
+\]
+so
+\[
+\frac{\partial {\boldsymbol{\omega}}}{\partial t} + \nabla \times ({\bf u} \cdot \nabla {\bf u}) = \nabla \times \left[ -\frac{\nabla P}{\rho} + \nu \nabla^2 {\bf u} + \frac{1}{3}\nu \nabla(\nabla \cdot {\bf u}) + {\bf F}_{\rm ext}\right].
+\]
+The curl of a gradient is zero, so the $\nu \nabla(\nabla \cdot {\bf u})$ term must be zero. Likewise, the curl term acting on the pressure gradient is
+\[
+\nabla \times \frac{\nabla P}{\rho} = -\frac{1}{\rho^2} \nabla \rho \times \nabla P = 0.
+\]
+\rmk{We have made two simplifications under the hood here. First, the product rule containing $\nabla \times \nabla P =0$ by definition. Additionally, $\nabla \rho \times \nabla P$ is zero for a \textbf{barotropic fluid} since they share level surfaces.} We therefore have the following expression for the evolution of vorticity:
+\[
+\frac{\partial \boldsymbol{\omega}}{\partial t} = - \nabla \times ({\bf u}\cdot \nabla{\bf u}) + \nu \nabla^2\boldsymbol{\omega} + {\bf F}_{\rm ext}.
+\]
+Now, if we recall from our study of vorticity in previous chapters,
+\[
+\nabla \times ({\bf u} \cdot \nabla {\bf u}) = \nabla \times \left[\frac{1}{2}\nabla({\bf u}^2) - {\bf u} \times (\nabla \times {\bf u})\right] =-\nabla \times {\bf u} \times \boldsymbol{\omega},
+\]
+so if we have only gravitational forces,
+\[
+\frac{\partial \boldsymbol{\omega}}{\partial t} = \nabla \times({\bf u} \times \boldsymbol{\omega}) + \nu \nabla^2\boldsymbol{\omega}.
+\]
+Let's take a minute to understand this. Recall our discussion of Kelvin's Vorticity Theorem that, in \textbf{inviscid flows},
+\[
+\frac{\partial \boldsymbol{\omega}}{\partial t} = \nabla\times({\bf u} \times \boldsymbol{\omega}),
+\]
+And so we see that there is a new, Laplace-like (diffusion) element to our vorticity evolution.
+\par
+First, we see that \textbf{Kelvin's Circulation Theorem is preserved} in the sense that if the flow begins with 
+$\boldsymbol{\omega} = 0$, then no vorticity will be generated in time. The caveat is that this only holds for 
+\textbf{barotropic fluids} with suitable forces (e.g. gravity); in more general cases, baroclinic effects 
+($\nabla \rho \times \nabla P \neq 0$) can generate vorticity.  
+\par
+Second, viscosity introduces an entirely new effect: a \textbf{diffusion term} 
+$\nu \nabla^2 \boldsymbol{\omega}$. In an inviscid fluid, a compact region of vorticity (say a vortex ring) is 
+simply advected and deformed by the flow without spreading. By contrast, in a viscous fluid, momentum exchange 
+across streamlines causes the vorticity to diffuse outward, weakening the core and smearing rotational structures 
+into the surrounding fluid.
+
+\begin{bigidea}
+In inviscid (Euler) flows, vorticity is conserved and carried along with the fluid, as expressed by 
+Kelvin's Circulation Theorem. In viscous (Navier--Stokes) flows, an additional diffusion term 
+appears in the vorticity equation, 
+\[
+\frac{\partial \boldsymbol{\omega}}{\partial t} 
+= \nabla \times (\mathbf{u} \times \boldsymbol{\omega}) 
++ \nu \nabla^2 \boldsymbol{\omega}.
+\]
+\begin{itemize}
+    \item If the flow begins irrotational ($\boldsymbol{\omega}=0$), it remains so in barotropic fluids 
+    with conservative body forces.
+    \item Viscosity causes vorticity to \emph{diffuse}, smoothing sharp vortical structures in the same 
+    way that heat or dye diffuses in a medium.
+\end{itemize}
+\textbf{Big Idea:} Viscosity breaks Kelvin’s theorem by allowing vorticity to spread and decay, rather 
+than remain perfectly frozen into the flow.
+\end{bigidea}
+
+\section{Energy Dissipation}
+
+We are now required, once again, to redo some of our earlier analysis. In this case, we will discuss in more detail the energy equation, the first law of thermodynamics, and the role that viscosity plays in these processes.
+
+\subsection{The Internal Energy}
+
+Recall that, for a thermodynamic system, the change in internal energy per unit mass is
+\[
+d\epsilon = dq + W,
+\]
+where $W$ is the work done on the fluid element. In the isotropic case of an ideal
+pressure, this reduces to the familiar $PdV$ term. However, when the dynamics are governed
+by a general stress tensor, the analysis requires more care.
+\vspace{0.25cm}
+\noindent
+Let's begin by imagining a fluid element which is (due to stresses) expanding or contracting. 
+We know that, for a region of the surface $d{\bf A}$, the force on that element will be
+\[
+d{\bf F} = \boldsymbol{\sigma} \, d{\bf A} = \sigma_{ij} \, dA^j, 
+\]
+where $\boldsymbol{\sigma}$ is the stress tensor. In some period $\Delta t$, that surface
+will be displaced ${\bf u}\,\Delta t$ under the imposed force. Thus, the work required to
+obtain that deformation is
+\[
+dW = d{\bf F} \cdot d{\boldsymbol{\ell}} = \sigma_{ij} u^i \, dA^j.
+\]
+
+Integrating over the \textbf{entire surface of the element}, we find the total rate of work
+\[
+\frac{\Delta W}{\Delta t} = \oint_{\partial V} \sigma_{ij} u^i \, dA^j.
+\]
+
+Applying the divergence theorem converts this surface integral into a volume integral:
+\[
+\frac{\Delta W}{\Delta t} = \int_V \left(\sigma_{ij} u^i\right)_{;j} dV
+= \int_V u^i \sigma_{ij;j} + \sigma_{ij} u^i_{;j} \, dV.
+\]
+\begin{remark}
+We see two terms here:
+\begin{itemize}
+    \item ${\bf u} \cdot (\nabla \cdot \boldsymbol{\sigma}) = u^i\sigma_{ij;j}$, which corresponds 
+    to the work done by the \emph{net force density} of the stresses. This is effectively the
+    center-of-mass (rigid motion) contribution, and therefore does not directly influence
+    internal energy.
+    \item $\boldsymbol{\sigma} : \nabla {\bf u} = \sigma_{ij} u^i_{;j}$, which corresponds to the 
+    \emph{deformation} work done by stresses as the element is strained. This term is responsible
+    for changes in internal energy.
+\end{itemize}
+\end{remark}
+\noindent
+We therefore identify the internal contribution to the work as
+\[
+\dot{w}_{\rm int} = \sigma_{ij} u^i_{;j} = \boldsymbol{\sigma} : \nabla {\bf u}.
+\]
+Now recall that the stress tensor may be decomposed into an isotropic pressure part and a
+viscous part:
+\[
+\sigma_{ij} = -P \delta_{ij} + \tau_{ij}.
+\]
+Contracting with the velocity gradient yields
+\[
+\sigma_{ij} u^i_{;j} = -P \nabla \cdot {\bf u} + \tau_{ij} u^i_{;j}.
+\]
+
+The first term $-P\nabla \cdot {\bf u}$ is the familiar compressional $PdV$ work, while the second term $\tau_{ij} u^i_{;j} = \boldsymbol{\tau} : \nabla {\bf u}$ corresponds to \textbf{viscous dissipation}, i.e. the irreversible conversion of bulk kinetic energy into heat.
+\vspace{0.25cm}
+\noindent
+Finally, including radiative or other thermal losses at a rate $-\rho \dot{q}_{\rm cool}$,
+the first law of thermodynamics for a viscous fluid element takes the form
+\begin{equation}
+\boxed{
+\rho \frac{D\epsilon}{Dt} = -P \nabla \cdot {\bf u} - \rho \dot{q}_{\rm cool} 
++ \boldsymbol{\tau} : \nabla {\bf u}.
+}
+\end{equation}
+Dividing through by the density and using the continuity equation to remove the $\nabla \cdot {\bf u}$, we obtain the specific form
+\begin{equation}
+\boxed{
+\frac{D\epsilon}{Dt} = \frac{P}{\rho^2}\frac{D\rho}{Dt} - \dot{q}_{\rm cool}
++ \frac{1}{\rho}\, \boldsymbol{\tau} : \nabla {\bf u}.
+}
+\end{equation}
+\begin{remark}
+The two reversible contributions to the internal energy are compressional heating and
+radiative cooling, while the final term represents the \emph{viscous heating rate}. For a
+Newtonian fluid, $\boldsymbol{\tau} : \nabla {\bf u}$ is a positive-definite quadratic
+function of velocity gradients, ensuring that viscous dissipation always increases the
+internal energy of the system.
+\end{remark}
+
+\subsection{The Energy Equation}
+Let's once again visit the \textbf{Energy Equation} of the previous chapters and, this time, fold in the viscosity to get a picture of how this influences the dynamics. Consider a fluid which has energy in its thermal motion, in its bulk motion, and in gravitational potential. The \textbf{total energy} is
+\[
+\mathcal{E} = \rho\left(\frac{1}{2}u^2 + \Phi + \epsilon\right).
+\]
+The time evolution of this quantity is of considerable interest. We may take the Lagrangian time derivative to find
+\[
+\frac{D\mathcal{E}}{Dt} = - \mathcal{E} \nabla \cdot {\bf u} + \rho \left[{\bf u} \cdot \frac{D{\bf u}}{Dt} + \frac{D\Phi}{Dt} + \frac{D\epsilon}{Dt}\right]
+\]
+It is here that things will differ from the derivative already familiar to us. We now need to use not the Euler Equation, but the \textbf{Navier Stokes Equation}. In order to keep things reasonably tame notationally, we'll use the convective form:
+\[
+\frac{D{\bf u}}{Dt} = - \frac{\nabla P}{\rho} + \frac{1}{\rho} \nabla \cdot \tau - \nabla \Phi.
+\]
+Thus,
+\[
+\frac{D\mathcal{E}}{Dt} = - \mathcal{E} \nabla \cdot {\bf u} + \rho \left[{\bf u} \cdot \left(\frac{-\nabla P}{\rho}-\nabla \Phi +\frac{\nabla \cdot \tau}{\rho}\right) + \frac{\partial \Phi}{\partial t} + {\bf u}\cdot \nabla \Phi + \frac{D\epsilon}{Dt}\right]
+\]
+Clearly, the gravitational terms cancel out and we have
+\[
+\frac{D\mathcal{E}}{Dt} = -\mathcal{E}\nabla \cdot {\bf u} + \rho{\bf u} \cdot \left(\nabla \cdot \tau - \nabla P\right) + \rho\frac{\partial \Phi}{\partial t} + \rho\frac{D\epsilon}{Dt}.
+\]
+Substituting in our expression for $D\epsilon/Dt$, we have
+\[
+\frac{D\mathcal{E}}{Dt} = -\mathcal{E}\nabla \cdot {\bf u} + \rho{\bf u} \cdot \left(\nabla \cdot \tau - \nabla P\right) + \rho\frac{\partial \Phi}{\partial t} -P \rho\nabla \cdot {\bf u} - \rho \dot{q}_{\rm cool} + \rho\boldsymbol{\tau} : \nabla {\bf u}.
+\]
+We see $-{\bf u} \cdot \nabla P - P \cdot \nabla {\bf u}$ and identify it as $\nabla\cdot(P{\bf u})$. Thus,
+\[
+\frac{D\mathcal{E}}{Dt} + \mathcal{E} \nabla \cdot {\bf u} + \nabla \cdot P{\bf u} = {\bf u}\rho\cdot(\nabla \cdot \tau) +\rho \frac{\partial \Phi}{\partial t} - \rho \dot{q}_{\rm cool} + \rho\boldsymbol{\tau} : \nabla{\bf u}.
+\]
+Finally, we recall that
+\[
+\rho\left[u^i\tau_{ij;j} + u^i_{;j} \tau_{ij}\right] = \rho \nabla \cdot(\boldsymbol{\tau}\cdot{\bf u}),
+\]
+so we obtain our \textbf{Lagrangian Energy Equation}:
+\begin{equation}
+    \boxed{
+    \frac{D\mathcal{E}}{Dt} + \mathcal{E} \nabla \cdot {\bf u} + \nabla \cdot (P{\bf u}) - \nabla \cdot (\boldsymbol{\tau}{\bf u}) = \rho \frac{\partial \Phi}{\partial t} - \rho \dot{q}_{\rm cool}.
+    }
+\end{equation}
+In the \textbf{Eulerian Form}, we have
+\begin{equation}
+    \boxed{
+    \frac{\partial \mathcal{E}}{\partial t} + \nabla\cdot\left[(\mathcal{E}+P){\bf u} - {\bf u}\cdot \boldsymbol{\tau}\right] = \rho \frac{\partial \Phi}{\partial t} - \rho \dot{q}_{\rm cool}.
+    }
+\end{equation}
+
+\begin{bigidea}
+\textbf{Viscous Energy Dissipation: Key Takeaways}
+\begin{itemize}
+    \item In a viscous fluid, the \emph{internal energy equation} gains an additional source term:
+    \[
+    \frac{D\epsilon}{Dt} = \frac{P}{\rho^2}\frac{D\rho}{Dt} - \dot{q}_{\rm cool} 
+    + \frac{1}{\rho}\,\boldsymbol{\tau}:\nabla{\bf u}.
+    \]
+    The final term is always positive and represents \textbf{viscous heating}.
+    
+    \item The \emph{total energy equation} acquires a new flux contribution:
+    \[
+    \nabla \cdot \big[(\mathcal{E}+P){\bf u} - {\bf u}\cdot \boldsymbol{\tau}\big],
+    \]
+    describing transport of energy by viscous stresses in addition to pressure and advection.
+    
+    \item Physically: pressure gradients do reversible $PdV$ work, while viscosity irreversibly 
+    converts bulk kinetic energy into heat and redistributes energy through stresses.
+    
+    \item Conservation remains intact: total energy is conserved, but the partition between 
+    kinetic and thermal energy shifts irreversibly due to viscous dissipation.
+\end{itemize}
+\end{bigidea}

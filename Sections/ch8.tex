@@ -4,18 +4,30 @@ A common scenario in both theory and application is that of the \textbf{blast-wa
     \textit{Consider an equilibrated region of fluid subject to no external gradients and with temperature $T \sim 0$. When a large quantity $E_0$ of energy is deposited at the center of the medium, the result is a shock wave which sweeps up the material.}
 \end{center}
 
-\section{Approximate Method}
+\section{The Blastwave Scenario}
 
-As the explosion propagates, we have a shock wave which will be a \textbf{strong shock} (\rmk{the reason being that $T \sim 0$ in the ambient fluid makes the sound speed very low, which means the velocity ratio will be very large}). To be clear about our notation and conventions, we identify two regions:
+- set up the system, define the rest and shock frame, the u's, p's, and rho's
+- the energy injection 
+- the basic idea of how we want to proceed.
+
+criteria
+
+- We need to give time for the ejecta to settle and we don't have the ejecta continuing. This is the
+  Sedov period of a SN phase.
+- Must be energy conserving phase, where radiative processes become relevant. Afterward that is late phase.
+  this is often 100s - 1000s of years in SN explosions.
+
+\section{The Approximate Method}
+
+As the explosion propagates, we have a shock wave which will be a \textbf{strong shock} (\rmk{the argument is that enough energy is injected which makes the post-shock region so much hotter, so the velocity ratio must be very large}). To be clear about our notation and conventions, we identify two regions:
 \vspace{0.25cm}
 
 \begin{itemize}
     \item The \textbf{downstream region} is \textbf{inside the shock}: this is the material which makes up the shell of the ejecta.
     \item The \textbf{upstream region} is \textbf{outside the shock}: this is the ambient material which is (in the frame of the shock) going to flow into it.
 \end{itemize}
-
 \vspace{0.25cm}
-Because the shock is \textbf{strong}, we adopt the treatment that $M = \infty$ and, therefore, the \textbf{Rankine-Huginiot conditions} require that (equation~\ref{eq:rankine_huginiot_2})
+Because the shock is \textbf{strong}, we adopt the treatment that $M = \infty$ and, therefore, the \textbf{Rankine-Huginiot conditions} require that (equation~\eqref{eq:rh_density_ratio_from_mach})
 \[
 \frac{\rho_1}{\rho_0} = \frac{\gamma +1 }{\gamma -1},
 \]
@@ -27,23 +39,24 @@ For a reasonable gas, $\gamma \sim 1$ and so if $\gamma = 1 + \chi$, then
 \[
 \frac{\gamma - 1}{\gamma +1} = \frac{\chi}{2+\chi} \ll 1.
 \]
-As such, we conclude that the shock width $D$ is \textbf{quite thin}. In making that assumption, we can also assume that the entire shell moves with the same velocity. Thus, in the frame of the shock, the RH conditions require that
+As such, we conclude that the shock width $D$ is \textbf{quite thin}. In making that assumption, we can also assume that the entire shell moves with the same velocity. Thus, \textbf{in the frame of the shock}, the RH conditions require that
 \[
 \rho_0u_0 = u_1\rho_1 \implies u_1 = \frac{\rho_0}{\rho_1}u_0 = \frac{\gamma - 1}{\gamma + 1} u_0.
 \]
-Now, relative to the ambient environment (velocity $u_1$), the shock has velocity $u = u_0-u_1$, so
+Now, relative to the ambient environment (velocity $u_1$), the shock has velocity $U = u_0-u_1$, so
 \[
 U = u_0-u_1  = \frac{2u_0}{\gamma + 1}.
 \]
+\rmk{This is then telling us how the actual rest-frame shock velocity behaves.}
 The \textbf{momentum of the shock} is then
 \[
-p_{\rm shock} = 4\pi D R^2 \rho_1 U = \frac{4}{3}\pi R^3 \rho_0 \frac{2u_0}{\gamma + 1}.
+p_{\rm shock} =\underbrace{ 4\pi D R^2}_{{\rm volume}} \underbrace{\rho_1 U}_{\text{momentum density}} = \frac{4}{3}\pi R^3 \rho_0 \frac{2u_0}{\gamma + 1}.
 \]
 Clearly,
 \[
 \dot{p}_{\rm shock} = \frac{8\pi \rho_0}{3(\gamma + 1)} \frac{d}{dt}(u_0R^3) \ge 0. 
 \]
-So the shock is \textbf{gaining momentum}. This must be because there is a pressure gradient at play! Now, we need the pressure $p_{\rm in}$ to drive the shock outward, which means it must be higher than $p_1$ (the shock pressure), and obviously higher than $p_0$ (which is zero since we set the temperature to 0). We consider the ansatz
+So the shock is \textbf{gaining momentum}.  \rmk{Remember that, in the rest frame of the shock, $u_0 \gg 0$ and $R$ is increasing}. This must be because there is a pressure gradient at play! Now, we need the pressure $P_{\rm in}$ to drive the shock outward, which means it must be higher than $P_1$ (the post-shock pressure), and obviously higher than $P_0$ (which is zero since we set the temperature to 0). We consider the ansatz
 \[
 P_{\rm in} = \alpha P_{1}.
 \]
@@ -174,6 +187,15 @@ Now, we would like to understand the various \textbf{post-shock quantities} (ind
     \rho_1 = \rho_0 \frac{\gamma +1}{\gamma -1}
 \end{aligned}
 \]
+Let's now establish a game plan: behind the shock, each quantity $\psi(r,t)$ is going to scale from $\psi_1$ right behind the shock at $\xi=1$, so what if we define the quantity as 
+\[
+\psi(r,t) = \psi(\xi) = \psi_1 \cdot \tilde{\psi}(\xi),
+\]
+where $\tilde{\psi}$ is the \textbf{scaling function} for that particular quantity, which is then determined from the differential equation. It turns out that you can in fact solve for these scaling terms. They then need to be integrated properly to get the solutions.
+
+\textcolor{red}{Add more detail here.}
+
+
 Now, if we assume that each of our various quantities is scale invariant, then we can assume equations of the form
 \[
 \begin{aligned}
@@ -197,3 +219,7 @@ which leads (after some algebra) to
 E \sim \frac{3\gamma - 1}{2(\gamma + 1)} \frac{4\pi}{3}\rho_0 R^3_{\rm max} \frac{c_0^2}{\gamma(\gamma -1)}.
 \]
 This generally works out to $\sim 100 {\rm pc}$ for most supernovae.
+
+\section{Astrophysical Context}
+
+- The phases of shock breakout, the snowplow phase, sedov phase, and the dissipation phase.
