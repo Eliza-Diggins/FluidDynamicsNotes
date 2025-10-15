@@ -600,86 +600,295 @@ The RT instability is fundamentally driven by the conversion of gravitational po
 \label{sec:kelvin_helmholtz}
 
 The \textbf{Kelvin--Helmholtz instability (KHI)} arises from shear between two fluid layers with different velocities. 
-To isolate this effect, we neglect gravity and surface tension by setting $g = 0$ and $\sigma = 0$. The dispersion relation \eqref{eq:compact_dispersion_clean} then reduces to
+It is a direct consequence of the results derived above. If we examine the general dispersion relation, we have
 \begin{equation}
-\rho_0 (\omega - k U_0)^2 + \rho_1 (\omega - k U_1)^2 = 0.
-\end{equation}
-Solving for $\omega$ gives
-\begin{equation}
-\label{eq:kh_solution}
-\omega = k \bar{U} \pm i \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|,
-\end{equation}
-where $\bar{U}$ and $\Delta U$ are the mean and differential velocities, respectively. The imaginary component of $\omega$ implies exponential growth with rate
-\begin{equation}
-\label{eq:kh_growth_rate}
-\gamma = \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|.
-\end{equation}
-Thus, \textbf{any finite shear $\Delta U$ produces instability at all wavelengths in an inviscid, surface-tensionless fluid.} The physical origin of the instability lies in the coupling between vorticity and pressure perturbations at the interface: a crest of the wave locally slows the upper flow and speeds up the lower one, amplifying the displacement.
-\par
-If we include both surface tension and gravity, the dispersion relation becomes
-\[
 \omega = k \bar{U} 
 \pm 
 \sqrt{
 -\frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2 k^2
 + \frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k
 + \frac{\sigma}{\rho_0 + \rho_1}\,k^3 }.
-\]
-The interface is unstable when the term under the square root is negative, i.e.
+\end{equation}
+For $\omega \in \mathbb{C}\setminus \mathbb{R}$, the quantity inside the square root must be negative. 
+This gives the general \textbf{instability condition}
 \begin{equation}
 \label{eq:kh_instability_condition}
 \frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k + \frac{\sigma}{\rho_0 + \rho_1}\,k^3 
 < \frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2\,k^2.
 \end{equation}
-This condition \textbf{shows that gravity stabilizes the system when the heavy fluid lies below}, 
-while\textbf{ surface tension suppresses short-wavelength perturbations}. When both effects are weak, the shear term dominates and the system is unstable for all $k$.
+From this, we can immediately see that the gravity term (proportional to $gk$) tends to stabilize long-wavelength modes, 
+while the surface tension term (proportional to $k^3$) stabilizes short-wavelength modes.  
+The velocity shear term, scaling as $(\Delta U)^2 k^2$, acts as the destabilizing mechanism.  
+We now examine the three most instructive limiting cases:
+
+\subsubsection*{Case 1: No Gravity, No Surface Tension ($g = 0$, $\sigma = 0$)}
+
+In this case, the dispersion relation simplifies to
+\begin{equation}
+\rho_0 (\omega - k U_0)^2 + \rho_1 (\omega - k U_1)^2 = 0,
+\end{equation}
+which yields the solution
+\begin{equation}
+\omega = k \bar{U} \pm i \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|.
+\end{equation}
+The imaginary part of $\omega$ implies an exponential growth rate
+\begin{equation}
+\gamma = \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|.
+\end{equation}
+Since $\gamma > 0$ for any nonzero shear $\Delta U$, the interface is \textbf{unstable for all wavelengths}.  
+Furthermore, $\gamma \propto |k|$, so shorter wavelengths grow faster.  
+In realistic fluids, viscosity or finite interface thickness imposes a small-scale cutoff, preventing unbounded growth.  
+This limit represents the classical, idealized Kelvin--Helmholtz instability:  
+\textit{any finite velocity shear leads to instability.}
+
+\subsubsection*{Case 2: No Gravity, Finite Surface Tension ($g = 0$, $\sigma \neq 0$)}
+
+When surface tension is present, the dispersion relation becomes
+\begin{equation}
+\omega = k \bar{U} 
+\pm 
+\sqrt{
+-\frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2 k^2
++ \frac{\sigma}{\rho_0 + \rho_1}\,k^3 }.
+\end{equation}
+The instability condition \eqref{eq:kh_instability_condition} reduces to
+\begin{equation}
+\frac{\sigma}{\rho_0 + \rho_1}\,k^3 
+< 
+\frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2\,k^2,
+\end{equation}
+or equivalently,
+\begin{equation}
+k < k_{\mathrm{crit}} = \frac{\rho_0 \rho_1 (\Delta U)^2}{\sigma (\rho_0 + \rho_1)}.
+\end{equation}
+Thus, only perturbations with wavenumber $k < k_{\mathrm{crit}}$ (i.e., long wavelengths) are unstable, 
+while short-wavelength modes ($k > k_{\mathrm{crit}}$) are stabilized by surface tension.  
+Physically, surface tension acts to smooth out small undulations at the interface by providing a restoring force that increases with curvature.  
+Therefore, surface tension defines a \textbf{maximum unstable wavenumber} beyond which the instability is suppressed.
+
+\subsubsection*{Case 3: Finite Gravity, No Surface Tension ($g \neq 0$, $\sigma = 0$)}
+
+In the absence of surface tension, gravity introduces a stabilizing (or destabilizing) term depending on the orientation of the density gradient.  
+The dispersion relation becomes
+\begin{equation}
+\omega = k \bar{U} 
+\pm 
+\sqrt{
+-\frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2 k^2
++ \frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k }.
+\end{equation}
+The instability criterion \eqref{eq:kh_instability_condition} gives
+\begin{equation}
+\frac{\rho_0 - \rho_1}{\rho_0 + \rho_1}\,g\,k
+<
+\frac{\rho_0 \rho_1}{(\rho_0 + \rho_1)^2}\,(\Delta U)^2\,k^2.
+\end{equation}
+If the heavy fluid lies \textbf{below} the lighter one ($\rho_0 > \rho_1$, $g > 0$), 
+the first term is positive and acts to stabilize long-wavelength perturbations.  
+Setting the two terms equal gives the critical wavenumber
+\begin{equation}
+k_{\mathrm{crit}} = \frac{(\rho_0 - \rho_1)(\rho_0 + \rho_1)g}{\rho_0 \rho_1 (\Delta U)^2}.
+\end{equation}
+For $k < k_{\mathrm{crit}}$, gravity dominates and the system is stable, 
+while for $k > k_{\mathrm{crit}}$, velocity shear dominates and instability sets in.  
+If, however, the heavy fluid lies \textbf{above} the light one ($\rho_0 < \rho_1$), 
+the gravitational term becomes destabilizing, and the system is \textbf{always unstable}, even without shear—this is the classic \textbf{Rayleigh--Taylor instability} limit.
 
 \begin{bigidea}{Kelvin--Helmholtz Instability}
-When two fluids move past each other with a \textbf{velocity shear} across their interface, pressure and velocity perturbations can couple to extract energy from the mean flow. 
-This interaction amplifies wave-like disturbances, producing \textbf{rolling vortices and billows} characteristic of shear instabilities.  
-In the inviscid, surface-tensionless limit, the growth rate is
+The Kelvin--Helmholtz instability occurs whenever two fluid layers move past each other with a velocity shear across their interface.  
+In the inviscid, tensionless, and gravity-free limit, the growth rate is
 \[
 \gamma_{\mathrm{KH}} = \frac{\sqrt{\rho_0 \rho_1}}{\rho_0 + \rho_1}\,|k\,\Delta U|,
 \]
-so that any finite shear is unstable at all wavelengths.  
-Surface tension stabilizes short waves, and gravity stabilizes configurations where the heavy fluid lies below.  
-The KH instability represents a transfer of energy from large-scale shear flow into interfacial wave motion and turbulence.
+so any finite shear is unstable at all wavelengths.  
+Gravity stabilizes long wavelengths when the heavy fluid lies below, 
+and surface tension stabilizes short wavelengths by damping curvature.  
+In astrophysical and geophysical contexts, KHI governs the onset of shear-driven mixing, vorticity generation, 
+and turbulent entrainment between stratified layers, jets, and boundary shears.
 \end{bigidea}
 
-\subsection{Taylor-Couette Instability}
-
-\subsection{Centrifugal Instability}
-
-\subsection{Richtmyer-Meshkov Instability}
 
 \section{Thermal Instability}
-Fluid instabilities due to \textbf{thermodynamics} are also possible. In essense, these are the scenarios where runaway heating or cooling leads to \textbf{multi-phase materials}. This is famously the case with the ISM ... insert more detail.
+\label{sec:thermal_instability}
 
-The details of thermal instability depend on the form you choose to use for the cooling law $\dot{Q}$; however, a full treatement may be made in terms of the behavior of $\dot{Q}$ in response to variations in various thermodynamic variables.
-
-\subsection*{Perturbative Analysis}
-As we have done in so many previous cases, we here assume an equilibrated fluid which satisfies the \textbf{continuity equation} and the \textbf{Euler equation}. For simplicity, we consider the scenario where there is no gravitation. In most cases previously, we used a barotropic equation of state to avoid the need for an energy equations; however, that will not be sufficient in this case. As such, we need to presume some \textbf{reasonable energy equation}. Let's start from the \textbf{First Law of Thermodynamics}:
-\[
-du = dq - P d \left(\frac{1}{\rho}\right) = dq + \frac{P}{\rho^2} d\rho.
-\]
-We know that $u$ may be written as a thermodynamic potential of the \textbf{specific entropy} $s$ and the density $\rho$. Thus,
-\[
-du = \left(\frac{du}{ds}\right)_\rho ds + \left(\frac{du}{d\rho}\right)_s d\rho = Tds + \frac{P}{\rho^2} d\rho.
-\]
-We can therefore \textbf{identify that $dq = T ds$}, and therefore, we introduce the \textbf{effective energy equation}
+In addition to dynamical instabilities driven by gravity or shear, fluids may also become unstable due to \textbf{thermodynamic imbalances}. These occur when the local heating and cooling processes of a gas act to amplify small temperature or density perturbations rather than damp them. The resulting runaway condensation or rarefaction leads to the formation of a \textbf{multi-phase medium}. This class of phenomena is known collectively as \textbf{thermal instability} \citet{1965ApJ...142..531F}, and is particularly important in astrophysical contexts such as the \emph{interstellar medium}, \emph{accretion flows}, and \emph{intra-cluster gas}.
+\par
+In a system where radiative heating and cooling are both present, thermal equilibrium is maintained when the local heating rate per unit mass $\Gamma$ balances the cooling rate $\Lambda$:
 \begin{equation}
-    \label{eq:therm_instability_energy_eq}
-    T \frac{ds}{dt} = - \dot{Q}.
+\dot{Q} \;\equiv\; \Gamma - \Lambda = 0.
 \end{equation}
-\rmk{We have included the $-$ here because $\dot{Q} > 0$ for a cooling fluid.} Now, we don't typically like to work in $T$ and $s$, we'd rather work in $\rho$ and the \textbf{polytropic index $K$.} With the 
-
-
-(the book uses this, im unclear wky that's permissible or the correct choice)
+If a small perturbation increases the temperature or density, the corresponding change in $\dot{Q}$ determines whether the disturbance grows or decays. If heating dominates in response to a cooling perturbation, the system is stable; but if cooling increases faster than pressure can respond, the perturbation grows exponentially. In some sense, we heuristically think that if
 \[
-- dQ = -T dS.
+\frac{d\Lambda }{dT} < 0,
 \]
-We can then substitute $K$ and $\rho$ (what are these)?
+then as we increase temperature, we cool less efficiently and we can lead to runaway condensation. In the next section, we'll be more formal about this assertion.
 
+\subsection*{Governing Equations}
+
+We begin from the standard equations of hydrodynamics for a compressible, inviscid fluid with a general energy source term $\dot{Q}$ (energy gained per unit mass per unit time):
+\begin{align}
+&\text{Continuity:} && \frac{d\rho}{dt} + \rho \nabla\!\cdot\!\mathbf{u} = 0, \label{eq:cont_TI}\\[4pt]
+&\text{Momentum:} && \rho \frac{d\mathbf{u}}{dt} = -\nabla P, \label{eq:mom_TI}\\[4pt]
+&\text{Energy:} && T \frac{ds}{dt} = -\,\dot{Q}, \label{eq:energy_TI}
+\end{align}
+where $s$ is the specific entropy and $\dot{Q}>0$ corresponds to \emph{net cooling}.  
+\par
+Equation~\eqref{eq:energy_TI} follows directly from the first law of thermodynamics,
+\[
+du = T\,ds - P\,d\!\left(\frac{1}{\rho}\right),
+\]
+so that
+\[
+\frac{du}{dt} = -P\frac{d}{dt}\!\left(\frac{1}{\rho}\right) - \dot{Q}.
+\]
+
+We assume an ideal gas equation of state,
+\begin{equation}
+P = (\gamma - 1)\rho u = K\rho^{\gamma},
+\end{equation}
+where \textbf{the polytropic constant $K$ encodes the specific entropy.  }
+Differentiating this expression gives
+\begin{equation}
+\frac{dK}{dt}
+= \frac{1}{\rho^{\gamma}}
+\frac{dP}{dt} - \frac{\gamma P}{\rho^{\gamma+1}}\frac{d\rho}{dt}.
+\end{equation}
+From the energy equation, we may equivalently write
+\begin{equation}
+\label{eq:dKdt_TI}
+\frac{dK}{dt} = -\,\frac{(\gamma - 1)}{\rho^{\gamma - 1}}\,\dot{Q}.
+\end{equation}
+Thus, entropy evolution and the associated thermodynamic stability are governed by how $\dot{Q}$ responds to perturbations in $P$ and $\rho$.
+
+\subsection*{Linear Perturbation Analysis}
+
+We consider a uniform, static equilibrium characterized by $(\rho_0, P_0, T_0)$ satisfying
+\[
+\dot{Q}_0(\rho_0, T_0) = 0.
+\]
+We introduce small perturbations of the form
+\begin{equation}
+\rho = \rho_0 + \delta\rho, 
+\quad 
+P = P_0 + \delta P, 
+\quad
+T = T_0 + \delta T,
+\quad
+\mathbf{u} = \delta\mathbf{u},
+\end{equation}
+and assume normal-mode solutions $\propto e^{i(\mathbf{k}\cdot\mathbf{r} - \omega t)}$.  
+Neglecting self-gravity and viscosity, the linearized equations become
+\begin{align}
+&-i\omega\,\delta\rho + i\rho_0 \mathbf{k}\!\cdot\!\delta\mathbf{u} = 0, \label{eq:lin_cont_TI}\\[3pt]
+&-i\omega\rho_0\,\delta\mathbf{u} = -i\mathbf{k}\,\delta P, \label{eq:lin_mom_TI}
+\end{align}
+and from the energy equation,
+\begin{equation}
+-i\omega\,\frac{\delta P}{P_0}
+- i\gamma\omega\,\frac{\delta\rho}{\rho_0}
+= (\gamma - 1)\frac{\delta\dot{Q}}{P_0}.
+\label{eq:lin_energy_TI}
+\end{equation}
+
+The perturbation to the cooling function is expanded to first order as
+\begin{equation}
+\delta\dot{Q} = 
+\left(\frac{\partial \dot{Q}}{\partial \rho}\right)_T \delta\rho
++ \left(\frac{\partial \dot{Q}}{\partial T}\right)_\rho \delta T.
+\label{eq:deltaQ_TI}
+\end{equation}
+Using the ideal-gas relation $\delta P/P_0 = \delta\rho/\rho_0 + \delta T/T_0$, we can eliminate $\delta T$ to express $\delta\dot{Q}$ in terms of $\delta P$ and $\delta\rho$:
+\begin{equation}
+\delta\dot{Q}
+= A\,\delta\rho + B\,\delta P,
+\qquad
+\begin{cases}
+A = 
+\left[\left(\frac{\partial \dot{Q}}{\partial \rho}\right)_T
+- \frac{\rho_0}{T_0}\left(\frac{\partial \dot{Q}}{\partial T}\right)_\rho\right],\\[6pt]
+B = \dfrac{\rho_0}{P_0}\left(\frac{\partial \dot{Q}}{\partial T}\right)_\rho.
+\end{cases}
+\label{eq:AB_defs}
+\end{equation}
+
+Combining equations \eqref{eq:lin_cont_TI}–\eqref{eq:lin_energy_TI}, we eliminate $\delta\mathbf{u}$ and $\delta\dot{Q}$ to obtain a closed relation between $\delta P$ and $\delta\rho$.  
+From \eqref{eq:lin_mom_TI}, $\delta\mathbf{u} = (\mathbf{k}/\omega\rho_0)\,\delta P$, and substitution into \eqref{eq:lin_cont_TI} gives
+\begin{equation}
+\omega^2\,\delta\rho = k^2 \frac{\rho_0}{\gamma P_0}\,\delta P.
+\label{eq:cont_mom_combined}
+\end{equation}
+Substituting this and \eqref{eq:deltaQ_TI}–\eqref{eq:AB_defs} into \eqref{eq:lin_energy_TI} yields a cubic dispersion relation of the form
+\begin{equation}
+\boxed{
+\omega^3 + i(\gamma - 1)\left[\frac{B P_0}{\rho_0} + \frac{A}{k^2 c_s^2}\right]\omega^2
+- c_s^2 k^2 \omega
+- i(\gamma - 1)A = 0,
+}
+\label{eq:TI_dispersion_cubic}
+\end{equation}
+where $c_s^2 = \gamma P_0 / \rho_0$ is the adiabatic sound speed.
+
+\subsection*{Limiting Cases and the Field Criterion}
+
+The cubic equation~\eqref{eq:TI_dispersion_cubic} admits three branches corresponding to different physical regimes:
+
+\begin{itemize}
+    \item \textbf{Adiabatic acoustic modes:}  
+    When radiative effects are negligible ($A,B\to0$), we recover the sound-wave relation 
+    $\omega^2 = c_s^2 k^2$.
+    
+    \item \textbf{Isobaric mode:}  
+    For long wavelengths ($k \to 0$), pressure equilibrates rapidly, $\delta P \simeq 0$, and the instability evolves at nearly constant pressure.  
+    The growth rate simplifies to
+    \begin{equation}
+    \boxed{
+    \omega_{\text{isoP}} = -\,i\,\frac{(\gamma - 1)}{P_0}
+    \left(\frac{\partial \dot{Q}}{\partial T}\right)_P T_0.
+    }
+    \end{equation}
+    The system is unstable if the net cooling increases with temperature at constant pressure:
+    \[
+    \left(\frac{\partial \dot{Q}}{\partial T}\right)_P > 0.
+    \]
+    This is the classic \textbf{Field criterion for isobaric thermal instability}.
+    
+    \item \textbf{Isochoric mode:}  
+    If the density is effectively fixed (e.g. very slow pressure response), the growth rate becomes
+    \begin{equation}
+    \boxed{
+    \omega_{\text{isoC}} = -\,i\,\frac{(\gamma - 1)}{T_0}
+    \left(\frac{\partial \dot{Q}}{\partial T}\right)_\rho.
+    }
+    \end{equation}
+    The gas is unstable if $\left(\frac{\partial \dot{Q}}{\partial T}\right)_\rho > 0$.
+\end{itemize}
+
+\subsection*{Physical Interpretation}
+
+Thermal instability reflects the competition between the gas’s ability to re-establish thermal balance via pressure work and the local response of heating and cooling to perturbations.  
+Two characteristic timescales govern the dynamics:
+\begin{align}
+t_{\mathrm{cool}} &\sim \frac{P_0}{(\gamma - 1)\rho_0\,|\dot{Q}_T|}, &
+t_{\mathrm{sound}} &\sim \frac{1}{k c_s}.
+\end{align}
+If $t_{\mathrm{cool}} \ll t_{\mathrm{sound}}$, the gas cools faster than it can adjust its pressure, leading to nearly isochoric behavior.  
+Conversely, $t_{\mathrm{cool}} \gg t_{\mathrm{sound}}$ favors isobaric evolution, where pressure remains uniform.
+
+In astrophysical systems, such as the interstellar medium, cooling laws often scale as $\Lambda \propto \rho^2 T^\alpha$.  
+The Field criterion then becomes
+\[
+\alpha < 1 \;\;\Longrightarrow\;\; \text{isobaric instability,}
+\]
+so that cooling decreases too weakly with temperature to stabilize perturbations.  
+The nonlinear outcome of this process is the formation of cold, dense condensations embedded in a warm, diffuse background—a defining feature of multi-phase astrophysical gases.
+
+\begin{bigidea}
+A fluid in local thermal balance becomes unstable if the local cooling rate increases with temperature at constant pressure:
+\[
+\left(\frac{\partial \dot{Q}}{\partial T}\right)_P > 0.
+\]
+Small perturbations then grow exponentially as radiative losses amplify temperature and density contrasts, leading to \textbf{spontaneous phase separation} of the gas into cold, dense and warm, diffuse components.
+\end{bigidea}
 
 \section{Convection}
 
